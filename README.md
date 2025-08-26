@@ -24,18 +24,43 @@ counsel-framework/
 └── examples/               # Example counsel work
 ```
 
+## 📋 Requirements
+
+- Node.js 16 or higher
+- npm 7 or higher  
+- Python 3.8 or higher (for ChromaDB)
+- macOS, Linux, or Windows
+
 ## 🚀 Quick Start
 
-### 1. Install the CLI
+### 1. Install the Framework
 
 ```bash
-cd cli
+# Clone the repository
+git clone https://github.com/ammon-nakosi/counsel-framework.git
+cd counsel-framework
+
+# Install dependencies
 npm install
-npm run build
+
+# Run the setup script (creates directories, installs ChromaDB in venv)
+npm run setup
+```
+
+The setup script will:
+- Create `~/.counsel` directories
+- Set up a Python virtual environment at `~/.counsel/venv`
+- Install ChromaDB in the virtual environment (no system packages affected)
+- Copy/update slash commands to `~/.claude/commands/` (if Claude is installed)
+- Create ChromaDB startup scripts
+
+### 2. Make CLI Available Globally
+
+```bash
 npm link  # Makes 'counsel' command available globally
 ```
 
-### 2. Initialize Configuration
+### 3. Initialize Your Configuration
 
 ```bash
 counsel init
@@ -47,12 +72,13 @@ This will prompt for:
 - ChromaDB settings (optional)
 - Pattern extraction preferences
 
-### 3. Set Up Slash Commands
+### 4. Start ChromaDB (Optional)
 
-Copy the slash commands to your Claude commands directory:
 ```bash
-cp commands/*.md ~/.claude/commands/
+counsel chromadb start
 ```
+
+ChromaDB runs in a Python virtual environment, keeping your system Python clean.
 
 ## 📚 Core Concepts
 
@@ -128,13 +154,16 @@ All counsel work is stored at `~/.counsel/`:
 ```
 ~/.counsel/
 ├── config.json             # User configuration
+├── venv/                   # Python virtual environment for ChromaDB
+├── chromadb/               # ChromaDB data storage
+├── bin/                    # Executable scripts
 ├── features/               # Feature development work
-├── scripts/               # Automation scripts
-├── debug/                 # Debug sessions
-├── review/                # Review sessions
-├── vibe/                  # Exploratory work
-├── archive/               # Archived work
-└── knowledge/             # Extracted patterns
+├── scripts/                # Automation scripts
+├── debug/                  # Debug sessions
+├── review/                 # Review sessions
+├── vibe/                   # Exploratory work
+├── archive/                # Archived work
+└── knowledge/              # Extracted patterns
 ```
 
 ## 🤝 Contributing
@@ -143,12 +172,15 @@ All counsel work is stored at `~/.counsel/`:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/ammon-nakosi/counsel-framework.git
 cd counsel-framework
 
-# Install CLI dependencies
-cd cli
+# Install dependencies and run setup
 npm install
+npm run setup
+
+# Build the CLI
+cd cli
 npm run build
 
 # Run in development
