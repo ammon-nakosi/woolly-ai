@@ -274,13 +274,21 @@ ${this.venvPython} ${scriptPath}
   }
   
   async setupSlashCommands() {
-    const claudeCommandsDir = path.join(os.homedir(), '.claude', 'commands');
+    const claudeDir = path.join(os.homedir(), '.claude');
+    const claudeCommandsDir = path.join(claudeDir, 'commands');
     
-    if (!fs.existsSync(claudeCommandsDir)) {
-      console.log(chalk.yellow('\n⚠️  Claude commands directory not found'));
+    // Check if .claude exists
+    if (!fs.existsSync(claudeDir)) {
+      console.log(chalk.yellow('\n⚠️  Claude directory not found at ~/.claude'));
       console.log(chalk.gray('You can copy slash commands manually later:'));
       console.log(chalk.gray('  cp commands/*.md ~/.claude/commands/'));
       return;
+    }
+    
+    // Create commands directory if it doesn't exist
+    if (!fs.existsSync(claudeCommandsDir)) {
+      console.log(chalk.cyan('Creating Claude commands directory...'));
+      fs.mkdirSync(claudeCommandsDir, { recursive: true });
     }
     
     // Check if any counsel commands already exist
