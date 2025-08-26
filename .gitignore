@@ -11,6 +11,7 @@ build/
 *.js.map
 *.d.ts
 !cli/bin/counsel
+!scripts/*.js
 
 # TypeScript cache
 *.tsbuildinfo

@@ -11,6 +11,12 @@ import simpleGit from 'simple-git';
 
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
 
+interface ProjectInfo {
+  name: string;
+  path?: string;
+  gitRemote?: string;
+}
+
 export function registerAddCommands(program: Command) {
   program
     .command('add <mode> <name>')
@@ -41,7 +47,7 @@ export function registerAddCommands(program: Command) {
         }
         
         // Get project info if not provided
-        let projectInfo = options.project ? { name: options.project } : null;
+        let projectInfo: ProjectInfo | null = options.project ? { name: options.project } : null;
         if (!projectInfo) {
           const git = simpleGit();
           try {
