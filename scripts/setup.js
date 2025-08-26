@@ -31,9 +31,6 @@ class CounselSetup {
     // Setup slash commands for Claude
     await this.setupSlashCommands();
     
-    // Setup commands for Cursor IDE
-    await this.setupCursorCommands();
-    
     // Create CLI commands
     await this.createCLICommands();
     
@@ -41,9 +38,10 @@ class CounselSetup {
     console.log(chalk.cyan('Next steps:'));
     console.log('  1. Run ' + chalk.bold('counsel init') + ' to configure your settings');
     console.log('  2. Start ChromaDB: ' + chalk.bold('counsel chromadb start'));
-    console.log('  3. Create your first counsel work:');
-    console.log('     - In Claude: ' + chalk.bold('/counsel-create feature "your feature"'));
-    console.log('     - In Cursor: ' + chalk.bold('/counsel-create feature "your feature"') + ' (beta)');
+    console.log('  3. Set up AI assistant commands:');
+    console.log('     - Claude: Commands installed globally');
+    console.log('     - Cursor: Run ' + chalk.bold('counsel cursor init') + ' in your project');
+    console.log('  4. Create your first counsel work: ' + chalk.bold('/counsel-create feature "your feature"'));
     console.log('\nDocumentation: https://github.com/ammon-nakosi/counsel-framework');
   }
   
@@ -330,76 +328,6 @@ ${this.venvPython} ${scriptPath}
       spinner.succeed(`Copied ${copied} slash commands to Claude`);
     } else {
       console.log(chalk.gray('Skipped copying slash commands'));
-    }
-  }
-  
-  async setupCursorCommands() {
-    const cursorDir = path.join(os.homedir(), '.cursor');
-    const cursorCommandsDir = path.join(cursorDir, 'commands');
-    
-    // Check if .cursor exists
-    if (!fs.existsSync(cursorDir)) {
-      // Cursor not installed, skip silently
-      return;
-    }
-    
-    console.log(chalk.cyan('\n📝 Setting up Cursor IDE commands...'));
-    
-    // Create commands directory if it doesn't exist
-    if (!fs.existsSync(cursorCommandsDir)) {
-      console.log(chalk.cyan('Creating Cursor commands directory...'));
-      fs.mkdirSync(cursorCommandsDir, { recursive: true });
-    }
-    
-    // Check if any counsel commands already exist
-    const commandsDir = path.join(__dirname, '..', 'commands');
-    const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
-    const existingCommands = counselCommands.filter(file => 
-      fs.existsSync(path.join(cursorCommandsDir, file))
-    );
-    
-    let shouldCopy = true;
-    if (existingCommands.length > 0) {
-      const { overwrite } = await inquirer.prompt([
-        {
-          type: 'confirm',
-          name: 'overwrite',
-          message: `Found ${existingCommands.length} existing Counsel commands in Cursor. Overwrite with latest versions?`,
-          default: true
-        }
-      ]);
-      shouldCopy = overwrite;
-    }
-    
-    if (shouldCopy) {
-      const spinner = ora('Copying commands to Cursor...').start();
-      
-      let copied = 0;
-      for (const file of counselCommands) {
-        const src = path.join(commandsDir, file);
-        const dest = path.join(cursorCommandsDir, file);
-        
-        // Read the file and check if we need to adapt it for Cursor
-        let content = fs.readFileSync(src, 'utf-8');
-        
-        // For now, use the same content since Cursor's syntax isn't fully documented
-        // In the future, we might need to replace $ARGUMENTS with Cursor's variable
-        // Note: Adding a comment to indicate it's beta
-        if (!content.includes('Cursor compatibility')) {
-          content = `---
-# Note: Cursor commands are in beta. Syntax may change.
-# Original command from Counsel Framework
-` + content.substring(content.indexOf('---') + 3);
-        }
-        
-        fs.writeFileSync(dest, content);
-        copied++;
-      }
-      
-      spinner.succeed(`Copied ${copied} commands to Cursor`);
-      console.log(chalk.gray('  Commands available in Cursor by typing "/" in chat'));
-    } else {
-      console.log(chalk.gray('Skipped copying Cursor commands'));
     }
   }
   

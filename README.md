@@ -13,8 +13,8 @@ The Counsel Framework provides:
 - **Knowledge extraction** from completed work
 
 ### Supported AI Assistants
-- **Claude**: Full support via slash commands in `.claude/commands/`
-- **Cursor IDE**: Beta support via commands in `.cursor/commands/`
+- **Claude**: Full support via global slash commands in `~/.claude/commands/`
+- **Cursor IDE**: Beta support via project-level commands in `.cursor/commands/`
 
 ## 🏗️ Architecture
 
@@ -56,8 +56,8 @@ The setup script will:
 - Set up a Python virtual environment at `~/.counsel/venv`
 - Install ChromaDB in the virtual environment (no system packages affected)
 - Copy/update slash commands to `~/.claude/commands/` (if Claude is installed)
-- Copy/update commands to `~/.cursor/commands/` (if Cursor IDE is installed)
 - Create ChromaDB startup scripts
+- Note: Cursor commands are installed per-project (see below)
 
 ### 2. Make CLI Available Globally
 
@@ -123,10 +123,16 @@ counsel list --mode feature
 - Commands are fully supported
 
 **In Cursor IDE (Beta):**
-- Open the chat/composer in Cursor
-- Type `/` to see available commands
-- Select a counsel command
-- Note: Cursor commands are in beta, syntax may evolve
+1. Initialize commands in your project:
+   ```bash
+   counsel cursor init
+   ```
+2. Restart Cursor IDE
+3. Open the chat/composer (Cmd/Ctrl + L)
+4. Type `/` to see available commands
+5. To update commands: `counsel cursor update`
+
+Note: Cursor requires project-level commands (stored in `.cursor/commands/`)
 
 ## 🔧 CLI Commands
 
@@ -136,6 +142,10 @@ counsel list --mode feature
 - `counsel list` - List counsel work
 - `counsel status <name>` - Get detailed status
 - `counsel search <query>` - Semantic search
+
+### Cursor IDE Integration
+- `counsel cursor init` - Install Counsel commands in current project
+- `counsel cursor update` - Update commands to latest version
 
 ### Linear Integration
 - `counsel linear` - List your tickets

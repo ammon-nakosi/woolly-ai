@@ -38,3 +38,5 @@ coverage/
 # Temporary files
 tmp/
 temp/
+# Counsel Framework - Cursor IDE commands (project-specific)
+.cursor/commands/
