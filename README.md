@@ -6,11 +6,15 @@ A comprehensive framework for structured development workflows, combining AI-ass
 
 The Counsel Framework provides:
 - **Structured workflows** for features, scripts, debugging, reviews, and exploratory work
-- **AI-powered slash commands** for Claude sessions with guided workflows
+- **AI-powered slash commands** for Claude and Cursor IDE with guided workflows
 - **CLI tool** for programmatic access and automation
 - **Semantic search** via ChromaDB integration
 - **Linear integration** for ticket management
 - **Knowledge extraction** from completed work
+
+### Supported AI Assistants
+- **Claude**: Full support via slash commands in `.claude/commands/`
+- **Cursor IDE**: Beta support via commands in `.cursor/commands/`
 
 ## 🏗️ Architecture
 
@@ -52,6 +56,7 @@ The setup script will:
 - Set up a Python virtual environment at `~/.counsel/venv`
 - Install ChromaDB in the virtual environment (no system packages affected)
 - Copy/update slash commands to `~/.claude/commands/` (if Claude is installed)
+- Copy/update commands to `~/.cursor/commands/` (if Cursor IDE is installed)
 - Create ChromaDB startup scripts
 
 ### 2. Make CLI Available Globally
@@ -97,7 +102,7 @@ The framework supports five distinct modes:
 ### Workflow Example
 
 ```bash
-# Create new feature work (via slash command in Claude)
+# Create new feature work (via slash command in Claude or Cursor)
 /counsel-create feature "add user authentication"
 
 # Check status
@@ -109,6 +114,19 @@ counsel search "authentication patterns"
 # List all features
 counsel list --mode feature
 ```
+
+### Using Commands in AI Assistants
+
+**In Claude:**
+- Type `/` in any Claude session
+- Select a counsel command from the dropdown
+- Commands are fully supported
+
+**In Cursor IDE (Beta):**
+- Open the chat/composer in Cursor
+- Type `/` to see available commands
+- Select a counsel command
+- Note: Cursor commands are in beta, syntax may evolve
 
 ## 🔧 CLI Commands
 
