@@ -10,6 +10,7 @@ import { registerListCommands } from './commands/list';
 import { registerSearchCommands } from './commands/search';
 import { registerStatusCommands } from './commands/status';
 import { registerCursorCommands } from './commands/cursor';
+import { registerGitCommands } from './commands/git';
 
 const program = new Command();
 
@@ -38,6 +39,7 @@ async function main() {
   registerSearchCommands(program);
   registerStatusCommands(program);
   registerCursorCommands(program);
+  registerGitCommands(program);
 
   // Global options
   program

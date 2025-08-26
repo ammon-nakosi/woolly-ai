@@ -8,6 +8,7 @@ The Counsel Framework provides:
 - **Structured workflows** for features, scripts, debugging, reviews, and exploratory work
 - **AI-powered slash commands** for Claude and Cursor IDE with guided workflows
 - **CLI tool** for programmatic access and automation
+- **Git integration** for backup and sync across machines
 - **Semantic search** via ChromaDB integration
 - **Linear integration** for ticket management
 - **Knowledge extraction** from completed work
@@ -85,6 +86,28 @@ counsel chromadb start
 
 ChromaDB runs in a Python virtual environment, keeping your system Python clean.
 
+### 5. Set Up Git Backup/Sync (Optional but Recommended)
+
+Enable version control and sync across machines:
+
+```bash
+# During initial setup
+counsel init  # Will prompt about git initialization
+
+# Or manually later
+counsel git init
+counsel git remote git@github.com:yourusername/counsel-backup.git
+
+# Sync your work
+counsel git sync
+```
+
+Your counsel work in `~/.counsel/` can now be:
+- Backed up to GitHub/GitLab/etc
+- Synced across multiple machines
+- Versioned with full history
+- Shared with team members (optional)
+
 ## 📚 Core Concepts
 
 ### Counsel Modes
@@ -137,11 +160,17 @@ Note: Cursor requires project-level commands (stored in `.cursor/commands/`)
 ## 🔧 CLI Commands
 
 ### Core Commands
-- `counsel init` - Initialize configuration
+- `counsel init` - Initialize configuration (includes optional git setup)
 - `counsel add <mode> <name>` - Add existing work to index
 - `counsel list` - List counsel work
 - `counsel status <name>` - Get detailed status
 - `counsel search <query>` - Semantic search
+
+### Git Integration (New!)
+- `counsel git init` - Initialize git repository for counsel work
+- `counsel git status` - Show git status of counsel work
+- `counsel git sync` - Pull and push changes (backup/sync)
+- `counsel git remote <url>` - Configure remote repository
 
 ### Cursor IDE Integration
 - `counsel cursor init` - Install Counsel commands in current project
@@ -181,18 +210,22 @@ All counsel work is stored at `~/.counsel/`:
 
 ```
 ~/.counsel/
+├── .git/                   # Git repository (if initialized)
+├── .gitignore              # Controls what gets synced
 ├── config.json             # User configuration
-├── venv/                   # Python virtual environment for ChromaDB
-├── chromadb/               # ChromaDB data storage
+├── venv/                   # Python virtual environment (not synced)
+├── chromadb/               # ChromaDB data (not synced)
 ├── bin/                    # Executable scripts
-├── features/               # Feature development work
-├── scripts/                # Automation scripts
-├── debug/                  # Debug sessions
-├── review/                 # Review sessions
-├── vibe/                   # Exploratory work
-├── archive/                # Archived work
-└── knowledge/              # Extracted patterns
+├── features/               # Feature work (synced)
+├── scripts/                # Automation scripts (synced)
+├── debug/                  # Debug sessions (synced)
+├── review/                 # Review sessions (synced)
+├── vibe/                   # Exploratory work (synced)
+├── archive/                # Archived work (synced)
+└── knowledge/              # Extracted patterns (synced)
 ```
+
+**Git Sync:** By default, your counsel work (features, scripts, etc.) is synced while large/regenerable files (venv, chromadb) are excluded.
 
 ## 🤝 Contributing
 
