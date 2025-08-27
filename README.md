@@ -1,4 +1,4 @@
-# Counsel Framework
+# Counsel AI
 
 A comprehensive framework for structured development workflows, combining AI-assisted slash commands with a powerful CLI for project management and knowledge extraction.
 
