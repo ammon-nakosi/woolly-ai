@@ -4,8 +4,7 @@ import ora from 'ora';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
-import { v4 as uuidv4 } from 'uuid';
-import { getChromaClient } from '../services/chromadb-client';
+import { indexCounselWork } from '../services/chromadb-client';
 import { CounselMode } from '../types';
 import simpleGit from 'simple-git';
 
@@ -88,48 +87,25 @@ export function registerAddCommands(program: Command) {
           description = `${mode} work: ${name}`;
         }
         
-        // Add to ChromaDB
-        spinner.text = 'Indexing in ChromaDB...';
-        const client = await getChromaClient();
-        const collection = await client.getOrCreateCollection({
-          name: 'counsel_items'
-        });
+        // Index existing markdown files in the counsel work
+        spinner.text = 'Indexing counsel work in ChromaDB...';
+        const indexResult = await indexCounselWork(
+          counselPath,
+          name,
+          mode as CounselMode
+        );
         
-        const id = uuidv4();
-        const timestamp = new Date().toISOString();
+        spinner.succeed(`Indexed ${indexResult.filesIndexed} files for ${mode} '${name}'`);
         
-        // Read any plan-status.json if it exists
-        let planStatus = null;
-        try {
-          const statusPath = path.join(counselPath, 'plan-approved.plan-status.json');
-          const statusContent = await fs.readFile(statusPath, 'utf-8');
-          planStatus = JSON.parse(statusContent);
-        } catch {
-          // No status file, that's okay
+        if (indexResult.skipped > 0) {
+          console.log(chalk.gray(`\nSkipped ${indexResult.skipped} non-markdown files`));
+        }
+        if (indexResult.errors.length > 0) {
+          console.log(chalk.yellow('\nSome files could not be indexed:'));
+          indexResult.errors.forEach(err => console.log(`  - ${err}`));
         }
         
-        await collection.add({
-          ids: [id],
-          documents: [description],
-          metadatas: [{
-            id,
-            type: 'counsel_item',
-            mode,
-            name,
-            path: counselPath,
-            project: projectInfo,
-            status: options.status || 'planned',
-            planStatus: planStatus ? JSON.stringify(planStatus) : null,
-            created: timestamp,
-            updated: timestamp,
-            lastWorked: timestamp
-          }]
-        });
-        
-        spinner.succeed(`Added ${mode} '${name}' to counsel index`);
-        
-        console.log(chalk.gray(`\nID: ${id}`));
-        console.log(chalk.gray(`Path: ${counselPath}`));
+        console.log(chalk.gray(`\nPath: ${counselPath}`));
         console.log(chalk.gray(`Status: ${options.status || 'planned'}`));
         
         console.log(chalk.cyan('\nNext steps:'));

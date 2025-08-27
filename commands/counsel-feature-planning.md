@@ -15,7 +15,15 @@ You will first layout the high level plan. Once we agree on this high level plan
 
 You will then create a detailed plan for each phase. Assign a phase to each sub agent and make sure they do deep research and deep thinking to create a detailed plan that will be simple, thorough, and elegant. These sub agents should run in parallel. Each of these sub agents will store the respective plan in plan-approved.phase-[n].md. Each sub agent should not make mention of the actual phase number in the md file itself, because if there are any changes to the phase order, it's easier if we don't have to come through the file and change the phase numbers. Make sure the sub agents give it their all. Each phase document should include a high level checklist at the top. This will later be used to create a json out of these checklists.
 
-Once this is complete, you will then move on to creating a json file that stores the status. You will take the checklist from each of the plan-approved.phase-[n].md files and create a plan-approved.plan-status.json. Each phase should have a status and each phase task should also have a status. The possible statuses are "to-do", "doing", "done", "skipped", "canceled". It should look similar to this:
+Once this is complete, you will then move on to creating a json file that stores the status. You will take the checklist from each of the plan-approved.phase-[n].md files and create a plan-approved.plan-status.json. Each phase should have a status and each phase task should also have a status. The possible statuses are "to-do", "doing", "done", "skipped", "canceled". 
+
+After creating all planning documents and the status JSON, index the feature for search:
+```bash
+counsel index --name [feature-name]
+```
+Note: Only markdown files are indexed; JSON files are automatically skipped.
+
+It should look similar to this:
 
 ```json
 {

@@ -23,3 +23,11 @@ You must thoroughly review the codebase for pertinent parts. You don't necessari
 Once you are done completing a step of the phase, explicitly ask before updating the plan-phases.json
 
 Do not mark phases as completed until I tell you to, but you can mark phase tasks as completed.
+
+## Indexing Note
+
+After implementing significant changes or creating new documentation files (like implementation.md or notes.md), update the search index:
+```bash
+counsel index --name [feature-name] --modified
+```
+This ensures new documentation is searchable. Status JSON updates do not require re-indexing.

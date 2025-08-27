@@ -9,4 +9,9 @@ Parse the argument as the feature name from $ARGUMENTS. If no feature name is pr
 
 The requirements document will be stored at @.features/[feature-name]/requirements.md. If the .features directory or the feature subdirectory doesn't exist yet, create them as needed.
 
+After saving the requirements document, index it for search:
+```bash
+counsel index --name [feature-name] --file requirements.md
+```
+
 Now help me put together requirements for this:

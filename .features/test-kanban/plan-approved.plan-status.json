@@ -1,0 +1,129 @@
+{
+  "project": {
+    "name": "Test Kanban Feature",
+    "description": "Testing the interactive kanban functionality",
+    "totalPhases": 3,
+    "createdAt": "2025-01-26T10:00:00Z",
+    "lastUpdated": "2025-01-26T12:00:00Z"
+  },
+  "phases": [
+    {
+      "phaseNumber": 1,
+      "title": "Setup and Planning",
+      "status": "completed",
+      "description": "Initial setup and project planning phase",
+      "duration": "2 days",
+      "checklist": [
+        {
+          "id": "setup-1",
+          "category": "Infrastructure",
+          "description": "Set up project repository and basic structure",
+          "status": "completed",
+          "priority": "high"
+        },
+        {
+          "id": "setup-2",
+          "category": "Planning",
+          "description": "Create detailed project requirements document",
+          "status": "completed",
+          "priority": "medium"
+        },
+        {
+          "id": "setup-3",
+          "category": "Design",
+          "description": "Design system architecture and component structure",
+          "status": "completed",
+          "priority": "high"
+        }
+      ]
+    },
+    {
+      "phaseNumber": 2,
+      "title": "Core Development",
+      "status": "in-progress",
+      "description": "Implement core kanban functionality",
+      "duration": "5 days",
+      "checklist": [
+        {
+          "id": "dev-1",
+          "category": "Frontend",
+          "description": "Create interactive kanban board component",
+          "status": "completed",
+          "priority": "high"
+        },
+        {
+          "id": "dev-2",
+          "category": "Frontend",
+          "description": "Implement drag and drop functionality",
+          "status": "in-progress",
+          "priority": "high"
+        },
+        {
+          "id": "dev-3",
+          "category": "Frontend",
+          "description": "Add inline editing for task descriptions",
+          "status": "to-do",
+          "priority": "medium"
+        },
+        {
+          "id": "dev-4",
+          "category": "Backend",
+          "description": "Create API endpoints for saving changes",
+          "status": "in-progress",
+          "priority": "high"
+        },
+        {
+          "id": "dev-5",
+          "category": "Backend",
+          "description": "Implement data persistence to JSON files",
+          "status": "to-do",
+          "priority": "medium"
+        },
+        {
+          "id": "dev-6",
+          "category": "Testing",
+          "description": "Write unit tests for kanban components",
+          "status": "blocked",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "phaseNumber": 3,
+      "title": "Polish and Testing",
+      "status": "to-do",
+      "description": "Final testing and user experience improvements",
+      "duration": "3 days",
+      "checklist": [
+        {
+          "id": "polish-1",
+          "category": "UX",
+          "description": "Improve visual feedback for drag operations",
+          "status": "to-do",
+          "priority": "medium"
+        },
+        {
+          "id": "polish-2",
+          "category": "UX",
+          "description": "Add keyboard shortcuts for common actions",
+          "status": "to-do",
+          "priority": "low"
+        },
+        {
+          "id": "polish-3",
+          "category": "Testing",
+          "description": "Perform end-to-end testing of all functionality",
+          "status": "to-do",
+          "priority": "high"
+        },
+        {
+          "id": "polish-4",
+          "category": "Documentation",
+          "description": "Update user documentation with new features",
+          "status": "to-do",
+          "priority": "medium"
+        }
+      ]
+    }
+  ]
+}

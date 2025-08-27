@@ -44,13 +44,12 @@ export function registerStatusCommands(program: Command) {
         try {
           const client = await getChromaClient();
           const collection = await client.getOrCreateCollection({
-            name: 'counsel_items'
+            name: 'counsel_documents'
           });
           
           const results = await collection.get({
             where: {
-              type: 'counsel_item',
-              name: name
+              counselWork: name
             },
             limit: 1
           });
@@ -238,7 +237,7 @@ export function registerStatusCommands(program: Command) {
         
         // Next actions
         console.log(chalk.cyan('\n💡 Actions:'));
-        console.log(`  • Update status: /counsel-update-status ${name}`);
+        console.log(`  • Update status: /counsel-status-update ${name}`);
         console.log(`  • Export knowledge: counsel export knowledge ${name}`);
         console.log(`  • Archive: counsel export archive ${name}`);
         if (metadata?.project?.name) {

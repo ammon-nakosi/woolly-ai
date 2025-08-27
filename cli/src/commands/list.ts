@@ -18,21 +18,22 @@ export function registerListCommands(program: Command) {
     .option('-r, --recent', 'Sort by recently updated')
     .option('-p, --project <project>', 'Filter by project name')
     .option('--json', 'Output as JSON')
-    .option('--local', 'List from local filesystem instead of ChromaDB')
+    .option('--chroma', 'List from ChromaDB instead of local filesystem')
     .action(async (options) => {
       const spinner = ora('Fetching counsel work...').start();
       
       try {
         let items = [];
         
-        if (options.local) {
-          // List from filesystem
+        // Default to local filesystem since ChromaDB isn't fully implemented
+        if (options.chroma) {
+          // List from ChromaDB (only if explicitly requested)
+          items = await listFromChromaDB(options);
+          spinner.succeed(`Found ${items.length} counsel items (ChromaDB)`);
+        } else {
+          // List from filesystem (default)
           items = await listFromFilesystem(options);
           spinner.succeed(`Found ${items.length} counsel items (local)`);
-        } else {
-          // List from ChromaDB
-          items = await listFromChromaDB(options);
-          spinner.succeed(`Found ${items.length} counsel items`);
         }
         
         if (items.length === 0) {
@@ -175,7 +176,9 @@ async function listFromFilesystem(options: any) {
   const modes: CounselMode[] = options.mode ? [options.mode] : ['feature', 'script', 'debug', 'review', 'vibe'];
   
   for (const mode of modes) {
-    const modePath = path.join(COUNSEL_BASE, `${mode}s`);
+    // All directories use plural form
+    const dirName = `${mode}s`;
+    const modePath = path.join(COUNSEL_BASE, dirName);
     
     try {
       const dirs = await fs.readdir(modePath);

@@ -11,6 +11,9 @@ import { registerSearchCommands } from './commands/search';
 import { registerStatusCommands } from './commands/status';
 import { registerCursorCommands } from './commands/cursor';
 import { registerGitCommands } from './commands/git';
+import { registerIndexCommands } from './commands/index';
+import { registerChromaDBCommands } from './commands/chromadb';
+import { registerOpenCommands } from './commands/open';
 
 const program = new Command();
 
@@ -34,8 +37,11 @@ async function main() {
   // Register command groups
   registerInitCommands(program);
   registerAddCommands(program);
+  registerChromaDBCommands(program);
+  registerIndexCommands(program);
   registerLinearCommands(program);
   registerListCommands(program);
+  registerOpenCommands(program);
   registerSearchCommands(program);
   registerStatusCommands(program);
   registerCursorCommands(program);

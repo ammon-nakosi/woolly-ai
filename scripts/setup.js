@@ -63,10 +63,10 @@ class CounselSetup {
       COUNSEL_DIR,
       path.join(COUNSEL_DIR, 'features'),
       path.join(COUNSEL_DIR, 'scripts'),
-      path.join(COUNSEL_DIR, 'debug'),
-      path.join(COUNSEL_DIR, 'review'),
-      path.join(COUNSEL_DIR, 'vibe'),
-      path.join(COUNSEL_DIR, 'archive'),
+      path.join(COUNSEL_DIR, 'debugs'),
+      path.join(COUNSEL_DIR, 'reviews'),
+      path.join(COUNSEL_DIR, 'vibes'),
+      path.join(COUNSEL_DIR, 'archives'),
       path.join(COUNSEL_DIR, 'knowledge'),
       path.join(COUNSEL_DIR, 'chromadb'),
       path.join(COUNSEL_DIR, 'bin')
@@ -294,28 +294,66 @@ ${this.venvPython} ${scriptPath}
       fs.mkdirSync(claudeCommandsDir, { recursive: true });
     }
     
-    // Check if any counsel commands already exist
-    const commandsDir = path.join(__dirname, '..', 'commands');
-    const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
-    const existingCommands = counselCommands.filter(file => 
-      fs.existsSync(path.join(claudeCommandsDir, file))
-    );
+    // Check for existing counsel commands in Claude's commands directory
+    const existingFiles = fs.existsSync(claudeCommandsDir) 
+      ? fs.readdirSync(claudeCommandsDir).filter(f => f.startsWith('counsel-'))
+      : [];
     
-    let shouldCopy = true;
-    if (existingCommands.length > 0) {
+    if (existingFiles.length > 0) {
+      // Found existing counsel commands, ask to overwrite
+      const customCommands = existingFiles.filter(f => f.includes('-custom'));
+      const standardCommands = existingFiles.filter(f => !f.includes('-custom'));
+      
+      console.log(chalk.yellow(`\nFound ${existingFiles.length} existing counsel commands:`));
+      if (standardCommands.length > 0) {
+        console.log(chalk.gray(`  - ${standardCommands.length} standard commands`));
+      }
+      if (customCommands.length > 0) {
+        console.log(chalk.cyan(`  - ${customCommands.length} custom commands (will be preserved)`));
+      }
+      
       const { overwrite } = await inquirer.prompt([
         {
           type: 'confirm',
           name: 'overwrite',
-          message: `Found ${existingCommands.length} existing Counsel slash commands. Overwrite with latest versions?`,
+          message: 'Update counsel commands? (custom commands will be preserved)',
           default: true
         }
       ]);
-      shouldCopy = overwrite;
-    }
-    
-    if (shouldCopy) {
-      const spinner = ora('Copying slash commands...').start();
+      
+      if (overwrite) {
+        const spinner = ora('Updating counsel commands...').start();
+        
+        // Remove all counsel- commands that don't have -custom in the name
+        let removed = 0;
+        for (const file of standardCommands) {
+          const filePath = path.join(claudeCommandsDir, file);
+          fs.unlinkSync(filePath);
+          removed++;
+        }
+        
+        // Copy all new counsel commands from the commands directory
+        const commandsDir = path.join(__dirname, '..', 'commands');
+        const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
+        
+        let copied = 0;
+        for (const file of counselCommands) {
+          const src = path.join(commandsDir, file);
+          const dest = path.join(claudeCommandsDir, file);
+          fs.copyFileSync(src, dest);
+          copied++;
+        }
+        
+        spinner.succeed(`Updated counsel commands (removed ${removed}, added ${copied}, preserved ${customCommands.length} custom)`);
+      } else {
+        console.log(chalk.gray('Skipped updating counsel commands'));
+      }
+    } else {
+      // No existing counsel commands, just copy them all
+      const spinner = ora('Installing counsel slash commands...').start();
+      
+      const commandsDir = path.join(__dirname, '..', 'commands');
+      const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
       
       let copied = 0;
       for (const file of counselCommands) {
@@ -325,9 +363,7 @@ ${this.venvPython} ${scriptPath}
         copied++;
       }
       
-      spinner.succeed(`Copied ${copied} slash commands to Claude`);
-    } else {
-      console.log(chalk.gray('Skipped copying slash commands'));
+      spinner.succeed(`Installed ${copied} counsel slash commands`);
     }
   }
   

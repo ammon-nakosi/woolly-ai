@@ -113,7 +113,7 @@ Examples:
 
 ## Feature Mode Workflow
 
-### 1. Requirements Gathering (`/counsel-requirements`)
+### 1. Requirements Gathering (`/counsel-feature-requirements`)
 **Purpose**: Define what needs to be built
 
 - Captures feature requirements from stakeholder input
@@ -122,7 +122,7 @@ Examples:
 - Creates structured requirements document
 - **Output**: `requirements.md` with clear feature specification
 
-### 2. Discovery & Scoping (`/counsel-discovery`)
+### 2. Discovery & Scoping (`/counsel-feature-discovery`)
 **Purpose**: Understand technical implications and complexity
 
 - Reviews requirements and existing codebase thoroughly
@@ -132,7 +132,7 @@ Examples:
 - Asks critical questions about implementation approach
 - **Output**: `discovery_{model_name}.md` with technical analysis
 
-### 3. Planning (`/counsel-planning`)
+### 3. Planning (`/counsel-feature-planning`)
 **Purpose**: Create detailed implementation roadmap
 
 **Phase 1: High-Level Planning**
@@ -152,7 +152,7 @@ Examples:
 - Creates JSON structure for progress tracking
 - **Output**: `plan-approved.plan-status.json`
 
-### 4. Implementation (`/counsel-implement-phase`)
+### 4. Implementation (`/counsel-feature-implement`)
 **Purpose**: Execute the planned work
 
 - Implements specific phase following approved plan
@@ -165,7 +165,7 @@ Examples:
 
 ### 5. Status Management
 
-#### Quick Status Check (`/counsel-get-status-light`)
+#### Quick Status Check (`/counsel-status-light`)
 **Purpose**: Fast overview from JSON only
 
 - Reads plan-status.json without verification
@@ -174,7 +174,7 @@ Examples:
 - No codebase validation
 - **Speed**: Instant response
 
-#### Full Status Verification (`/counsel-get-status`)
+#### Full Status Verification (`/counsel-status`)
 **Purpose**: Comprehensive status with validation
 
 - Launches subagent for deep investigation
@@ -183,7 +183,7 @@ Examples:
 - Provides detailed progress report
 - **Accuracy**: Validates against actual code
 
-#### Status Update (`/counsel-update-status`)
+#### Status Update (`/counsel-status-update`)
 **Purpose**: Synchronize status with reality
 
 - Launches subagent to scan entire codebase
@@ -311,7 +311,7 @@ Where mode is one of:
 
 Load context for any existing work:
 ```bash
-/counsel-ramp-up [name]
+/counsel-resume [name]
 ```
 
 This will:
@@ -328,19 +328,19 @@ This will:
 # → Creates .features/dark-mode/
 
 # Gather requirements
-/counsel-requirements dark-mode
+/counsel-feature-requirements dark-mode
 
 # Technical discovery
-/counsel-discovery dark-mode
+/counsel-feature-discovery dark-mode
 
 # Create implementation plan
-/counsel-planning dark-mode
+/counsel-feature-planning dark-mode
 
 # Implement Phase 1
-/counsel-implement-phase dark-mode 1
+/counsel-feature-implement dark-mode 1
 
 # Check status anytime
-/counsel-get-status dark-mode
+/counsel-status dark-mode
 ```
 
 ### Quick Script Example

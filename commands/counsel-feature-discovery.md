@@ -21,3 +21,8 @@ Read the @.features/[feature-name]/requirements.md file thoroughly and any other
 Your job is to thoroughly scope out the project. Ultimately you have to provide a discovery document to help the requester understand all the information involved, and any nuances or facts that you think they should know. Ask as many questions as you need to understand the problem, and give as much pertinent information to the requester as you can so that the implementation is as seamless as possible. The last thing you want is for the project to get implemented a certain way and later you find a fatal flaw in the implementation, or later you discover that they didn't control for certain problems. You will not code, you will only scope.
 
 Save the discovery document to @.features/[feature-name]/discovery_[model_name].md where [model_name] is your model identifier (e.g., discovery_claude-opus-4-1-20250805.md) once you think you have enough information to create it.
+
+After saving the discovery document, index it for search:
+```bash
+counsel index --name [feature-name] --file "discovery_*.md"
+```

@@ -63,7 +63,7 @@ Before creating new work:
 2. If high similarity (>80%) found, suggest continuing existing work instead
 3. Show user the similar work and ask for confirmation
 
-### In `/counsel-get-status`
+### In `/counsel-status`
 
 Can augment with:
 ```bash
@@ -71,7 +71,7 @@ counsel status <name> --json
 ```
 Then perform deeper codebase verification on top of the CLI data
 
-### In `/counsel-ramp-up`
+### In `/counsel-resume`
 
 Start with:
 ```bash

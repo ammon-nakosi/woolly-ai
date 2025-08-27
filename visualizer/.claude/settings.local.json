@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/Users/Personal/counsel-framework/cli/scripts/**)",
+      "Read(/Users/Personal/counsel-framework/cli/src/commands/**)",
+      "Bash(counsel chromadb start:*)",
+      "Bash(curl:*)",
+      "Bash(counsel chromadb:*)",
+      "Read(/Users/Personal/.counsel/bin/**)",
+      "Bash(~/.counsel/venv/bin/python -m chromadb.cli.cli --help)",
+      "Bash(~/.counsel/venv/bin/chroma --help)",
+      "Bash(counsel search:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "/Users/Personal/counsel-framework"
+    ]
+  }
+}

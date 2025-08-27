@@ -100,7 +100,7 @@ The Counsel Framework will guide you through:
 4. Phased development
 
 Next step: Let's define the requirements
-Run: /counsel-requirements [name]
+Run: /counsel-feature-requirements [name]
 
 💡 CLI Tips:
   • Check status anytime: counsel status [name]

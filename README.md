@@ -78,13 +78,34 @@ This will prompt for:
 - ChromaDB settings (optional)
 - Pattern extraction preferences
 
-### 4. Start ChromaDB (Optional)
+### 4. Start ChromaDB (Optional but Recommended)
+
+ChromaDB enables semantic search across all your counsel work. Start it using Docker:
 
 ```bash
-counsel chromadb start
+# Using the provided script
+./cli/scripts/start-chromadb.sh
+
+# Or manually with Docker
+docker run -d \
+  --name chromadb \
+  -p 8000:8000 \
+  -v ~/.counsel/chromadb:/chroma/chroma \
+  chromadb/chroma:latest
 ```
 
-ChromaDB runs in a Python virtual environment, keeping your system Python clean.
+Once ChromaDB is running, index your existing counsel work:
+
+```bash
+# Index all counsel work
+counsel index --all
+
+# Index specific mode
+counsel index --mode feature
+
+# Index specific work
+counsel index --name user-auth
+```
 
 ### 5. Set Up Git Backup/Sync (Optional but Recommended)
 

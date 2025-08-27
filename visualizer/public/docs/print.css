@@ -1,0 +1,178 @@
+/* Print-specific styles for documentation */
+@media print {
+  /* Hide non-essential elements */
+  nav,
+  .search-box,
+  .back-to-top,
+  .navigation-sidebar,
+  .toc-mobile-toggle,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: black !important;
+    background: white !important;
+  }
+
+  /* Main content adjustments */
+  main {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Typography for print */
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 12pt;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 24pt;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 16pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+  }
+
+  h4, h5, h6 {
+    font-size: 12pt;
+    margin-top: 12pt;
+    margin-bottom: 4pt;
+    page-break-after: avoid;
+  }
+
+  /* Paragraph spacing */
+  p {
+    margin-bottom: 8pt;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Code blocks */
+  pre, code {
+    font-family: 'Courier New', monospace;
+    font-size: 10pt;
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd;
+    padding: 4pt;
+    page-break-inside: avoid;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Lists */
+  ul, ol {
+    margin-bottom: 8pt;
+    padding-left: 20pt;
+  }
+
+  li {
+    margin-bottom: 2pt;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 4pt 8pt;
+    text-align: left;
+  }
+
+  th {
+    background: #f5f5f5 !important;
+    font-weight: bold;
+  }
+
+  /* Links */
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  /* Show URLs for external links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  .no-page-break {
+    page-break-inside: avoid;
+  }
+
+  /* Header for each page */
+  @page {
+    margin: 1in;
+    @top-center {
+      content: "Counsel Framework Documentation";
+      font-size: 10pt;
+      color: #666;
+    }
+    @bottom-center {
+      content: counter(page);
+      font-size: 10pt;
+      color: #666;
+    }
+  }
+
+  /* First page header */
+  @page :first {
+    @top-center {
+      content: none;
+    }
+  }
+
+  /* Ensure good contrast */
+  * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Badge styles for print */
+  .badge {
+    border: 1px solid #ddd !important;
+    background: white !important;
+    color: black !important;
+    padding: 2pt 4pt;
+    font-size: 9pt;
+  }
+
+  /* Section spacing */
+  section {
+    margin-bottom: 24pt;
+  }
+
+  /* Avoid breaking inside important blocks */
+  .doc-section,
+  .code-block,
+  .example-block {
+    page-break-inside: avoid;
+  }
+}

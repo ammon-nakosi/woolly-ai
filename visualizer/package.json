@@ -1,0 +1,40 @@
+{
+  "name": "visualizer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3555",
+    "build": "next build",
+    "start": "next start -p 3555",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@mdxeditor/editor": "^3.42.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/prismjs": "^1.26.5",
+    "@uiw/react-md-editor": "^4.0.8",
+    "fuse.js": "^7.1.0",
+    "next": "15.5.1",
+    "prismjs": "^1.30.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.6.6",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
