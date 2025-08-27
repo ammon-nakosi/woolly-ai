@@ -87,7 +87,7 @@ export function registerInitCommands(program: Command) {
               type: 'input',
               name: 'port',
               message: 'ChromaDB port:',
-              default: existingConfig?.chromadb?.port || '8000'
+              default: existingConfig?.chromadb?.port || '8090'
             }
           ]);
           
@@ -140,7 +140,7 @@ export function registerInitCommands(program: Command) {
         
         // Create directory structure
         spinner.text = 'Creating counsel directories...';
-        const directories = ['features', 'scripts', 'debug', 'review', 'vibe', 'archive', 'knowledge'];
+        const directories = ['features', 'scripts', 'debugs', 'reviews', 'vibes', 'archives', 'knowledge'];
         for (const dir of directories) {
           await fs.mkdir(path.join(COUNSEL_BASE, dir), { recursive: true });
         }
@@ -279,8 +279,8 @@ cli/
 # config.json
 
 # Optional: Uncomment to exclude specific counsel modes
-# debug/
-# vibe/
+# debugs/
+# vibes/
 `;
   
   await fs.writeFile(gitignorePath, content);

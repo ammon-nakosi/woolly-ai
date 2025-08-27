@@ -129,37 +129,57 @@ async function searchCounselWork(
 ): Promise<any[]> {
   const client = await getChromaClient();
   const collection = await client.getOrCreateCollection({
-    name: 'counsel_items'
+    name: 'counsel_documents'
   });
   
-  // Build where clause
-  const where: any = { type: 'counsel_item' };
+  // Build where clause - only include if we have conditions
+  const queryOptions: any = {
+    queryTexts: [query],
+    nResults: (options.limit || 10) * 2 // Get more results to account for chunking
+  };
+  
   if (options.mode) {
-    where.mode = options.mode;
+    queryOptions.where = { counselMode: options.mode };
   }
   
   // Perform semantic search
-  const results = await collection.query({
-    queryTexts: [query],
-    nResults: options.limit || 10,
-    where
-  });
+  const results = await collection.query(queryOptions);
   
   // Filter by threshold and format results
   const formattedResults = [];
+  const seenWork = new Set(); // Deduplicate by counsel work
+  
   for (let i = 0; i < results.ids[0].length; i++) {
     const distance = results.distances?.[0][i] || 0;
     const similarity = 1 - distance; // Convert distance to similarity
+    const metadata = results.metadatas[0][i] as any;
     
     if (similarity >= (options.threshold || 0.7)) {
-      formattedResults.push({
-        id: results.ids[0][i],
-        similarity,
-        document: results.documents[0][i],
-        metadata: results.metadatas[0][i]
-      });
+      const workKey = `${metadata.counselMode}_${metadata.counselWork}`;
+      
+      // Only include the best match per counsel work
+      if (!seenWork.has(workKey)) {
+        seenWork.add(workKey);
+        
+        // Apply semantic weight boost
+        const weight = metadata.semanticWeight || 1;
+        const boostedSimilarity = similarity * (1 + weight / 20);
+        
+        formattedResults.push({
+          id: results.ids[0][i],
+          similarity: boostedSimilarity,
+          document: results.documents[0][i],
+          metadata: {
+            ...metadata,
+            mode: metadata.counselMode,
+            name: metadata.counselWork
+          }
+        });
+      }
     }
   }
   
-  return formattedResults;
+  // Sort by boosted similarity and limit
+  formattedResults.sort((a, b) => b.similarity - a.similarity);
+  return formattedResults.slice(0, options.limit || 10);
 }
