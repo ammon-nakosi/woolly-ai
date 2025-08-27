@@ -34,6 +34,9 @@ class CounselSetup {
     // Create CLI commands
     await this.createCLICommands();
     
+    // Install visualizer dependencies
+    await this.installVisualizerDependencies();
+    
     console.log(chalk.green('\n✅ Counsel Framework setup complete!\n'));
     console.log(chalk.cyan('Next steps:'));
     console.log('  1. Run ' + chalk.bold('counsel init') + ' to configure your settings');
@@ -399,6 +402,40 @@ if (command === 'start') {
     const chromadbCmdPath = path.join(__dirname, '..', 'cli', 'bin', 'counsel-chromadb');
     fs.writeFileSync(chromadbCmdPath, chromadbCommand);
     fs.chmodSync(chromadbCmdPath, '755');
+  }
+  
+  async installVisualizerDependencies() {
+    const visualizerPath = path.join(__dirname, '..', 'visualizer');
+    
+    // Check if visualizer directory exists
+    if (!fs.existsSync(visualizerPath)) {
+      console.log(chalk.yellow('⚠️  Visualizer directory not found, skipping dependency installation'));
+      return;
+    }
+    
+    const spinner = ora('Installing visualizer dependencies...').start();
+    
+    try {
+      // Check if node_modules already exists
+      const nodeModulesPath = path.join(visualizerPath, 'node_modules');
+      if (fs.existsSync(nodeModulesPath)) {
+        spinner.info('Visualizer dependencies already installed');
+        return;
+      }
+      
+      // Install dependencies
+      execSync('npm install', {
+        cwd: visualizerPath,
+        stdio: 'ignore',
+        encoding: 'utf-8'
+      });
+      
+      spinner.succeed('Visualizer dependencies installed successfully');
+    } catch (error) {
+      spinner.warn('Failed to install visualizer dependencies');
+      console.log(chalk.yellow('You can install them manually by running:'));
+      console.log(chalk.gray('  cd visualizer && npm install'));
+    }
   }
 }
 
