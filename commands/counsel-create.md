@@ -68,7 +68,7 @@ Present the suggestion:
 Description: [user's description]
 Suggested Name: [proposed-name]
 
-This will create: .[mode]s/[proposed-name]/
+This will create: ~/.counsel/[mode]s/[proposed-name]/
 
 Is this name good, or would you prefer a different one?
 ═══════════════════════════════════════════════════════════════
@@ -77,11 +77,11 @@ Is this name good, or would you prefer a different one?
 ## Step 3: Create Directory Structure
 
 Once the user approves or provides an alternative name, create the appropriate directory:
-- `.features/[name]/` for feature mode
-- `.scripts/[name]/` for script mode
-- `.debug/[name]/` for debug mode
-- `.review/[name]/` for review mode
-- `.vibe/[name]/` for vibe mode
+- `~/.counsel/features/[name]/` for feature mode
+- `~/.counsel/scripts/[name]/` for script mode
+- `~/.counsel/debugs/[name]/` for debug mode
+- `~/.counsel/reviews/[name]/` for review mode
+- `~/.counsel/vibes/[name]/` for vibe mode
 
 ## Step 4: Provide Mode-Specific Next Steps
 
@@ -91,7 +91,7 @@ Once the user approves or provides an alternative name, create the appropriate d
                  FEATURE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: .features/[name]/
+Created: ~/.counsel/features/[name]/
 
 The Counsel Framework will guide you through:
 1. Requirements gathering
@@ -118,7 +118,7 @@ Ready to begin?
                   SCRIPT MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: .scripts/[name]/
+Created: ~/.counsel/scripts/[name]/
 
 Let me help you define this script. I'll need to understand:
 - What problem does it solve?
@@ -137,7 +137,7 @@ Then create `purpose.md` with the user's responses and begin implementation.
                   DEBUG MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: .debug/[name]/
+Created: ~/.counsel/debugs/[name]/
 
 Let's systematically debug this issue. First, I need to understand:
 - What symptoms are you seeing?
@@ -156,14 +156,14 @@ Then create `issue.md` with the problem description and begin investigation.
                   REVIEW MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: .review/[name]/
+Created: ~/.counsel/reviews/[name]/
 
 What would you like to review?
 
 1. Existing Counsel work:
-   - Feature in .features/
-   - Script in .scripts/
-   - Debug solution in .debug/
+   - Feature in ~/.counsel/features/
+   - Script in ~/.counsel/scripts/
+   - Debug solution in ~/.counsel/debugs/
    
 2. External code/system:
    - Pull request
@@ -185,7 +185,7 @@ Then create `scope.md` with review criteria and begin systematic review.
                    VIBE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: .vibe/[name]/
+Created: ~/.counsel/vibes/[name]/
 
 Session initialized.
 

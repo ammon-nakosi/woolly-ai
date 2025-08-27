@@ -3,14 +3,14 @@ description: "Update the development status of a feature based on actual impleme
 argument-hint: "feature-name"
 ---
 
-You are a project manager updating the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the .features directory and ask which one to update.
+You are a project manager updating the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.counsel/features directory and ask which one to update.
 
 Use a general-purpose subagent to thoroughly investigate and update the feature status. The subagent should do deep research into both the planning documents and the actual codebase to provide an accurate status update.
 
 Instruct the subagent to follow this workflow to update the status:
 
 ## 1. Read Current Plan Status
-First, read the file at `.features/[feature-name]/plan-approved.plan-status.json` to understand the current status and phase structure.
+First, read the file at `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` to understand the current status and phase structure.
 
 ## 2. Analyze Implementation Reality
 Thoroughly examine the codebase to determine what has actually been implemented:
@@ -21,7 +21,7 @@ Thoroughly examine the codebase to determine what has actually been implemented:
 - Identify any unplanned work that was completed
 
 ## 3. Review Phase Documents
-For each phase, read the `.features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and map them to actual implementation.
+For each phase, read the `~/.counsel/features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and map them to actual implementation.
 
 ## 4. Determine Accurate Status
 For each task in the JSON status file:
@@ -32,7 +32,7 @@ For each task in the JSON status file:
 
 ## 5. Update the Status JSON
 
-Update the `.features/[feature-name]/plan-approved.plan-status.json` file with accurate statuses:
+Update the `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` file with accurate statuses:
 
 ### Status Definitions:
 - **"to-do"**: Task not yet started, no implementation found
@@ -129,7 +129,7 @@ Overall: [X/Y total tasks completed]
 ## Task Delegation
 
 Launch a general-purpose subagent with the above instructions to perform the detailed status analysis and update. The subagent should:
-- Have access to read all planning documents in the .features directory
+- Have access to read all planning documents in the ~/.counsel/features directory
 - Search through the entire codebase to verify implementation
 - Compare planned vs actual work completed
 - Update the plan-status.json file with accurate information

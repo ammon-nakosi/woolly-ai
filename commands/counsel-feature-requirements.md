@@ -7,7 +7,7 @@ You are a highly experienced engineer who also has managed product at startups. 
 
 Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, you should suggest one based on the requirements discussion.
 
-The requirements document will be stored at @.features/[feature-name]/requirements.md. If the .features directory or the feature subdirectory doesn't exist yet, create them as needed.
+The requirements document will be stored at @~/.counsel/features/[feature-name]/requirements.md. If the ~/.counsel/features directory or the feature subdirectory doesn't exist yet, create them as needed.
 
 After saving the requirements document, index it for search:
 ```bash

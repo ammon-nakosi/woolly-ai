@@ -25,20 +25,20 @@ counsel status [name]
 
 ### Step 1: Determine the Mode
 If a name is provided, check which directory structure it belongs to:
-- Check `.features/[name]/` → Feature mode
-- Check `.scripts/[name]/` → Script mode  
-- Check `.debug/[name]/` → Debug mode
-- Check `.review/[name]/` → Review mode
-- Check `.vibe/[name]/` → Vibe mode
+- Check `~/.counsel/features/[name]/` → Feature mode
+- Check `~/.counsel/scripts/[name]/` → Script mode  
+- Check `~/.counsel/debugs/[name]/` → Debug mode
+- Check `~/.counsel/reviews/[name]/` → Review mode
+- Check `~/.counsel/vibes/[name]/` → Vibe mode
 
 ### Step 2: Load Mode-Specific Context
 
 #### Feature Mode
-If it's a feature (in `.features/[name]/`), load the specific feature context by reading:
-1. `.features/[feature-name]/requirements.md` - Understanding what needs to be built
-2. `.features/[feature-name]/discovery_*.md` - Technical analysis and considerations  
-3. `.features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
-4. `.features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
+If it's a feature (in `~/.counsel/features/[name]/`), load the specific feature context by reading:
+1. `~/.counsel/features/[feature-name]/requirements.md` - Understanding what needs to be built
+2. `~/.counsel/features/[feature-name]/discovery_*.md` - Technical analysis and considerations  
+3. `~/.counsel/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
+4. `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
 
 Determine the current stage and recommended role based on the feature's status:
 
@@ -208,43 +208,43 @@ Ready to proceed? Let me know how you'd like to continue.
 ```
 
 #### Script Mode
-If it's a script (in `.scripts/[name]/`), load the script context by reading:
-1. `.scripts/[name]/purpose.md` - Understanding the script's goal
-2. `.scripts/[name]/script.*` - The actual script implementation
-3. `.scripts/[name]/usage.md` - Documentation on how to use it
-4. `.scripts/[name]/test-results.md` - Testing documentation
+If it's a script (in `~/.counsel/scripts/[name]/`), load the script context by reading:
+1. `~/.counsel/scripts/[name]/purpose.md` - Understanding the script's goal
+2. `~/.counsel/scripts/[name]/script.*` - The actual script implementation
+3. `~/.counsel/scripts/[name]/usage.md` - Documentation on how to use it
+4. `~/.counsel/scripts/[name]/test-results.md` - Testing documentation
 
 Then provide status and recommend next steps for script development or enhancement.
 
 #### Debug Mode  
-If it's a debug session (in `.debug/[name]/`), load the debug context by reading:
-1. `.debug/[name]/issue.md` - Problem description
-2. `.debug/[name]/reproduction.md` - How to reproduce
-3. `.debug/[name]/investigation.md` - What's been tried
-4. `.debug/[name]/diagnosis.md` - Root cause analysis
-5. `.debug/[name]/fix.md` - Solution implemented
+If it's a debug session (in `~/.counsel/debugs/[name]/`), load the debug context by reading:
+1. `~/.counsel/debugs/[name]/issue.md` - Problem description
+2. `~/.counsel/debugs/[name]/reproduction.md` - How to reproduce
+3. `~/.counsel/debugs/[name]/investigation.md` - What's been tried
+4. `~/.counsel/debugs/[name]/diagnosis.md` - Root cause analysis
+5. `~/.counsel/debugs/[name]/fix.md` - Solution implemented
 
 Then provide current debug status and recommend investigation or fix steps.
 
 #### Review Mode
-If it's a review session (in `.review/[name]/`), load the review context by reading:
-1. `.review/[name]/scope.md` - What's being reviewed and criteria
-2. `.review/[name]/findings.md` - Issues and observations
-3. `.review/[name]/recommendations.md` - Suggested improvements
-4. `.review/[name]/approval.md` - Final decision if exists
+If it's a review session (in `~/.counsel/reviews/[name]/`), load the review context by reading:
+1. `~/.counsel/reviews/[name]/scope.md` - What's being reviewed and criteria
+2. `~/.counsel/reviews/[name]/findings.md` - Issues and observations
+3. `~/.counsel/reviews/[name]/recommendations.md` - Suggested improvements
+4. `~/.counsel/reviews/[name]/approval.md` - Final decision if exists
 
 If reviewing counsel work, also load the original work:
-- For feature reviews: load from `.features/[target]/`
-- For script reviews: load from `.scripts/[target]/`
-- For debug reviews: load from `.debug/[target]/`
+- For feature reviews: load from `~/.counsel/features/[target]/`
+- For script reviews: load from `~/.counsel/scripts/[target]/`
+- For debug reviews: load from `~/.counsel/debugs/[target]/`
 
 Then provide review status and next review steps.
 
 #### Vibe Mode
-If it's a vibe session (in `.vibe/[name]/`), load the exploration context by reading:
-1. `.vibe/[name]/context.md` - What we're working on
-2. `.vibe/[name]/notes.md` - Running documentation
-3. `.vibe/[name]/decisions.md` - Key decisions made
+If it's a vibe session (in `~/.counsel/vibes/[name]/`), load the exploration context by reading:
+1. `~/.counsel/vibes/[name]/context.md` - What we're working on
+2. `~/.counsel/vibes/[name]/notes.md` - Running documentation
+3. `~/.counsel/vibes/[name]/decisions.md` - Key decisions made
 
 Then provide a casual summary and ask where to continue.
 
@@ -260,28 +260,28 @@ The Counsel Framework supports multiple work modes.
 
 ## Available Work
 
-### Features (.features/)
-[List all directories in .features/ with status]
+### Features (~/.counsel/features/)
+[List all directories in ~/.counsel/features/ with status]
 • [feature-1]: Phase [N] - [Status]
 • [feature-2]: Phase [N] - [Status]
 
-### Scripts (.scripts/)
-[List all directories in .scripts/]
+### Scripts (~/.counsel/scripts/)
+[List all directories in ~/.counsel/scripts/]
 • [script-1]: [Purpose if known]
 • [script-2]: [Purpose if known]
 
-### Debug Sessions (.debug/)
-[List all directories in .debug/]
+### Debug Sessions (~/.counsel/debugs/)
+[List all directories in ~/.counsel/debugs/]
 • [issue-1]: [Status]
 • [issue-2]: [Status]
 
-### Review Sessions (.review/)
-[List all directories in .review/]
+### Review Sessions (~/.counsel/reviews/)
+[List all directories in ~/.counsel/reviews/]
 • [review-1]: [Target] - [Status]
 • [review-2]: [Target] - [Status]
 
-### Vibe Sessions (.vibe/)
-[List all directories in .vibe/]
+### Vibe Sessions (~/.counsel/vibes/)
+[List all directories in ~/.counsel/vibes/]
 • [session-1]: [Topic]
 • [session-2]: [Topic]
 

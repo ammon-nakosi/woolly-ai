@@ -81,9 +81,9 @@ handle_cli_not_available() {
   echo ""
   
   # Fallback to filesystem scan
-  for mode in features scripts debug review vibe; do
-    if [ -d ".$mode" ]; then
-      find ".$mode" -maxdepth 1 -type d -not -path ".$mode" -exec basename {} \;
+  for mode in features scripts debugs reviews vibes; do
+    if [ -d "~/.counsel/$mode" ]; then
+      find "~/.counsel/$mode" -maxdepth 1 -type d -not -path "~/.counsel/$mode" -exec basename {} \;
     fi
   done
 }
@@ -133,7 +133,7 @@ Command: counsel list [flags used]
 
 💡 Quick Actions:
   • View details: counsel status [project-name]
-  • Open project: cd .[mode]/[project-name]
+  • Open project: cd ~/.counsel/[mode]/[project-name]
   • Search: counsel search "[keyword]"
   • Different view: /counsel-list [different hint]
 ```

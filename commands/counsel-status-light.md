@@ -3,13 +3,13 @@ description: "Quick status check of a feature based on plan JSON only"
 argument-hint: "feature-name"
 ---
 
-You are checking the quick status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the .features directory and ask which one to check.
+You are checking the quick status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.counsel/features directory and ask which one to check.
 
 This is a lightweight status check that only reads from the plan status JSON file without verification.
 
 ## Workflow
 
-1. Read the file at `.features/[feature-name]/plan-approved.plan-status.json`
+1. Read the file at `~/.counsel/features/[feature-name]/plan-approved.plan-status.json`
 2. Parse the current phase and task statuses
 3. Calculate progress metrics
 4. Present a concise status report

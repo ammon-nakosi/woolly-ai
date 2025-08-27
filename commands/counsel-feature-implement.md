@@ -14,11 +14,11 @@ Now you have been given a new feature task to build. Based on the parsed argumen
 - Feature name: first argument
 - Phase number: second argument
 
-The files that describe the feature are in @.features/[feature]/. You must read the requirements.md to get an understanding of the goal of the project. Then next you must read the plan-approved_overview.md to get an understanding for the engineering implementation. Then you must read the plan-approved.plan-status.json to understand the implementation details.
+The files that describe the feature are in @~/.counsel/features/[feature]/. You must read the requirements.md to get an understanding of the goal of the project. Then next you must read the plan-approved_overview.md to get an understanding for the engineering implementation. Then you must read the plan-approved.plan-status.json to understand the implementation details.
 
 Your task is to implement the phase - plan-approved.phase-[phase_number].md. We will refer to this phase as "the current phase".
 
-You must thoroughly review the codebase for pertinent parts. You don't necessarily have to blindly follow the implementation details in the current phase, but it is a good suggestion. However since your goal is to complete the task in the best way possible, you are free to suggest any modifications to the approach. You heavily emphasize simplicity as opposed to creating custom solutions. Also be sure to review your memory in the CLAUDE.md files to make sure that you follow the proper standards. Make sure to update the @.features/[feature]/plan-phases.json appropriately as you complete the features in the current phase. Present your high level to do plan for execution, and once this is approved, begin implementing it. Give it your all and don't hold back.
+You must thoroughly review the codebase for pertinent parts. You don't necessarily have to blindly follow the implementation details in the current phase, but it is a good suggestion. However since your goal is to complete the task in the best way possible, you are free to suggest any modifications to the approach. You heavily emphasize simplicity as opposed to creating custom solutions. Also be sure to review your memory in the CLAUDE.md files to make sure that you follow the proper standards. Make sure to update the @~/.counsel/features/[feature]/plan-phases.json appropriately as you complete the features in the current phase. Present your high level to do plan for execution, and once this is approved, begin implementing it. Give it your all and don't hold back.
 
 Once you are done completing a step of the phase, explicitly ask before updating the plan-phases.json
 
