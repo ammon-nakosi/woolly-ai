@@ -1,6 +1,7 @@
 // Core types for Counsel CLI
 
-export type CounselMode = 'feature' | 'script' | 'debug' | 'review' | 'vibe';
+export type CounselMode = 'feature' | 'script' | 'debug' | 'review' | 'vibe' | 'prompt';
+export type ProjectStatus = 'active' | 'completed' | 'closed' | 'archived';
 export type TaskStatus = 'to-do' | 'doing' | 'done' | 'skipped' | 'canceled';
 export type Priority = 'urgent' | 'high' | 'medium' | 'low' | 'none';
 
@@ -79,7 +80,7 @@ export interface CounselItem {
   };
   
   // Status tracking
-  status: 'planned' | 'in_progress' | 'completed' | 'archived';
+  status: 'planned' | 'in_progress' | 'completed' | 'closed' | 'archived';
   currentPhase?: number;
   totalPhases?: number;
   tasksComplete?: number;
@@ -100,6 +101,91 @@ export interface CounselItem {
   
   // Personal notes (not exported)
   personalNotes?: string;
+  
+  // Closing and retrospective
+  closedDate?: string;
+  retrospective?: CounselRetrospective;
+}
+
+// Retrospective structure for closed projects
+export interface CounselRetrospective {
+  id: string;
+  projectName: string;
+  mode: CounselMode;
+  closedDate: string;
+  duration: {
+    startDate: string;
+    endDate: string;
+    totalDays: number;
+    activeDays?: number;
+  };
+  
+  // Completion metrics
+  metrics: {
+    plannedTasks: number;
+    completedTasks: number;
+    skippedTasks: number;
+    completionRate: number;
+    phasesCompleted: number;
+    totalPhases: number;
+  };
+  
+  // Key learnings
+  learnings: {
+    successes: string[];
+    challenges: string[];
+    improvements: string[];
+    keyInsights: string[];
+  };
+  
+  // Technical insights
+  technical: {
+    technologiesUsed: string[];
+    patternsApplied: string[];
+    problemsSolved: string[];
+    codeQuality?: 'excellent' | 'good' | 'fair' | 'needs-improvement';
+  };
+  
+  // Reusable knowledge
+  knowledge: {
+    reusablePatterns: Array<{
+      name: string;
+      description: string;
+      applicability: string;
+    }>;
+    documentation?: string[];
+    templates?: string[];
+  };
+  
+  // Impact assessment
+  impact: {
+    businessValue: 'high' | 'medium' | 'low';
+    userExperience: 'improved' | 'maintained' | 'degraded';
+    technicalDebt: 'reduced' | 'maintained' | 'increased';
+    teamLearning: 'significant' | 'moderate' | 'minimal';
+  };
+  
+  // Future recommendations
+  recommendations: {
+    nextSteps?: string[];
+    followUpWork?: string[];
+    maintenanceNotes?: string[];
+  };
+  
+  // Linear integration
+  linearSummary?: {
+    ticketsCompleted: string[];
+    totalPoints?: number;
+    velocity?: number;
+  };
+  
+  // AI-generated summary
+  summary: string;
+  
+  // Metadata
+  generatedBy?: string;
+  reviewedBy?: string;
+  approved?: boolean;
 }
 
 // Plan status structure (from plan-approved.plan-status.json)

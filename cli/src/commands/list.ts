@@ -17,6 +17,7 @@ export function registerListCommands(program: Command) {
     .option('-s, --status <status>', 'Filter by status (planned, in-progress, completed)')
     .option('-r, --recent', 'Sort by recently updated')
     .option('-p, --project <project>', 'Filter by project name')
+    .option('-l, --limit <number>', 'Limit number of results', parseInt)
     .option('--json', 'Output as JSON')
     .option('--chroma', 'List from ChromaDB instead of local filesystem')
     .action(async (options) => {
@@ -145,7 +146,7 @@ async function listFromChromaDB(options: any) {
   
   const results = await collection.get({
     where,
-    limit: 100
+    limit: options.limit || 100
   });
   
   const items = results.metadatas.map((metadata: any, i: number) => ({
@@ -253,6 +254,11 @@ async function listFromFilesystem(options: any) {
     items.sort((a, b) => 
       new Date(b.updated).getTime() - new Date(a.updated).getTime()
     );
+  }
+  
+  // Apply limit if specified
+  if (options.limit) {
+    return items.slice(0, options.limit);
   }
   
   return items;

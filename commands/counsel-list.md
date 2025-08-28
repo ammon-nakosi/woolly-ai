@@ -20,6 +20,7 @@ Interpret the user's hint smartly to build the appropriate counsel CLI command:
 - "debug", "debugging" → `counsel list --mode debug`
 - "review", "reviews" → `counsel list --mode review`
 - "vibe", "vibes", "explore" → `counsel list --mode vibe`
+- "prompt", "prompts" → `counsel list --mode prompt`
 
 ### Status Filtering → Use `--status`
 - "active", "wip", "in-progress", "working" → `counsel list --status in-progress`
@@ -81,7 +82,7 @@ handle_cli_not_available() {
   echo ""
   
   # Fallback to filesystem scan
-  for mode in features scripts debugs reviews vibes; do
+  for mode in features scripts debugs reviews vibes prompts; do
     if [ -d "~/.counsel/$mode" ]; then
       find "~/.counsel/$mode" -maxdepth 1 -type d -not -path "~/.counsel/$mode" -exec basename {} \;
     fi

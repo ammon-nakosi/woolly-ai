@@ -8,6 +8,12 @@ You are onboarding into the Counsel Framework, a structured approach for organiz
 ## Load Framework Documentation
 First, read the comprehensive framework guide at `/Users/Personal/.claude/COUNSEL-FRAMEWORK.md` to understand the complete workflow and philosophy.
 
+## Load Mode-Specific Guidelines
+Based on the detected mode, always load the appropriate guidelines using the CLI:
+- **Feature Mode**: `counsel guidelines feature`
+- **Script Mode**: `counsel guidelines script`  
+- **Debug/Review/Vibe/Prompt**: `counsel guidelines [mode]` as needed
+
 ## CLI Integration: Check Available Work
 If no name provided, use the Counsel CLI to show available work:
 ```bash
@@ -30,11 +36,20 @@ If a name is provided, check which directory structure it belongs to:
 - Check `~/.counsel/debugs/[name]/` → Debug mode
 - Check `~/.counsel/reviews/[name]/` → Review mode
 - Check `~/.counsel/vibes/[name]/` → Vibe mode
+- Check `~/.counsel/prompts/[name]/` → Prompt mode
 
 ### Step 2: Load Mode-Specific Context
 
 #### Feature Mode
-If it's a feature (in `~/.counsel/features/[name]/`), load the specific feature context by reading:
+If it's a feature (in `~/.counsel/features/[name]/`):
+
+**First, ensure you understand feature mode principles:**
+- Phased development approach
+- Deep discovery before implementation
+- Status tracking and verification
+- Simplicity over complexity
+
+Load the specific feature context by reading:
 1. `~/.counsel/features/[feature-name]/requirements.md` - Understanding what needs to be built
 2. `~/.counsel/features/[feature-name]/discovery_*.md` - Technical analysis and considerations  
 3. `~/.counsel/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
@@ -208,16 +223,39 @@ Ready to proceed? Let me know how you'd like to continue.
 ```
 
 #### Script Mode
-If it's a script (in `~/.counsel/scripts/[name]/`), load the script context by reading:
+If it's a script (in `~/.counsel/scripts/[name]/`):
+
+**First, load script mode guidelines:**
+- Run `counsel guidelines script` to understand production patterns
+- Review required features (dry-run, limits, batching, logging paths)
+- Understand architecture considerations
+
+Load the script context by reading:
 1. `~/.counsel/scripts/[name]/purpose.md` - Understanding the script's goal
 2. `~/.counsel/scripts/[name]/script.*` - The actual script implementation
 3. `~/.counsel/scripts/[name]/usage.md` - Documentation on how to use it
 4. `~/.counsel/scripts/[name]/test-results.md` - Testing documentation
 
-Then provide status and recommend next steps for script development or enhancement.
+**Verify the script includes required features:**
+- ✓ Dry-run mode (default) and --live flag
+- ✓ --limit flag for controlled processing
+- ✓ Batch processing with delays
+- ✓ Logs saved to `~/.counsel/scripts/[name]/logs/`
+- ✓ Outcomes saved to `~/.counsel/scripts/[name]/outcomes/`
+- ✓ Progress tracking and clear output
+
+Then provide status and recommend next steps for enhancement or testing.
 
 #### Debug Mode  
-If it's a debug session (in `~/.counsel/debugs/[name]/`), load the debug context by reading:
+If it's a debug session (in `~/.counsel/debugs/[name]/`):
+
+**First, understand debug mode principles:**
+- Systematic investigation approach
+- Clear reproduction steps
+- Root cause analysis before fixing
+- Verification of fixes
+
+Load the debug context by reading:
 1. `~/.counsel/debugs/[name]/issue.md` - Problem description
 2. `~/.counsel/debugs/[name]/reproduction.md` - How to reproduce
 3. `~/.counsel/debugs/[name]/investigation.md` - What's been tried
@@ -227,7 +265,15 @@ If it's a debug session (in `~/.counsel/debugs/[name]/`), load the debug context
 Then provide current debug status and recommend investigation or fix steps.
 
 #### Review Mode
-If it's a review session (in `~/.counsel/reviews/[name]/`), load the review context by reading:
+If it's a review session (in `~/.counsel/reviews/[name]/`):
+
+**First, understand review mode principles:**
+- Systematic evaluation against criteria
+- Constructive feedback focus
+- Clear recommendations
+- Actionable improvements
+
+Load the review context by reading:
 1. `~/.counsel/reviews/[name]/scope.md` - What's being reviewed and criteria
 2. `~/.counsel/reviews/[name]/findings.md` - Issues and observations
 3. `~/.counsel/reviews/[name]/recommendations.md` - Suggested improvements
@@ -235,7 +281,7 @@ If it's a review session (in `~/.counsel/reviews/[name]/`), load the review cont
 
 If reviewing counsel work, also load the original work:
 - For feature reviews: load from `~/.counsel/features/[target]/`
-- For script reviews: load from `~/.counsel/scripts/[target]/`
+- For script reviews: load from `~/.counsel/scripts/[target]/` and verify against `docs/SCRIPT-MODE-GUIDELINES.md`
 - For debug reviews: load from `~/.counsel/debugs/[target]/`
 
 Then provide review status and next review steps.
@@ -247,6 +293,24 @@ If it's a vibe session (in `~/.counsel/vibes/[name]/`), load the exploration con
 3. `~/.counsel/vibes/[name]/decisions.md` - Key decisions made
 
 Then provide a casual summary and ask where to continue.
+
+#### Prompt Mode
+If it's a prompt session (in `~/.counsel/prompts/[name]/`):
+
+**First, understand prompt mode principles:**
+- Clear objectives and success criteria
+- Iterative refinement based on testing
+- Edge case consideration
+- Performance measurement
+
+Load the prompt context by reading:
+1. `~/.counsel/prompts/[name]/purpose.md` - Understanding the prompt's goal
+2. `~/.counsel/prompts/[name]/prompt.md` - The actual prompt content
+3. `~/.counsel/prompts/[name]/test-cases.md` - Test scenarios and examples
+4. `~/.counsel/prompts/[name]/refinements.md` - Iteration history and improvements
+5. `~/.counsel/prompts/[name]/results.md` - Testing outcomes and effectiveness
+
+Then provide current status and recommend next steps for prompt refinement or testing.
 
 ### If no name provided:
 List available work across all modes and provide framework overview:
@@ -282,6 +346,9 @@ The Counsel Framework supports multiple work modes.
 
 ### Vibe Sessions (~/.counsel/vibes/)
 [List all directories in ~/.counsel/vibes/]
+
+### Prompt Engineering (~/.counsel/prompts/)
+[List all directories in ~/.counsel/prompts/]
 • [session-1]: [Topic]
 • [session-2]: [Topic]
 
@@ -291,7 +358,7 @@ To start new work:
 /counsel-init [feature|script|debug|review|vibe] "description"
 
 To continue existing work:
-/counsel-resume [name]
+/counsel-reload [name]
 
 ═══════════════════════════════════════════════════════════════
 ```

@@ -71,7 +71,7 @@ counsel status <name> --json
 ```
 Then perform deeper codebase verification on top of the CLI data
 
-### In `/counsel-resume`
+### In `/counsel-reload`
 
 Start with:
 ```bash

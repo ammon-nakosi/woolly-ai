@@ -311,7 +311,7 @@ Where mode is one of:
 
 Load context for any existing work:
 ```bash
-/counsel-resume [name]
+/counsel-reload [name]
 ```
 
 This will:

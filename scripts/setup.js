@@ -37,12 +37,15 @@ class CounselSetup {
     // Install visualizer dependencies
     await this.installVisualizerDependencies();
     
+    // Setup AI awareness
+    await this.setupAIAwareness();
+    
     console.log(chalk.green('\n✅ Counsel Framework setup complete!\n'));
     console.log(chalk.cyan('Next steps:'));
     console.log('  1. Run ' + chalk.bold('counsel init') + ' to configure your settings');
     console.log('  2. Start ChromaDB: ' + chalk.bold('counsel chromadb start'));
-    console.log('  3. Set up AI assistant commands:');
-    console.log('     - Claude: Commands installed globally');
+    console.log('  3. AI assistants are ' + chalk.green('counsel-aware') + '!');
+    console.log('     - Claude: ' + chalk.green('✓') + ' Ready (try "counsel log test")');
     console.log('     - Cursor: Run ' + chalk.bold('counsel cursor init') + ' in your project');
     console.log('  4. Create your first counsel work: ' + chalk.bold('/counsel-create feature "your feature"'));
     console.log('\nDocumentation: https://github.com/ammon-nakosi/counsel-framework');
@@ -69,10 +72,12 @@ class CounselSetup {
       path.join(COUNSEL_DIR, 'debugs'),
       path.join(COUNSEL_DIR, 'reviews'),
       path.join(COUNSEL_DIR, 'vibes'),
+      path.join(COUNSEL_DIR, 'prompts'),
       path.join(COUNSEL_DIR, 'archives'),
       path.join(COUNSEL_DIR, 'knowledge'),
       path.join(COUNSEL_DIR, 'chromadb'),
-      path.join(COUNSEL_DIR, 'bin')
+      path.join(COUNSEL_DIR, 'bin'),
+      path.join(COUNSEL_DIR, 'ai-awareness')
     ];
     
     for (const dir of dirs) {
@@ -435,6 +440,80 @@ if (command === 'start') {
       spinner.warn('Failed to install visualizer dependencies');
       console.log(chalk.yellow('You can install them manually by running:'));
       console.log(chalk.gray('  cd visualizer && npm install'));
+    }
+  }
+  
+  async setupAIAwareness() {
+    const spinner = ora('Setting up AI awareness...').start();
+    
+    try {
+      // Copy awareness document to ~/.counsel/ai-awareness/
+      const sourceAwareness = path.join(__dirname, '..', 'docs', 'COUNSEL-AWARENESS.md');
+      const targetDir = path.join(COUNSEL_DIR, 'ai-awareness');
+      const targetAwareness = path.join(targetDir, 'COUNSEL-AWARENESS.md');
+      
+      // Ensure target directory exists
+      if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+      }
+      
+      // Copy awareness document
+      if (fs.existsSync(sourceAwareness)) {
+        fs.copyFileSync(sourceAwareness, targetAwareness);
+      }
+      
+      // Setup Claude integration
+      const claudeDir = path.join(os.homedir(), '.claude');
+      const claudeMdPath = path.join(claudeDir, 'CLAUDE.md');
+      
+      if (fs.existsSync(claudeDir)) {
+        // Check if CLAUDE.md exists
+        let claudeMdContent = '';
+        let isNewFile = false;
+        
+        if (fs.existsSync(claudeMdPath)) {
+          claudeMdContent = fs.readFileSync(claudeMdPath, 'utf8');
+        } else {
+          isNewFile = true;
+        }
+        
+        // Check if import already exists
+        const importLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md';
+        const hasImport = claudeMdContent.includes(importLine) || 
+                         claudeMdContent.includes('counsel/ai-awareness');
+        
+        if (!hasImport) {
+          // Add import statement
+          const updatedContent = claudeMdContent + 
+            (claudeMdContent && !claudeMdContent.endsWith('\n') ? '\n' : '') +
+            '\n# Counsel Framework Integration\n' +
+            importLine + '\n';
+          
+          fs.writeFileSync(claudeMdPath, updatedContent);
+          
+          if (isNewFile) {
+            spinner.succeed('AI awareness configured: Created CLAUDE.md with counsel awareness');
+          } else {
+            spinner.succeed('AI awareness configured: Added counsel import to CLAUDE.md');
+          }
+        } else {
+          spinner.succeed('AI awareness already configured in CLAUDE.md');
+        }
+      } else {
+        // Claude not installed, but awareness files are ready
+        spinner.succeed('AI awareness files prepared (Claude not detected)');
+        console.log(chalk.yellow('  To enable: Add this to ~/.claude/CLAUDE.md:'));
+        console.log(chalk.gray('  import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md'));
+      }
+      
+      // Create version file for tracking
+      const versionPath = path.join(targetDir, 'version.txt');
+      const packageJson = require(path.join(__dirname, '..', 'package.json'));
+      fs.writeFileSync(versionPath, packageJson.version || '1.0.0');
+      
+    } catch (error) {
+      spinner.warn('AI awareness setup partially completed');
+      console.log(chalk.yellow('  Manual setup may be required. See docs/CLAUDE-INTEGRATION.md'));
     }
   }
 }

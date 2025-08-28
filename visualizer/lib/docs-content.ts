@@ -135,7 +135,7 @@ export const counselModes: CounselMode[] = [
         step: 2,
         title: 'Investigation',
         description: 'Analyze the problem and identify root causes',
-        commands: ['/counsel-feature-discovery', '/counsel-resume']
+        commands: ['/counsel-feature-discovery', '/counsel-reload']
       },
       {
         step: 3,
@@ -150,7 +150,7 @@ export const counselModes: CounselMode[] = [
       'API error troubleshooting',
       'UI rendering issues'
     ],
-    relatedCommands: ['counsel add debug', '/counsel-feature-discovery', '/counsel-resume']
+    relatedCommands: ['counsel add debug', '/counsel-feature-discovery', '/counsel-reload']
   },
   {
     name: 'Review Mode',
@@ -175,7 +175,7 @@ export const counselModes: CounselMode[] = [
         step: 2,
         title: 'Issue Identification',
         description: 'Document findings and potential improvements',
-        commands: ['/counsel-resume']
+        commands: ['/counsel-reload']
       },
       {
         step: 3,
@@ -190,7 +190,7 @@ export const counselModes: CounselMode[] = [
       'Code quality audit',
       'Architecture review'
     ],
-    relatedCommands: ['counsel add review', '/counsel-feature-discovery', '/counsel-resume']
+    relatedCommands: ['counsel add review', '/counsel-feature-discovery', '/counsel-reload']
   },
   {
     name: 'Vibe Mode',
@@ -215,7 +215,7 @@ export const counselModes: CounselMode[] = [
         step: 2,
         title: 'Experimentation',
         description: 'Build prototypes and test ideas',
-        commands: ['/counsel-resume', '/counsel-feature-implement']
+        commands: ['/counsel-reload', '/counsel-feature-implement']
       },
       {
         step: 3,
@@ -230,7 +230,7 @@ export const counselModes: CounselMode[] = [
       'Architecture experimentation',
       'Creative problem solving'
     ],
-    relatedCommands: ['counsel add vibe', '/counsel-feature-discovery', '/counsel-resume']
+    relatedCommands: ['counsel add vibe', '/counsel-feature-discovery', '/counsel-reload']
   }
 ];
 
@@ -447,16 +447,16 @@ export const slashCommands: Command[] = [
         output: 'AI will help analyze code structure, identify patterns, and understand system architecture'
       }
     ],
-    relatedCommands: ['/counsel-resume', '/counsel-feature-implement']
+    relatedCommands: ['/counsel-reload', '/counsel-feature-implement']
   },
   {
-    name: '/counsel-resume',
+    name: '/counsel-reload',
     type: 'slash',
     description: 'Get up to speed on existing code and prepare for development',
-    syntax: '/counsel-resume',
+    syntax: '/counsel-reload',
     examples: [
       {
-        command: '/counsel-resume',
+        command: '/counsel-reload',
         description: 'Learn about codebase and development environment',
         output: 'AI will provide codebase overview, setup instructions, and development guidelines'
       }

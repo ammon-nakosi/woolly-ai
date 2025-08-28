@@ -14,6 +14,11 @@ import { registerGitCommands } from './commands/git';
 import { registerIndexCommands } from './commands/index';
 import { registerChromaDBCommands } from './commands/chromadb';
 import { registerOpenCommands } from './commands/open';
+import { registerAwarenessCommands } from './commands/awareness';
+import { registerTimeCommands } from './commands/time';
+import { registerSessionCommands } from './commands/session';
+import { registerGuidelinesCommand } from './commands/guidelines';
+import { registerReloadCommands } from './commands/reload';
 
 const program = new Command();
 
@@ -37,7 +42,9 @@ async function main() {
   // Register command groups
   registerInitCommands(program);
   registerAddCommands(program);
+  registerAwarenessCommands(program);
   registerChromaDBCommands(program);
+  registerGuidelinesCommand(program);
   registerIndexCommands(program);
   registerLinearCommands(program);
   registerListCommands(program);
@@ -46,6 +53,9 @@ async function main() {
   registerStatusCommands(program);
   registerCursorCommands(program);
   registerGitCommands(program);
+  registerTimeCommands(program);
+  registerSessionCommands(program);
+  registerReloadCommands(program);
 
   // Global options
   program

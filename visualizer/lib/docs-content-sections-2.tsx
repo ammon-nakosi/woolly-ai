@@ -375,7 +375,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Deep Dive Analysis</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-resume</code>
+            <code>/counsel-reload</code>
           </pre>
           <p className="text-sm text-gray-600">
             Get detailed understanding of memory management in the codebase
