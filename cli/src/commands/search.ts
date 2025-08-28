@@ -4,6 +4,7 @@ import ora from 'ora';
 import { getChromaClient, findSimilarKnowledge } from '../services/chromadb-client';
 import { DefaultEmbeddingFunction } from 'chromadb';
 import { getEmbeddingFunction } from '../services/embedding-functions';
+import { getConfig } from '../utils/config';
 import { CounselMode } from '../types';
 
 export function registerSearchCommands(program: Command) {
@@ -13,15 +14,19 @@ export function registerSearchCommands(program: Command) {
     .option('-m, --mode <mode>', 'Filter by mode (feature, script, debug, review, vibe)')
     .option('-t, --type <type>', 'Search type: work, knowledge, or all', 'all')
     .option('-l, --limit <number>', 'Maximum results', '10')
-    .option('--threshold <number>', 'Similarity threshold (0-1)', '0.3')
+    .option('--threshold <number>', 'Similarity threshold (0-1)')
     .option('--json', 'Output as JSON')
     .action(async (query: string, options) => {
       const spinner = ora('Searching counsel...').start();
       
       try {
+        // Get default threshold from config if not specified
+        const config = await getConfig();
+        const defaultThreshold = config.chromadb?.embeddings?.defaultThreshold || 0.3;
+        
         const results = [];
         const limit = parseInt(options.limit);
-        const threshold = parseFloat(options.threshold);
+        const threshold = options.threshold ? parseFloat(options.threshold) : defaultThreshold;
         
         // Search counsel work items
         if (options.type === 'all' || options.type === 'work') {

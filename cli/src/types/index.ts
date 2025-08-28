@@ -271,6 +271,12 @@ export interface CounselConfig {
     host?: string;
     port?: number;
     path?: string;  // Defaults to ~/.counsel/chromadb
+    embeddings?: {
+      provider?: 'ollama' | 'openai' | 'default';
+      ollamaModel?: string;
+      autoStartOllama?: boolean;
+      defaultThreshold?: number;
+    };
   };
   
   patternExtraction?: {

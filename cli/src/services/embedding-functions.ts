@@ -5,15 +5,43 @@ import {
   TransformersEmbeddingFunction,
   CohereEmbeddingFunction
 } from 'chromadb';
+import { getConfig } from '../utils/config';
 
 /**
  * Get the configured embedding function for ChromaDB
  * Priority order:
- * 1. OpenAI (if API key is set)
- * 2. Ollama (if running locally)
+ * 1. Config settings
+ * 2. Environment variables
  * 3. Default (fallback)
  */
 export async function getEmbeddingFunction() {
+  // First check config
+  try {
+    const config = await getConfig();
+    const embedConfig = config.chromadb?.embeddings;
+    
+    if (embedConfig?.provider === 'ollama') {
+      const ollamaHost = process.env.OLLAMA_HOST || 'http://localhost:11434';
+      const model = embedConfig.ollamaModel || 'nomic-embed-text';
+      console.log(`Using Ollama embeddings (${model}) at ${ollamaHost}`);
+      return new OllamaEmbeddingFunction({
+        url: ollamaHost,
+        model
+      });
+    } else if (embedConfig?.provider === 'openai' && process.env.OPENAI_API_KEY) {
+      console.log('Using OpenAI embeddings (text-embedding-3-small)');
+      return new OpenAIEmbeddingFunction({
+        openai_api_key: process.env.OPENAI_API_KEY,
+        openai_model: "text-embedding-3-small"
+      });
+    } else if (embedConfig?.provider === 'default') {
+      console.log('Using default ChromaDB embeddings (configured)');
+      return new DefaultEmbeddingFunction();
+    }
+  } catch {
+    // Config not available, fall through to env vars
+  }
+  
   // Option 1: OpenAI (best quality for code/technical content)
   if (process.env.OPENAI_API_KEY) {
     console.log('Using OpenAI embeddings (text-embedding-3-small)');

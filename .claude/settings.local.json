@@ -35,7 +35,8 @@
       "Bash(USE_OLLAMA=true counsel search \"chromadb\")",
       "Bash(curl:*)",
       "Bash(USE_OLLAMA=true counsel index --all)",
-      "Bash(USE_OLLAMA=true counsel search:*)"
+      "Bash(USE_OLLAMA=true counsel search:*)",
+      "Bash(counsel search:*)"
     ],
     "deny": [],
     "ask": []

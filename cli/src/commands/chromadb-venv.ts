@@ -6,6 +6,7 @@ import { promisify } from 'util';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
+import { getConfig, updateConfig } from '../utils/config';
 
 const execAsync = promisify(exec);
 
@@ -35,6 +36,63 @@ async function checkChromaDBInstalled(): Promise<boolean> {
   try {
     const cmd = `"${VENV_PYTHON}" -c "import chromadb; print(chromadb.__version__)"`;
     await execAsync(cmd, { encoding: 'utf-8', timeout: 5000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function checkOllamaInstalled(): Promise<boolean> {
+  try {
+    await execAsync('which ollama', { encoding: 'utf-8', timeout: 1000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function checkOllamaRunning(): Promise<boolean> {
+  try {
+    const { stdout } = await execAsync('curl -s http://localhost:11434/api/tags', { encoding: 'utf-8', timeout: 2000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function startOllama(): Promise<boolean> {
+  try {
+    // Start Ollama in background using spawn
+    const child = spawn('ollama', ['serve'], {
+      detached: true,
+      stdio: 'ignore'
+    });
+    child.unref();
+    
+    // Wait for it to start
+    for (let i = 0; i < 10; i++) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (await checkOllamaRunning()) {
+        return true;
+      }
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+async function ensureOllamaModel(model: string = 'nomic-embed-text'): Promise<boolean> {
+  try {
+    // Check if model exists
+    const { stdout } = await execAsync('ollama list', { encoding: 'utf-8', timeout: 5000 });
+    if (stdout.includes(model)) {
+      return true;
+    }
+    
+    // Pull the model
+    console.log(chalk.yellow(`\nDownloading ${model} model (this may take a few minutes)...`));
+    await execAsync(`ollama pull ${model}`, { encoding: 'utf-8', timeout: 300000 }); // 5 minute timeout
     return true;
   } catch {
     return false;
@@ -207,7 +265,35 @@ export function registerChromaDBCommands(program: Command) {
       const spinner = ora('Checking Python virtual environment...').start();
       
       try {
+        // Check config for Ollama auto-start
+        const config = await getConfig();
+        const embedConfig = config.chromadb?.embeddings;
+        
+        if (embedConfig?.provider === 'ollama' && embedConfig?.autoStartOllama !== false) {
+          // Check if Ollama is installed
+          if (await checkOllamaInstalled()) {
+            spinner.text = 'Checking Ollama service...';
+            
+            if (!await checkOllamaRunning()) {
+              spinner.text = 'Starting Ollama service...';
+              if (await startOllama()) {
+                spinner.succeed('Ollama service started');
+              } else {
+                spinner.warn('Could not start Ollama automatically');
+              }
+            }
+            
+            // Ensure the model is downloaded
+            const model = embedConfig.ollamaModel || 'nomic-embed-text';
+            spinner.text = `Checking Ollama model ${model}...`;
+            if (!await ensureOllamaModel(model)) {
+              spinner.warn(`Could not download ${model} model`);
+            }
+          }
+        }
+        
         // Check if venv exists
+        spinner.text = 'Checking Python virtual environment...';
         if (!await checkVenv()) {
           spinner.text = 'Virtual environment not found. Setting up...';
           const setupSuccess = await setupVenv();
@@ -468,6 +554,127 @@ export function registerChromaDBCommands(program: Command) {
       } catch (error: any) {
         spinner.fail('Failed to restart ChromaDB');
         console.error(chalk.red('Error:'), error.message);
+      }
+    });
+
+  chromadb
+    .command('embeddings [provider]')
+    .description('Configure embedding provider for ChromaDB search')
+    .option('--model <model>', 'Model to use (for Ollama)', 'nomic-embed-text')
+    .option('--auto-start', 'Auto-start Ollama when needed', true)
+    .option('--threshold <threshold>', 'Default similarity threshold', '0.3')
+    .action(async (provider: string | undefined, options) => {
+      const spinner = ora('Updating embeddings configuration...').start();
+      
+      try {
+        const config = await getConfig();
+        
+        // If no provider specified, show current config
+        if (!provider) {
+          spinner.stop();
+          const currentConfig = config.chromadb?.embeddings;
+          
+          console.log(chalk.bold('\n📊 Current Embeddings Configuration\n'));
+          console.log('Provider:', chalk.cyan(currentConfig?.provider || 'default'));
+          
+          if (currentConfig?.provider === 'ollama') {
+            console.log('Model:', chalk.cyan(currentConfig.ollamaModel || 'nomic-embed-text'));
+            console.log('Auto-start:', chalk.cyan(currentConfig.autoStartOllama !== false ? 'enabled' : 'disabled'));
+          }
+          
+          console.log('Default threshold:', chalk.cyan(currentConfig?.defaultThreshold || '0.3'));
+          
+          console.log(chalk.gray('\nAvailable providers:'));
+          console.log('  ollama  - Free, local, good quality (recommended)');
+          console.log('  openai  - Best quality (requires API key)');
+          console.log('  default - Basic embeddings (limited performance)');
+          
+          console.log(chalk.gray('\nTo change provider:'));
+          console.log(chalk.cyan('  counsel chromadb embeddings ollama'));
+          console.log(chalk.cyan('  counsel chromadb embeddings openai'));
+          console.log(chalk.cyan('  counsel chromadb embeddings default'));
+          return;
+        }
+        
+        // Validate provider
+        if (!['ollama', 'openai', 'default'].includes(provider.toLowerCase())) {
+          spinner.fail('Invalid provider');
+          console.error(chalk.red('Valid providers: ollama, openai, default'));
+          process.exit(1);
+        }
+        
+        const normalizedProvider = provider.toLowerCase() as 'ollama' | 'openai' | 'default';
+        
+        // Update config
+        const embedConfig = {
+          provider: normalizedProvider,
+          ...(normalizedProvider === 'ollama' && {
+            ollamaModel: options.model,
+            autoStartOllama: options.autoStart
+          }),
+          defaultThreshold: normalizedProvider === 'default' ? 0.1 : parseFloat(options.threshold)
+        };
+        
+        await updateConfig({
+          chromadb: {
+            ...config.chromadb,
+            embeddings: embedConfig
+          }
+        });
+        
+        spinner.succeed('Configuration updated');
+        
+        // Provider-specific setup instructions
+        if (normalizedProvider === 'ollama') {
+          // Check if Ollama is installed
+          if (!await checkOllamaInstalled()) {
+            console.log(chalk.yellow('\n⚠️  Ollama is not installed'));
+            console.log('\nTo install Ollama:');
+            
+            if (process.platform === 'darwin') {
+              console.log(chalk.cyan('  brew install ollama'));
+            } else {
+              console.log(chalk.cyan('  curl -fsSL https://ollama.ai/install.sh | sh'));
+            }
+          } else {
+            // Check if model is downloaded
+            if (!await checkOllamaRunning()) {
+              console.log(chalk.yellow('\nStarting Ollama service...'));
+              await startOllama();
+            }
+            
+            console.log(chalk.yellow(`\nChecking ${options.model} model...`));
+            if (await ensureOllamaModel(options.model)) {
+              console.log(chalk.green('✓ Model ready'));
+            }
+          }
+          
+          console.log(chalk.green('\n✅ Ollama embeddings configured'));
+          console.log('\nOllama will auto-start when you run ChromaDB.');
+          
+        } else if (normalizedProvider === 'openai') {
+          if (!process.env.OPENAI_API_KEY) {
+            console.log(chalk.yellow('\n⚠️  OpenAI API key not found'));
+            console.log('\nTo use OpenAI embeddings:');
+            console.log('1. Get an API key from: https://platform.openai.com/api-keys');
+            console.log('2. Set the environment variable:');
+            console.log(chalk.cyan('   export OPENAI_API_KEY="sk-..."'));
+          } else {
+            console.log(chalk.green('\n✅ OpenAI embeddings configured'));
+          }
+        } else {
+          console.log(chalk.yellow('\n⚠️  Using default embeddings'));
+          console.log('Note: Default embeddings have limited performance for technical content.');
+        }
+        
+        console.log('\nNext steps:');
+        console.log('1. Re-index your content: ' + chalk.cyan('counsel index --all --force'));
+        console.log('2. Test search: ' + chalk.cyan('counsel search "your query"'));
+        
+      } catch (error: any) {
+        spinner.fail('Failed to update configuration');
+        console.error(chalk.red('Error:'), error.message);
+        process.exit(1);
       }
     });
 
