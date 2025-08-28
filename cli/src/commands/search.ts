@@ -2,6 +2,8 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import { getChromaClient, findSimilarKnowledge } from '../services/chromadb-client';
+import { DefaultEmbeddingFunction } from 'chromadb';
+import { getEmbeddingFunction } from '../services/embedding-functions';
 import { CounselMode } from '../types';
 
 export function registerSearchCommands(program: Command) {
@@ -11,7 +13,7 @@ export function registerSearchCommands(program: Command) {
     .option('-m, --mode <mode>', 'Filter by mode (feature, script, debug, review, vibe)')
     .option('-t, --type <type>', 'Search type: work, knowledge, or all', 'all')
     .option('-l, --limit <number>', 'Maximum results', '10')
-    .option('--threshold <number>', 'Similarity threshold (0-1)', '0.7')
+    .option('--threshold <number>', 'Similarity threshold (0-1)', '0.3')
     .option('--json', 'Output as JSON')
     .action(async (query: string, options) => {
       const spinner = ora('Searching counsel...').start();
@@ -128,8 +130,10 @@ async function searchCounselWork(
   }
 ): Promise<any[]> {
   const client = await getChromaClient();
+  const embeddingFunction = await getEmbeddingFunction();
   const collection = await client.getOrCreateCollection({
-    name: 'counsel_documents'
+    name: 'counsel_documents',
+    embeddingFunction
   });
   
   // Build where clause - only include if we have conditions
@@ -149,12 +153,12 @@ async function searchCounselWork(
   const formattedResults = [];
   const seenWork = new Set(); // Deduplicate by counsel work
   
-  for (let i = 0; i < results.ids[0].length; i++) {
+  for (let i = 0; i < (results.ids?.[0]?.length || 0); i++) {
     const distance = results.distances?.[0][i] || 0;
     const similarity = 1 - distance; // Convert distance to similarity
     const metadata = results.metadatas[0][i] as any;
     
-    if (similarity >= (options.threshold || 0.7)) {
+    if (similarity >= (options.threshold || 0.3)) {
       const workKey = `${metadata.counselMode}_${metadata.counselWork}`;
       
       // Only include the best match per counsel work

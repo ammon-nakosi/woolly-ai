@@ -5,6 +5,15 @@ export type ProjectStatus = 'active' | 'completed' | 'closed' | 'archived';
 export type TaskStatus = 'to-do' | 'doing' | 'done' | 'skipped' | 'canceled';
 export type Priority = 'urgent' | 'high' | 'medium' | 'low' | 'none';
 
+export interface ProjectMetadata {
+  name: string;
+  mode: CounselMode;
+  status: 'open' | 'closed';
+  createdAt: string;
+  closedAt: string | null;
+  updatedAt: string;
+}
+
 // Knowledge types
 export interface CounselKnowledge {
   id: string;

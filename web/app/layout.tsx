@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Counsel Framework Visualizer",
-  description: "Visualize and manage your Counsel Framework projects",
+  title: "Counsel Framework Web",
+  description: "Web interface for managing your Counsel Framework projects",
 };
 
 export default function RootLayout({

@@ -8,18 +8,18 @@ export function registerOpenCommands(program: Command) {
     .command('open')
     .description('Open the Counsel Framework web interface')
     .action(async () => {
-      const visualizerPath = path.join(process.cwd(), 'visualizer');
+      const webPath = path.join(process.cwd(), 'web');
       
-      if (!fs.existsSync(visualizerPath)) {
-        console.error('❌ Visualizer directory not found. Make sure you are in the counsel-framework directory.');
+      if (!fs.existsSync(webPath)) {
+        console.error('❌ Web directory not found. Make sure you are in the counsel-framework directory.');
         process.exit(1);
       }
 
-      console.log('🚀 Starting Counsel Framework Visualizer...');
+      console.log('🚀 Starting Counsel Framework Web Interface...');
       console.log('   Access at: http://localhost:3555\n');
       
       const child = spawn('npm', ['run', 'dev'], {
-        cwd: visualizerPath,
+        cwd: webPath,
         stdio: 'inherit',
         shell: true
       });

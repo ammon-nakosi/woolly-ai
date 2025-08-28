@@ -4,11 +4,12 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
+import { getEmbeddingFunction } from './embedding-functions';
 
 // Configuration
 const CHROMADB_CONFIG = {
   host: process.env.CHROMADB_HOST || 'localhost',
-  port: parseInt(process.env.CHROMADB_PORT || '8090'),
+  port: parseInt(process.env.CHROMADB_PORT || '8444'),
   persistDir: process.env.CHROMADB_PERSIST_DIR || path.join(os.homedir(), '.counsel', 'chromadb'),
   defaultLimit: parseInt(process.env.DEFAULT_SEARCH_LIMIT || '10'),
   defaultThreshold: parseFloat(process.env.DEFAULT_SIMILARITY_THRESHOLD || '0.7')
@@ -92,16 +93,18 @@ export const getChromaClient = async (): Promise<ChromaClient> => {
  */
 const getCollection = async (name: string): Promise<Collection> => {
   const client = await getChromaClient();
+  const embeddingFunction = await getEmbeddingFunction();
   
   try {
     return await client.getCollection({ 
       name,
-      embeddingFunction: new DefaultEmbeddingFunction()
+      embeddingFunction
     });
   } catch {
     // Collection doesn't exist, create it
     return await client.createCollection({
       name,
+      embeddingFunction,
       metadata: { 
         created: new Date().toISOString(),
         version: '2.0'  // Updated for simplified schema
@@ -116,8 +119,17 @@ const getCollection = async (name: string): Promise<Collection> => {
 const getFileWeight = (fileName: string): number => {
   for (const [pattern, weight] of Object.entries(VECTORIZATION_CONFIG.index)) {
     if (pattern.includes('*')) {
-      const regex = new RegExp(pattern.replace('*', '.*'));
-      if (regex.test(fileName)) return weight as number;
+      // Convert glob pattern to regex properly
+      const regexPattern = pattern
+        .replace(/\*\*/g, '.*')    // ** matches anything including /
+        .replace(/\*/g, '[^/]*');  // * matches anything except /
+      try {
+        const regex = new RegExp(regexPattern);
+        if (regex.test(fileName)) return weight as number;
+      } catch {
+        // Invalid regex, skip this pattern
+        continue;
+      }
     } else if (fileName === pattern) {
       return weight as number;
     }
@@ -132,8 +144,17 @@ const shouldIndexFile = (fileName: string): boolean => {
   // Check skip list first
   for (const pattern of VECTORIZATION_CONFIG.skip) {
     if (pattern.includes('*')) {
-      const regex = new RegExp(pattern.replace('*', '.*'));
-      if (regex.test(fileName)) return false;
+      // Convert glob pattern to regex properly
+      const regexPattern = pattern
+        .replace(/\*\*/g, '.*')    // ** matches anything including /
+        .replace(/\*/g, '[^/]*');  // * matches anything except /
+      try {
+        const regex = new RegExp(regexPattern);
+        if (regex.test(fileName)) return false;
+      } catch {
+        // Invalid regex, skip this pattern
+        continue;
+      }
     } else if (fileName === pattern) {
       return false;
     }

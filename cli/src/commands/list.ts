@@ -5,7 +5,7 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { getChromaClient } from '../services/chromadb-client';
-import { CounselMode } from '../types';
+import { CounselMode, ProjectMetadata } from '../types';
 
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
 
@@ -61,11 +61,16 @@ export function registerListCommands(program: Command) {
           console.log(chalk.gray('─'.repeat(40)));
           
           for (const item of modeItems) {
-            const status = item.status === 'completed' ? chalk.green('✓') :
+            const isClosedProject = item.projectStatus === 'closed' || item.status === 'closed';
+            const status = isClosedProject ? chalk.blue('✓') :
+                          item.status === 'completed' ? chalk.green('✓') :
                           item.status === 'in-progress' ? chalk.yellow('◐') :
                           chalk.gray('○');
             
-            console.log(`${status} ${chalk.bold(item.name)}`);
+            const nameDisplay = isClosedProject ? 
+              `${chalk.bold(item.name)} ${chalk.blue('[CLOSED]')}` : 
+              chalk.bold(item.name);
+            console.log(`${status} ${nameDisplay}`);
             
             if (item.description) {
               console.log(`  ${chalk.gray(item.description.substring(0, 60))}${item.description.length > 60 ? '...' : ''}`);
@@ -75,7 +80,13 @@ export function registerListCommands(program: Command) {
               console.log(`  ${chalk.dim('Project:')} ${item.project.name}`);
             }
             
-            if (item.updated) {
+            if (isClosedProject && item.closedAt) {
+              const date = new Date(item.closedAt);
+              console.log(`  ${chalk.dim('Closed:')} ${date.toLocaleDateString()}`);
+              if (item.hasRetro) {
+                console.log(`  ${chalk.dim('Retro:')} ${chalk.green('✓')} Has retrospective`);
+              }
+            } else if (item.updated) {
               const date = new Date(item.updated);
               const now = new Date();
               const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
@@ -190,26 +201,47 @@ async function listFromFilesystem(options: any) {
         
         if (!stats.isDirectory()) continue;
         
-        // Try to read status
-        let status = 'planned';
-        let planStatus = null;
+        // Try to read metadata.json first
+        let metadata: ProjectMetadata | null = null;
         try {
-          const statusPath = path.join(itemPath, 'plan-approved.plan-status.json');
-          const statusContent = await fs.readFile(statusPath, 'utf-8');
-          planStatus = statusContent;
-          const parsed = JSON.parse(statusContent);
-          
-          // Determine overall status
-          const hasCompleted = parsed.phases?.some((p: any) => p.status === 'done');
-          const hasInProgress = parsed.phases?.some((p: any) => p.status === 'doing');
-          
-          if (hasCompleted && !hasInProgress) {
-            status = 'completed';
-          } else if (hasInProgress || hasCompleted) {
-            status = 'in-progress';
-          }
+          const metadataContent = await fs.readFile(path.join(itemPath, 'metadata.json'), 'utf-8');
+          metadata = JSON.parse(metadataContent);
         } catch {
-          // No status file
+          // No metadata file
+        }
+        
+        // Check if has retrospective
+        let hasRetro = false;
+        try {
+          await fs.access(path.join(itemPath, 'retro.md'));
+          hasRetro = true;
+        } catch {
+          // No retro file
+        }
+        
+        // Try to read status
+        let status = metadata?.status === 'closed' ? 'closed' : 'planned';
+        let planStatus = null;
+        
+        if (metadata?.status !== 'closed') {
+          try {
+            const statusPath = path.join(itemPath, 'plan-approved.plan-status.json');
+            const statusContent = await fs.readFile(statusPath, 'utf-8');
+            planStatus = statusContent;
+            const parsed = JSON.parse(statusContent);
+            
+            // Determine overall status
+            const hasCompleted = parsed.phases?.some((p: any) => p.status === 'done');
+            const hasInProgress = parsed.phases?.some((p: any) => p.status === 'doing');
+            
+            if (hasCompleted && !hasInProgress) {
+              status = 'completed';
+            } else if (hasInProgress || hasCompleted) {
+              status = 'in-progress';
+            }
+          } catch {
+            // No status file
+          }
         }
         
         // Read description from first .md file
@@ -231,11 +263,14 @@ async function listFromFilesystem(options: any) {
         items.push({
           name: dir,
           mode,
-          status,
+          status: metadata?.status === 'closed' ? 'closed' : status,
+          projectStatus: metadata?.status,
           description,
           planStatus,
-          created: stats.birthtime.toISOString(),
-          updated: stats.mtime.toISOString(),
+          created: metadata?.createdAt || stats.birthtime.toISOString(),
+          updated: metadata?.updatedAt || stats.mtime.toISOString(),
+          closedAt: metadata?.closedAt,
+          hasRetro,
           path: itemPath
         });
       }
@@ -246,7 +281,13 @@ async function listFromFilesystem(options: any) {
   
   // Filter by status if requested
   if (options.status) {
-    return items.filter(item => item.status === options.status);
+    return items.filter(item => {
+      // Handle closed as a special status
+      if (options.status === 'closed') {
+        return item.projectStatus === 'closed';
+      }
+      return item.status === options.status;
+    });
   }
   
   // Sort by recent if requested

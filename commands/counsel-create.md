@@ -29,25 +29,6 @@ Please specify mode: /counsel-create [mode] [description]
 ═══════════════════════════════════════════════════════════════
 ```
 
-## Step 1.5: Check for Similar Work (CLI Integration)
-
-**IMPORTANT**: Before suggesting a name, use the Counsel CLI to check for similar existing work:
-
-```bash
-counsel search "<user's description>"
-```
-
-If similar work is found with >80% similarity:
-```
-⚠️ Found similar existing counsel work:
-  • [name]: [similarity]% match
-  
-Would you like to:
-1. View the existing work (counsel status [name])
-2. Continue with creating new work
-3. Choose a different description
-```
-
 ## Step 2: Suggest Name Based on Description
 
 Based on the description and mode, suggest an appropriate name:
@@ -60,7 +41,23 @@ Based on the description and mode, suggest an appropriate name:
 - **vibe**: kebab-case, topic-summary (e.g., "api-refactor", "performance-exploration")
 - **prompt**: kebab-case, prompt-purpose (e.g., "code-reviewer", "test-generator", "doc-writer")
 
-Present the suggestion:
+### For Vibe Mode
+**Skip the name confirmation entirely**. Just auto-generate a name and proceed directly:
+
+```
+═══════════════════════════════════════════════════════════════
+                   VIBE MODE INITIALIZED
+═══════════════════════════════════════════════════════════════
+
+Created: ~/.counsel/vibes/[auto-generated-name]/
+
+Session initialized.
+
+Where should we start?
+```
+
+### For Other Modes
+Present the suggestion and ask for confirmation:
 
 ```
 ═══════════════════════════════════════════════════════════════
@@ -75,6 +72,27 @@ This will create: ~/.counsel/[mode]s/[proposed-name]/
 Is this name good, or would you prefer a different one?
 ═══════════════════════════════════════════════════════════════
 ```
+
+## Step 2.5: Check for Similar Work (CLI Integration)
+
+**After the name is confirmed (or auto-generated for vibe)**, use the Counsel CLI to check for similar existing work:
+
+```bash
+counsel search "[name] [description]"
+```
+
+If similar work is found with >80% similarity:
+```
+⚠️ Found similar existing counsel work:
+  • [name]: [similarity]% match
+  
+Would you like to:
+1. View the existing work (counsel status [name])
+2. Continue with creating new work
+3. Choose a different name
+```
+
+**Note**: For vibe mode, if similar work is found, just mention it briefly and continue unless the similarity is >90%.
 
 ## Step 3: Create Directory Structure
 
@@ -211,19 +229,28 @@ Please specify what to review:
 Then create `scope.md` with review criteria and begin systematic review.
 
 ### Vibe Mode
+Since vibe mode auto-generates the name, the flow is streamlined. After creating the directory, immediately show:
+
 ```
 ═══════════════════════════════════════════════════════════════
                    VIBE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: ~/.counsel/vibes/[name]/
+Created: ~/.counsel/vibes/[auto-generated-name]/
 
 Session initialized.
 
 Where should we start?
 ```
 
-For vibe mode, keep it light and conversational. Create `context.md` as work progresses to document what's being explored.
+**Vibe mode file management:**
+- Create `context.md` ONCE at initialization with:
+  - What the user wants to explore/accomplish
+  - Initial research findings or insights
+  - Potential approaches to investigate
+- Create `sessions/session-[timestamp].md` for tracking significant outcomes
+- Only update session file for major milestones, not routine conversation
+- Context is the "what and why", session is the "what happened"
 
 ### Prompt Mode
 ```

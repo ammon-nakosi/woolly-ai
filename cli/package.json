@@ -22,6 +22,7 @@
     "cosmiconfig": "^9.0.0",
     "dotenv": "^16.3.1",
     "inquirer": "^9.2.12",
+    "ollama": "^0.5.17",
     "ora": "^7.0.1",
     "simple-git": "^3.20.0",
     "uuid": "^9.0.1"

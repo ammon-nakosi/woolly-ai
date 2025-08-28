@@ -34,8 +34,8 @@ class CounselSetup {
     // Create CLI commands
     await this.createCLICommands();
     
-    // Install visualizer dependencies
-    await this.installVisualizerDependencies();
+    // Install web dependencies
+    await this.installWebDependencies();
     
     // Setup AI awareness
     await this.setupAIAwareness();
@@ -409,37 +409,37 @@ if (command === 'start') {
     fs.chmodSync(chromadbCmdPath, '755');
   }
   
-  async installVisualizerDependencies() {
-    const visualizerPath = path.join(__dirname, '..', 'visualizer');
+  async installWebDependencies() {
+    const webPath = path.join(__dirname, '..', 'web');
     
-    // Check if visualizer directory exists
-    if (!fs.existsSync(visualizerPath)) {
-      console.log(chalk.yellow('⚠️  Visualizer directory not found, skipping dependency installation'));
+    // Check if web directory exists
+    if (!fs.existsSync(webPath)) {
+      console.log(chalk.yellow('⚠️  Web directory not found, skipping dependency installation'));
       return;
     }
     
-    const spinner = ora('Installing visualizer dependencies...').start();
+    const spinner = ora('Installing web dependencies...').start();
     
     try {
       // Check if node_modules already exists
-      const nodeModulesPath = path.join(visualizerPath, 'node_modules');
+      const nodeModulesPath = path.join(webPath, 'node_modules');
       if (fs.existsSync(nodeModulesPath)) {
-        spinner.info('Visualizer dependencies already installed');
+        spinner.info('Web dependencies already installed');
         return;
       }
       
       // Install dependencies
       execSync('npm install', {
-        cwd: visualizerPath,
+        cwd: webPath,
         stdio: 'ignore',
         encoding: 'utf-8'
       });
       
-      spinner.succeed('Visualizer dependencies installed successfully');
+      spinner.succeed('Web dependencies installed successfully');
     } catch (error) {
-      spinner.warn('Failed to install visualizer dependencies');
+      spinner.warn('Failed to install web dependencies');
       console.log(chalk.yellow('You can install them manually by running:'));
-      console.log(chalk.gray('  cd visualizer && npm install'));
+      console.log(chalk.gray('  cd web && npm install'));
     }
   }
   

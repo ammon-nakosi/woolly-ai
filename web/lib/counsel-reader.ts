@@ -3,13 +3,19 @@ import path from 'path';
 
 export type CounselMode = 'feature' | 'script' | 'debug' | 'review' | 'vibe';
 
+export interface FileItem {
+  name: string;
+  isDirectory: boolean;
+}
+
 export interface CounselProject {
   name: string;
   mode: CounselMode;
   path: string;
   created: Date;
   modified: Date;
-  files: string[];
+  files: string[];  // Keep for backward compatibility
+  fileItems?: FileItem[];  // New detailed file/directory info
   metadata?: {
     status?: string;
     description?: string;
@@ -108,7 +114,12 @@ export async function getProject(projectRoot: string, mode: CounselMode, name: s
     const stat = await fs.stat(projectPath);
     if (!stat.isDirectory()) return null;
     
-    const files = await fs.readdir(projectPath);
+    const entries = await fs.readdir(projectPath, { withFileTypes: true });
+    const files = entries.map(e => e.name);
+    const fileItems = entries.map(e => ({
+      name: e.name,
+      isDirectory: e.isDirectory()
+    }));
     
     return {
       name,
@@ -117,6 +128,7 @@ export async function getProject(projectRoot: string, mode: CounselMode, name: s
       created: stat.birthtime,
       modified: stat.mtime,
       files,
+      fileItems,
       metadata: await getProjectMetadata(projectPath, mode)
     };
   } catch (error) {
@@ -159,7 +171,21 @@ async function getProjectMetadata(projectPath: string, mode: CounselMode) {
 
 export async function getFileContent(projectPath: string, fileName: string): Promise<string | null> {
   try {
-    const content = await fs.readFile(path.join(projectPath, fileName), 'utf-8');
+    const filePath = path.join(projectPath, fileName);
+    const stat = await fs.stat(filePath);
+    
+    // If it's a directory, return a listing of its contents
+    if (stat.isDirectory()) {
+      const entries = await fs.readdir(filePath, { withFileTypes: true });
+      const listing = entries.map(e => {
+        const type = e.isDirectory() ? '📁' : '📄';
+        return `${type} ${e.name}`;
+      }).join('\n');
+      return `Directory contents:\n\n${listing}`;
+    }
+    
+    // If it's a file, return its content
+    const content = await fs.readFile(filePath, 'utf-8');
     return content;
   } catch {
     return null;

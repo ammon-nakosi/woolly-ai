@@ -534,7 +534,7 @@ export const DevelopmentSection: React.FC = () => (
 │   └── package.json
 ├── commands/                 # Slash command definitions
 ├── docs/                    # Framework documentation
-├── visualizer/              # Documentation website
+├── web/                     # Web interface
 └── scripts/                 # Build and deployment scripts`}</code>
       </pre>
 

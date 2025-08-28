@@ -14,14 +14,28 @@ Based on the detected mode, always load the appropriate guidelines using the CLI
 - **Script Mode**: `counsel guidelines script`  
 - **Debug/Review/Vibe/Prompt**: `counsel guidelines [mode]` as needed
 
-## CLI Integration: Check Available Work
-If no name provided, use the Counsel CLI to show available work:
+## CLI Integration: Smart Project Selection
+If no name provided, use intelligent discernment to select work:
+
+### Step 0: Gather Context and Apply Discernment
 ```bash
 counsel list --recent --limit 10
 ```
 
+**Use discernment to narrow down the options:**
+1. Check if you're already in a counsel project directory (path contains `.counsel/`)
+2. Look for project names mentioned in recent conversation context
+3. Check for `.counsel-active` file indicating recently worked project
+4. Consider the mode you're likely working in based on context
+
+**Present smart selection:**
+- If high confidence (e.g., already in project directory): Show only that 1 option
+- If medium confidence (e.g., recent context mentions): Show 2-3 most likely options  
+- If low confidence: Show up to 5 recent projects
+- Let user confirm selection before proceeding
+
 ## Parse Arguments and Detect Mode
-Parse the optional name from $ARGUMENTS.
+Parse the optional name from $ARGUMENTS or from user selection.
 
 ### Step 0.5: Quick Status Check
 If name provided, first get quick status from CLI:
@@ -312,56 +326,29 @@ Load the prompt context by reading:
 
 Then provide current status and recommend next steps for prompt refinement or testing.
 
-### If no name provided:
-List available work across all modes and provide framework overview:
+### If no name provided and no clear context:
+After applying discernment, if you still need user input, present a concise selection:
 
 ```
 ═══════════════════════════════════════════════════════════════
                     COUNSEL FRAMEWORK LOADED
 ═══════════════════════════════════════════════════════════════
 
-The Counsel Framework supports multiple work modes.
+Based on recent activity, select a project to reload:
 
-## Available Work
+1. [mode]/[name] - [brief status or last updated]
+2. [mode]/[name] - [brief status or last updated]
+3. [mode]/[name] - [brief status or last updated]
 
-### Features (~/.counsel/features/)
-[List all directories in ~/.counsel/features/ with status]
-• [feature-1]: Phase [N] - [Status]
-• [feature-2]: Phase [N] - [Status]
+Which project would you like to reload? (1-3):
 
-### Scripts (~/.counsel/scripts/)
-[List all directories in ~/.counsel/scripts/]
-• [script-1]: [Purpose if known]
-• [script-2]: [Purpose if known]
-
-### Debug Sessions (~/.counsel/debugs/)
-[List all directories in ~/.counsel/debugs/]
-• [issue-1]: [Status]
-• [issue-2]: [Status]
-
-### Review Sessions (~/.counsel/reviews/)
-[List all directories in ~/.counsel/reviews/]
-• [review-1]: [Target] - [Status]
-• [review-2]: [Target] - [Status]
-
-### Vibe Sessions (~/.counsel/vibes/)
-[List all directories in ~/.counsel/vibes/]
-
-### Prompt Engineering (~/.counsel/prompts/)
-[List all directories in ~/.counsel/prompts/]
-• [session-1]: [Topic]
-• [session-2]: [Topic]
-
-## Commands
-
-To start new work:
+Or start new work with:
 /counsel-init [feature|script|debug|review|vibe] "description"
-
-To continue existing work:
-/counsel-reload [name]
 
 ═══════════════════════════════════════════════════════════════
 ```
+
+**Note**: Use your judgment to present fewer options when confident. If very confident about the project (e.g., it's mentioned in the conversation or you're in its directory), you can present just 1 option for confirmation.
 
 ## Role Personas and Document Focus
 

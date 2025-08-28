@@ -1,4 +1,4 @@
-You are opening the Counsel Framework web interface. This command starts the Next.js development server for the visualizer application.
+You are opening the Counsel Framework web interface. This command starts the Next.js development server for the web application.
 
 ## Primary Task
 Start the Next.js development server (configured to run on port 3555) using the CLI command.
@@ -11,14 +11,14 @@ Start the Next.js development server (configured to run on port 3555) using the 
    ```
    
    This should start the server and display:
-   - 🚀 Starting Counsel Framework Visualizer...
+   - 🚀 Starting Counsel Framework Web Interface...
    - Access at: http://localhost:3555
    
 2. **If the CLI command fails (command not found), use fallback method:**
 
    ```bash
-   # Navigate to visualizer directory
-   cd visualizer
+   # Navigate to web directory
+   cd web
    
    # Check and install dependencies if needed
    if [ ! -d "node_modules" ]; then
@@ -42,7 +42,7 @@ Start the Next.js development server (configured to run on port 3555) using the 
 - If server fails to start, check the console output for Next.js errors
 
 ## Notes
-- The visualizer provides a web-based interface for managing Counsel Framework projects
+- The web interface provides a web-based UI for managing Counsel Framework projects
 - Port 3555 is the default port configured in package.json
 - The server runs in development mode with hot reloading enabled
 - Press Ctrl+C to stop the server

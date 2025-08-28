@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { CounselProject } from '@/lib/counsel-reader';
+import { CounselProject, FileItem } from '@/lib/counsel-reader';
 import MarkdownViewer from '@/components/MarkdownViewerSimple';
 import dynamic from 'next/dynamic';
 
@@ -95,7 +95,11 @@ export default function FilesPage({ params }: FilesPageProps) {
     );
   }
 
-  const getFileIcon = (fileName: string) => {
+  const getFileIcon = (item: FileItem | string) => {
+    const fileName = typeof item === 'string' ? item : item.name;
+    const isDirectory = typeof item === 'object' && item.isDirectory;
+    
+    if (isDirectory) return '📁';
     if (fileName.endsWith('.md')) return '📝';
     if (fileName.endsWith('.json')) return '📊';
     if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) return '🟦';
@@ -115,22 +119,27 @@ export default function FilesPage({ params }: FilesPageProps) {
         
         <div className="bg-white rounded-lg shadow">
           <div className="divide-y divide-gray-200">
-            {project.files.map((file) => (
-              <button
-                key={file}
-                onClick={() => setSelectedFile(file)}
-                className="w-full flex items-center gap-3 px-6 py-3 hover:bg-gray-50 transition-colors text-left"
-              >
-                <span className="text-xl flex-shrink-0">{getFileIcon(file)}</span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-gray-900">{file}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    {file.split('/').slice(0, -1).join('/') || 'Root'}
-                  </p>
-                </div>
-                <span className="text-gray-400">→</span>
-              </button>
-            ))}
+            {(project.fileItems || project.files.map(f => ({ name: f, isDirectory: false }))).map((item) => {
+              const itemName = typeof item === 'string' ? item : item.name;
+              const isDirectory = typeof item === 'object' && item.isDirectory;
+              
+              return (
+                <button
+                  key={itemName}
+                  onClick={() => setSelectedFile(itemName)}
+                  className="w-full flex items-center gap-3 px-6 py-3 hover:bg-gray-50 transition-colors text-left"
+                >
+                  <span className="text-xl flex-shrink-0">{getFileIcon(item)}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-gray-900">{itemName}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {isDirectory ? 'Directory' : itemName.split('/').slice(0, -1).join('/') || 'Root'}
+                    </p>
+                  </div>
+                  <span className="text-gray-400">→</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -169,7 +178,32 @@ export default function FilesPage({ params }: FilesPageProps) {
                 </div>
               </div>
               
-              {selectedFile.endsWith('.md') ? (
+              {fileContent && fileContent.startsWith('Directory contents:') ? (
+                <div className="divide-y divide-gray-200">
+                  {fileContent.split('\n').slice(2).filter(line => line.trim()).map((line, idx) => {
+                    const isDirectory = line.includes('📁');
+                    const icon = isDirectory ? '📁' : '📄';
+                    const name = line.replace(/📁|📄/g, '').trim();
+                    const fullPath = selectedFile + '/' + name;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedFile(fullPath)}
+                        className="w-full flex items-center gap-3 px-6 py-3 hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <span className="text-xl flex-shrink-0">{icon}</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-gray-900">{name}</p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {isDirectory ? 'Directory' : selectedFile}
+                          </p>
+                        </div>
+                        <span className="text-gray-400">→</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : selectedFile.endsWith('.md') ? (
                 fileContent ? (
                   <MarkdownViewer
                     content={fileContent}

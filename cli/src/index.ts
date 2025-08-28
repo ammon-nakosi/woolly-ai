@@ -12,13 +12,14 @@ import { registerStatusCommands } from './commands/status';
 import { registerCursorCommands } from './commands/cursor';
 import { registerGitCommands } from './commands/git';
 import { registerIndexCommands } from './commands/index';
-import { registerChromaDBCommands } from './commands/chromadb';
+import { registerChromaDBCommands } from './commands/chromadb-venv';
 import { registerOpenCommands } from './commands/open';
 import { registerAwarenessCommands } from './commands/awareness';
 import { registerTimeCommands } from './commands/time';
 import { registerSessionCommands } from './commands/session';
 import { registerGuidelinesCommand } from './commands/guidelines';
 import { registerReloadCommands } from './commands/reload';
+import { registerCloseCommands } from './commands/close';
 
 const program = new Command();
 
@@ -44,6 +45,7 @@ async function main() {
   registerAddCommands(program);
   registerAwarenessCommands(program);
   registerChromaDBCommands(program);
+  registerCloseCommands(program);
   registerGuidelinesCommand(program);
   registerIndexCommands(program);
   registerLinearCommands(program);

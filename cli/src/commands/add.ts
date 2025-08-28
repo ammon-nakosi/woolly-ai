@@ -5,7 +5,7 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { indexCounselWork } from '../services/chromadb-client';
-import { CounselMode } from '../types';
+import { CounselMode, ProjectMetadata } from '../types';
 import simpleGit from 'simple-git';
 
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
@@ -86,6 +86,31 @@ export function registerAddCommands(program: Command) {
         if (!description) {
           description = `${mode} work: ${name}`;
         }
+        
+        // Create or update metadata.json
+        const metadataPath = path.join(counselPath, 'metadata.json');
+        const metadata: ProjectMetadata = {
+          name,
+          mode: mode as CounselMode,
+          status: 'open',
+          createdAt: new Date().toISOString(),
+          closedAt: null,
+          updatedAt: new Date().toISOString()
+        };
+        
+        // Check if metadata already exists
+        try {
+          const existing = await fs.readFile(metadataPath, 'utf-8');
+          const existingMetadata = JSON.parse(existing);
+          // Preserve existing createdAt and status
+          metadata.createdAt = existingMetadata.createdAt;
+          metadata.status = existingMetadata.status;
+          metadata.closedAt = existingMetadata.closedAt;
+        } catch {
+          // No existing metadata, use new
+        }
+        
+        await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2));
         
         // Index existing markdown files in the counsel work
         spinner.text = 'Indexing counsel work in ChromaDB...';
