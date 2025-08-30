@@ -8,10 +8,13 @@ export function registerOpenCommands(program: Command) {
     .command('open')
     .description('Open the Counsel Framework web interface')
     .action(async () => {
-      const webPath = path.join(process.cwd(), 'web');
+      // Find the framework root directory relative to this command file
+      const frameworkRoot = path.join(__dirname, '..', '..', '..');
+      const webPath = path.join(frameworkRoot, 'web');
       
       if (!fs.existsSync(webPath)) {
-        console.error('❌ Web directory not found. Make sure you are in the counsel-framework directory.');
+        console.error('❌ Web directory not found at:', webPath);
+        console.error('Please ensure the counsel-framework is properly installed.');
         process.exit(1);
       }
 

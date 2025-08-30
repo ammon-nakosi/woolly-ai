@@ -28,7 +28,7 @@
       "Read(/Users/ammonowens/.counsel/debugs/test-close-feature/**)",
       "Read(/Users/ammonowens/.counsel/features/test-session-close/sessions/**)",
       "Read(/Users/ammonowens/.counsel/features/test-session-close/**)",
-      "Bash(counsel close:*)",
+      "Bash(counsel finalize:*)",
       "Bash(git mv:*)",
       "Bash(node:*)",
       "Read(/Users/ammonowens/.counsel/vibes/chromadb-venv-setup/**)",
@@ -36,7 +36,14 @@
       "Bash(curl:*)",
       "Bash(USE_OLLAMA=true counsel index --all)",
       "Bash(USE_OLLAMA=true counsel search:*)",
-      "Bash(counsel search:*)"
+      "Bash(counsel search:*)",
+      "Read(/private/tmp/**)",
+      "Read(/private/tmp/**)",
+      "Read(/Users/ammonowens/.counsel/**)",
+      "Bash(ollama serve:*)",
+      "Read(/Users/ammonowens/.counsel/**)",
+      "Read(/Users/ammonowens/.counsel/scripts/**)",
+      "Read(/Users/ammonowens/.counsel/scripts/sync-users-to-hubspot/**)"
     ],
     "deny": [],
     "ask": []

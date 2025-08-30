@@ -62,6 +62,17 @@ Recognize these patterns for managing counsel work:
 
 **Action**: Use appropriate counsel command
 
+### 5. Project Closure
+Recognize these patterns for closing and finalizing counsel work:
+- `close this counsel session` → Use `/counsel-close`
+- `close the counsel project` → Use `/counsel-close`
+- `counsel finalize` → Use `/counsel-close`
+- `wrap up this counsel work` → Use `/counsel-close`
+- `we're done with this counsel` → Use `/counsel-close`
+- `close counsel session` → Use `/counsel-close`
+
+**Action**: Use `/counsel-close` which handles the full closure workflow including retrospective analysis
+
 ## Context Awareness
 
 ### Active Work Tracking
@@ -102,8 +113,9 @@ When users mention counsel, you have access to these slash commands:
 - `/counsel-status` - Check work status
 - `/counsel-list` - List all work
 - `/counsel-reload` - Load work context
-- `/counsel-feature-*` - Feature-specific workflows
-- `/counsel-prompt-*` - Prompt engineering workflows
+- `/counsel-close` - Finalize and close work with retrospective
+- `/counsel-feature` - Feature-specific workflows
+- `/counsel-prompt` - Prompt engineering workflows
 
 ### CLI Integration
 You can also use the CLI directly:

@@ -34,10 +34,11 @@ interface UserInsights {
 
 export function registerCloseCommands(program: Command) {
   program
-    .command('close <name>')
-    .description('Close a counsel project and generate retrospective')
+    .command('finalize <name>')
+    .description('Finalize a counsel project and generate retrospective')
     .option('-m, --mode <mode>', 'Specify mode if ambiguous')
     .option('--interactive', 'Enable interactive mode to prompt for user insights')
+    .option('--agent', 'Running in agent mode (enforces AI analysis)')
     .option('--ai-went-well <text>', 'AI analysis: What went well')
     .option('--ai-improve <text>', 'AI analysis: What could be improved')
     .option('--ai-avoid <text>', 'AI analysis: What to avoid')
@@ -48,6 +49,9 @@ export function registerCloseCommands(program: Command) {
       const spinner = ora('Finding project...').start();
       
       try {
+        // Check if running in agent mode or non-TTY environment
+        const isAgent = options.agent || !process.stdin.isTTY;
+        
         const projectPath = await findProjectPath(name, options.mode);
         if (!projectPath) {
           spinner.fail(`Project "${name}" not found`);
@@ -91,6 +95,16 @@ export function registerCloseCommands(program: Command) {
             whatToAvoid: options.aiAvoid ? [options.aiAvoid] : []
           };
           spinner.succeed('Using AI-provided analysis');
+        } else if (isAgent) {
+          // Agent mode requires AI analysis
+          spinner.fail('Agent mode requires AI analysis flags (--ai-went-well, --ai-improve, --ai-avoid)');
+          console.log(chalk.yellow('\nUsage for agents:'));
+          console.log(chalk.gray('  counsel finalize <name> --agent \\'));
+          console.log(chalk.gray('    --ai-went-well "What went well" \\'));
+          console.log(chalk.gray('    --ai-improve "What could be improved" \\'));
+          console.log(chalk.gray('    --ai-avoid "What to avoid"'));
+          console.log(chalk.yellow('\nOr follow the /counsel-close workflow for proper instructions'));
+          return;
         } else {
           // Fallback to programmatic analysis (deprecated path)
           spinner.start('Analyzing project artifacts...');

@@ -1,6 +1,6 @@
 ---
 description: "Create a new counsel workflow with appropriate mode"
-argument-hint: "[mode] [brief description]"
+argument-hint: "{feature|script|debug|review|vibe|prompt} [brief description]"
 ---
 
 You are initiating a new Counsel Framework workflow. Parse the arguments from $ARGUMENTS as:

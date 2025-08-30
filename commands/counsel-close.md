@@ -1,6 +1,8 @@
 # Counsel Close Command
 
-You are closing a counsel project. This involves updating the session, providing your analysis, closing the project, then gathering user insights.
+You are closing a counsel project. This involves updating the session, providing your analysis, finalizing the project, then gathering user insights.
+
+**IMPORTANT**: This is a slash command workflow (/counsel-close) for AI agents. The actual CLI command is `counsel finalize` (not `counsel close`).
 
 ## Determining Which Project to Close
 
@@ -31,12 +33,12 @@ counsel session "Summary of what was accomplished and key decisions made" --work
 
 This should be a natural session update, as if the user just asked for a status update.
 
-### Step 2: Provide Your Analysis and Close
+### Step 2: Provide Your Analysis and Finalize
 
-Analyze the work done and close the project with your retrospective:
+Analyze the work done and finalize the project with your retrospective:
 
 ```bash
-counsel close <name> \
+counsel finalize <name> \
   --ai-went-well "Your analysis of what went well" \
   --ai-improve "Your analysis of what could be improved" \
   --ai-avoid "Your analysis of what to avoid"
@@ -118,8 +120,8 @@ AI: [Already knows we're working on fix-counsel-close-interactive, proceeds dire
     [Updates session naturally]
     counsel session "Completed implementation of non-interactive close command..."
     
-    [Provides analysis and closes]
-    counsel close fix-counsel-close-interactive \
+    [Provides analysis and finalizes]
+    counsel finalize fix-counsel-close-interactive \
       --ai-went-well "..." \
       --ai-improve "..." \
       --ai-avoid "..."
@@ -154,9 +156,9 @@ AI: [Proceeds with closing dark-mode]
 
 ## Mode Detection
 
-The close command will auto-detect the mode from the project path. If ambiguous:
+The finalize command will auto-detect the mode from the project path. If ambiguous:
 ```bash
-counsel close <name> --mode <feature|script|debug|review|vibe>
+counsel finalize <name> --mode <feature|script|debug|review|vibe>
 ```
 
 ## Error Handling
