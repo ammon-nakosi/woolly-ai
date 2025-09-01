@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
   Filter, 
@@ -44,39 +43,6 @@ const modeColors = {
   script: 'secondary' as const,
   vibe: 'outline' as const,
   prompt: 'destructive' as const
-};
-
-// Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 }
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const cardVariants = {
-  initial: { opacity: 0, scale: 0.95 },
-  animate: { 
-    opacity: 1, 
-    scale: 1,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut"
-    }
-  },
-  whileHover: { 
-    scale: 1.02,
-    transition: {
-      duration: 0.2
-    }
-  }
 };
 
 export default function ModernHomePage() {
@@ -156,12 +122,7 @@ export default function ModernHomePage() {
   });
 
   return (
-    <motion.div 
-      className="min-h-screen bg-gradient-to-b from-background to-muted/20"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Hero Section */}
       <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-8">
@@ -184,51 +145,38 @@ export default function ModernHomePage() {
             </div>
 
             {/* Quick Stats */}
-            <motion.div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"
-              variants={staggerContainer}
-              initial="initial"
-              animate="animate"
-            >
-              <motion.div variants={fadeInUp}>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Total Projects</CardDescription>
-                    <CardTitle className="text-2xl">{projects.length}</CardTitle>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Features</CardDescription>
-                    <CardTitle className="text-2xl">
-                      {projects.filter(p => p.mode === 'feature').length}
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Scripts</CardDescription>
-                    <CardTitle className="text-2xl">
-                      {projects.filter(p => p.mode === 'script').length}
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardDescription>Vibes</CardDescription>
-                    <CardTitle className="text-2xl">
-                      {projects.filter(p => p.mode === 'vibe').length}
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-            </motion.div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardDescription>Total Projects</CardDescription>
+                  <CardTitle className="text-2xl">{projects.length}</CardTitle>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardDescription>Features</CardDescription>
+                  <CardTitle className="text-2xl">
+                    {projects.filter(p => p.mode === 'feature').length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardDescription>Scripts</CardDescription>
+                  <CardTitle className="text-2xl">
+                    {projects.filter(p => p.mode === 'script').length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardDescription>Vibes</CardDescription>
+                  <CardTitle className="text-2xl">
+                    {projects.filter(p => p.mode === 'vibe').length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
@@ -312,24 +260,13 @@ export default function ModernHomePage() {
                 ))}
               </div>
             ) : (
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                variants={staggerContainer}
-                initial="initial"
-                animate="animate"
-              >
-                <AnimatePresence mode="popLayout">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {sortedProjects.map((project) => (
-                  <motion.div
+                  <Link
                     key={`${project.mode}-${project.name}`}
-                    variants={cardVariants}
-                    initial="initial"
-                    animate="animate"
-                    whileHover="whileHover"
-                    layout
+                    href={`/projects/${project.mode}/${project.name}`}
                   >
-                    <Link href={`/projects/${project.mode}/${project.name}`}>
-                      <Card className="h-full hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+                    <Card className="h-full hover:shadow-lg transition-all duration-200 hover:scale-[1.02] cursor-pointer">
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -355,12 +292,10 @@ export default function ModernHomePage() {
                           <ChevronRight className="w-4 h-4" />
                         </div>
                       </CardContent>
-                      </Card>
-                    </Link>
-                  </motion.div>
+                    </Card>
+                  </Link>
                 ))}
-                </AnimatePresence>
-              </motion.div>
+              </div>
             )}
 
             {sortedProjects.length === 0 && !loading && (
@@ -447,6 +382,6 @@ export default function ModernHomePage() {
           </TabsContent>
         </Tabs>
       </div>
-    </motion.div>
+    </div>
   );
 }
