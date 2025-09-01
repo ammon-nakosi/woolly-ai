@@ -8,6 +8,7 @@ import readline from 'readline';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { CounselMode } from '../types';
+import { ruleInjectionService } from '../services/rule-injection';
 
 const execAsync = promisify(exec);
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
@@ -21,7 +22,7 @@ interface WorkContext {
 }
 
 async function findCounselWork(name: string): Promise<WorkContext | null> {
-  const modes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe', 'prompt'];
+  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
   
   for (const mode of modes) {
     const workPath = path.join(COUNSEL_BASE, `${mode}s`, name);
@@ -67,7 +68,7 @@ async function detectWorkFromDirectory(): Promise<WorkContext | null> {
 }
 
 async function getRecentProjects(limit: number = 10): Promise<WorkContext[]> {
-  const modes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe', 'prompt'];
+  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
   const projects: WorkContext[] = [];
   
   for (const mode of modes) {
@@ -281,6 +282,15 @@ export function registerReloadCommands(program: Command) {
           console.log(stdout);
         } catch (error) {
           console.error(chalk.red('Failed to load guidelines:'), error);
+        }
+        
+        // Refresh rule injection files
+        try {
+          await ruleInjectionService.refreshRules(process.cwd());
+          console.log(chalk.gray('📚 Rules refreshed'));
+        } catch (error) {
+          // Non-fatal error - don't block work
+          console.error(chalk.yellow('Warning: Failed to refresh rules:'), error);
         }
         
         console.log(chalk.cyan('═'.repeat(63)));

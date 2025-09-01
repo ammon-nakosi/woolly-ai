@@ -72,8 +72,6 @@ class CounselSetup {
       COUNSEL_DIR,
       path.join(COUNSEL_DIR, 'features'),
       path.join(COUNSEL_DIR, 'scripts'),
-      path.join(COUNSEL_DIR, 'debugs'),
-      path.join(COUNSEL_DIR, 'reviews'),
       path.join(COUNSEL_DIR, 'vibes'),
       path.join(COUNSEL_DIR, 'prompts'),
       path.join(COUNSEL_DIR, 'archives'),
@@ -450,17 +448,17 @@ if (command === 'start') {
     const spinner = ora('Setting up AI awareness...').start();
     
     try {
-      // Copy awareness document to ~/.counsel/ai-awareness/
-      const sourceAwareness = path.join(__dirname, '..', 'docs', 'COUNSEL-AWARENESS.md');
+      // Copy AI instructions document to ~/.counsel/ai-awareness/
+      const sourceAwareness = path.join(__dirname, '..', 'docs', 'COUNSEL-AI-INSTRUCTIONS.md');
       const targetDir = path.join(COUNSEL_DIR, 'ai-awareness');
-      const targetAwareness = path.join(targetDir, 'COUNSEL-AWARENESS.md');
+      const targetAwareness = path.join(targetDir, 'COUNSEL-AI-INSTRUCTIONS.md');
       
       // Ensure target directory exists
       if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true });
       }
       
-      // Copy awareness document
+      // Copy AI instructions document
       if (fs.existsSync(sourceAwareness)) {
         fs.copyFileSync(sourceAwareness, targetAwareness);
       }
@@ -481,32 +479,39 @@ if (command === 'start') {
         }
         
         // Check if import already exists
-        const importLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md';
-        const hasImport = claudeMdContent.includes(importLine) || 
-                         claudeMdContent.includes('counsel/ai-awareness');
+        const newImportLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AI-INSTRUCTIONS.md';
+        const oldImportLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md';
+        const hasNewImport = claudeMdContent.includes(newImportLine);
+        const hasOldImport = claudeMdContent.includes(oldImportLine);
+        const hasImport = hasNewImport || hasOldImport;
         
-        if (!hasImport) {
+        if (hasOldImport && !hasNewImport) {
+          // Migrate from old import to new import
+          const updatedContent = claudeMdContent.replace(oldImportLine, newImportLine);
+          fs.writeFileSync(claudeMdPath, updatedContent);
+          spinner.succeed('AI instructions updated: Migrated to new counsel instructions file');
+        } else if (!hasImport) {
           // Add import statement
           const updatedContent = claudeMdContent + 
             (claudeMdContent && !claudeMdContent.endsWith('\n') ? '\n' : '') +
             '\n# Counsel Framework Integration\n' +
-            importLine + '\n';
+            newImportLine + '\n';
           
           fs.writeFileSync(claudeMdPath, updatedContent);
           
           if (isNewFile) {
-            spinner.succeed('AI awareness configured: Created CLAUDE.md with counsel awareness');
+            spinner.succeed('AI instructions configured: Created CLAUDE.md with counsel instructions');
           } else {
-            spinner.succeed('AI awareness configured: Added counsel import to CLAUDE.md');
+            spinner.succeed('AI instructions configured: Added counsel import to CLAUDE.md');
           }
         } else {
-          spinner.succeed('AI awareness already configured in CLAUDE.md');
+          spinner.succeed('AI instructions already configured in CLAUDE.md');
         }
       } else {
-        // Claude not installed, but awareness files are ready
-        spinner.succeed('AI awareness files prepared (Claude not detected)');
+        // Claude not installed, but instruction files are ready
+        spinner.succeed('AI instruction files prepared (Claude not detected)');
         console.log(chalk.yellow('  To enable: Add this to ~/.claude/CLAUDE.md:'));
-        console.log(chalk.gray('  import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md'));
+        console.log(chalk.gray('  import: ~/.counsel/ai-awareness/COUNSEL-AI-INSTRUCTIONS.md'));
       }
       
       // Create version file for tracking

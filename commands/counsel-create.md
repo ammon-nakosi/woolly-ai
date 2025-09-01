@@ -1,10 +1,10 @@
 ---
 description: "Create a new counsel workflow with appropriate mode"
-argument-hint: "{feature|script|debug|review|vibe|prompt} [brief description]"
+argument-hint: "{feature|script|vibe|prompt} [brief description]"
 ---
 
 You are initiating a new Counsel Framework workflow. Parse the arguments from $ARGUMENTS as:
-1. **Mode**: The first word should be one of: `feature`, `script`, `debug`, `review`, `vibe`, or `prompt`
+1. **Mode**: The first word should be one of: `feature`, `script`, `vibe`, or `prompt`
 2. **Description**: The rest of the arguments form a brief description
 
 If mode is missing or invalid, show available modes and ask which one to use.
@@ -20,8 +20,6 @@ Validate the mode is one of the supported types. If not, present:
 
 • feature - Full development lifecycle for new features
 • script - Quick automation scripts and utilities  
-• debug - Systematic debugging of issues
-• review - Code review, architecture review, or reviewing counsel work
 • vibe - Flexible, exploratory work
 • prompt - AI prompt engineering and optimization
 
@@ -36,8 +34,6 @@ Based on the description and mode, suggest an appropriate name:
 **Naming Conventions:**
 - **feature**: kebab-case, feature-focused (e.g., "dark-mode-settings", "user-authentication")
 - **script**: kebab-case, action-oriented (e.g., "db-backup", "log-analyzer")
-- **debug**: kebab-case, issue-description (e.g., "slow-page-load", "auth-error-500")
-- **review**: kebab-case, review-target (e.g., "pr-auth-feature", "feature-dark-mode", "security-audit")
 - **vibe**: kebab-case, topic-summary (e.g., "api-refactor", "performance-exploration")
 - **prompt**: kebab-case, prompt-purpose (e.g., "code-reviewer", "test-generator", "doc-writer")
 
@@ -99,8 +95,6 @@ Would you like to:
 Once the user approves or provides an alternative name, create the appropriate directory:
 - `~/.counsel/features/[name]/` for feature mode
 - `~/.counsel/scripts/[name]/` for script mode
-- `~/.counsel/debugs/[name]/` for debug mode
-- `~/.counsel/reviews/[name]/` for review mode
 - `~/.counsel/vibes/[name]/` for vibe mode
 - `~/.counsel/prompts/[name]/` for prompt mode
 
@@ -182,56 +176,8 @@ Then begin coding.
 - Default to dry-run mode for safety (require `--live` flag for actual execution)
 - Testing progression: dry-run with small limit → dry-run with larger limit → live with small limit → full production
 
-### Debug Mode
-```
-═══════════════════════════════════════════════════════════════
-                  DEBUG MODE INITIALIZED
-═══════════════════════════════════════════════════════════════
-
-Created: ~/.counsel/debugs/[name]/
-
-Let's systematically debug this issue. First, I need to understand:
-- What symptoms are you seeing?
-- When did this start happening?
-- Can you reproduce it consistently?
-- Any error messages or logs?
-
-Describe the issue:
-```
-
-Then create both `context.md` using the universal template and `issue.md` with the problem description and begin investigation.
-
-### Review Mode
-```
-═══════════════════════════════════════════════════════════════
-                  REVIEW MODE INITIALIZED
-═══════════════════════════════════════════════════════════════
-
-Created: ~/.counsel/reviews/[name]/
-
-What would you like to review?
-
-1. Existing Counsel work:
-   - Feature in ~/.counsel/features/
-   - Script in ~/.counsel/scripts/
-   - Debug solution in ~/.counsel/debugs/
-   
-2. External code/system:
-   - Pull request
-   - Architecture/design
-   - Security audit
-   - Existing codebase
-   - Performance analysis
-
-Please specify what to review:
-- For counsel work: "feature:name" or "script:name"
-- For external: describe what needs reviewing
-```
-
-Then create both `context.md` using the universal template and `scope.md` with review criteria and begin systematic review.
-
 ### Vibe Mode
-Since vibe mode auto-generates the name, the flow is streamlined. After creating the directory, immediately show:
+Since vibe mode auto-generates the name, the flow is streamlined. After creating the directory and context.md, read the context to extract potential approaches, then present specific options:
 
 ```
 ═══════════════════════════════════════════════════════════════
@@ -240,9 +186,13 @@ Since vibe mode auto-generates the name, the flow is streamlined. After creating
 
 Created: ~/.counsel/vibes/[auto-generated-name]/
 
-Session initialized.
+Based on your description, I see a few key areas to explore:
 
-Where should we start?
+1. **[Approach 1]** - [Brief description from context]
+2. **[Approach 2]** - [Brief description from context]  
+3. **[Approach 3]** - [Brief description from context]
+
+Which of these would you like to dive into first, or is there another angle you'd prefer to explore?
 ```
 
 **Vibe mode file management:**
@@ -250,9 +200,8 @@ Where should we start?
   - What the user wants to explore/accomplish
   - Initial research findings or insights
   - Potential approaches to investigate
-- Create `sessions/session-[timestamp].md` for tracking significant outcomes
-- Only update session file for major milestones, not routine conversation
-- Context is the "what and why", session is the "what happened"
+- **All progress updates use `/counsel-context-update`** - no session files for routine progress
+- Session files only for full session exports (like Claude Code session export)
 
 ### Prompt Mode
 ```
@@ -292,10 +241,6 @@ Create initial files based on mode:
 **Feature Mode**: Create `context.md` to track project context (other files created by subsequent commands)
 
 **Script Mode**: Create `context.md` and `purpose.md` after gathering specifications
-
-**Debug Mode**: Create `context.md` and `issue.md` with initial problem description
-
-**Review Mode**: Create `context.md` and `scope.md` with review criteria and target
 
 **Vibe Mode**: Create `context.md` to track exploration
 

@@ -7,6 +7,7 @@ import fs from 'fs/promises';
 import inquirer from 'inquirer';
 import { CounselMode } from '../types';
 import { getChromaClient } from '../services/chromadb-client';
+import { ruleInjectionService } from '../services/rule-injection';
 
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
 
@@ -119,6 +120,15 @@ export function registerCloseCommands(program: Command) {
           closedAt,
           updatedAt: closedAt
         });
+        
+        // Clear session rules for this project
+        spinner.start('Clearing session rules...');
+        try {
+          await ruleInjectionService.clearSessionRules(process.cwd(), name);
+          spinner.succeed(`Session rules for ${name} cleared`);
+        } catch (error) {
+          spinner.warn('Could not clear session rules');
+        }
         
         // Generate and save retrospective
         let retroContent = await generateRetroMarkdown(name, mode, projectPath, analysis, null);
@@ -248,7 +258,7 @@ export function registerCloseCommands(program: Command) {
 }
 
 async function findProjectPath(name: string, mode?: string): Promise<string | null> {
-  const modes: CounselMode[] = mode ? [mode as CounselMode] : ['feature', 'script', 'debug', 'review', 'vibe'];
+  const modes: CounselMode[] = mode ? [mode as CounselMode] : ['feature', 'script', 'vibe', 'prompt'];
   
   for (const m of modes) {
     const dirName = `${m}s`;
@@ -328,14 +338,8 @@ async function generateAgentAnalysis(mode: CounselMode, projectPath: string): Pr
       case 'feature':
         await analyzeFeatureProject(projectPath, analysis);
         break;
-      case 'debug':
-        await analyzeDebugProject(projectPath, analysis);
-        break;
       case 'script':
         await analyzeScriptProject(projectPath, analysis);
-        break;
-      case 'review':
-        await analyzeReviewProject(projectPath, analysis);
         break;
       case 'vibe':
         await analyzeVibeProject(projectPath, analysis);
@@ -428,37 +432,6 @@ async function analyzeFeatureProject(projectPath: string, analysis: AgentAnalysi
   }
 }
 
-async function analyzeDebugProject(projectPath: string, analysis: AgentAnalysis): Promise<void> {
-  try {
-    // Check for diagnosis file
-    const diagnosisExists = await fileExists(path.join(projectPath, 'diagnosis.md'));
-    const fixExists = await fileExists(path.join(projectPath, 'fix.md'));
-    const verificationExists = await fileExists(path.join(projectPath, 'verification.md'));
-    
-    if (diagnosisExists) {
-      analysis.whatWentWell.push('Root cause identified and documented');
-    }
-    
-    if (fixExists) {
-      analysis.whatWentWell.push('Fix implemented');
-    }
-    
-    if (verificationExists) {
-      analysis.whatWentWell.push('Fix verified');
-    }
-    
-    if (!diagnosisExists) {
-      analysis.whatCouldBeImproved.push('Root cause analysis not documented');
-    }
-    
-    if (!verificationExists && fixExists) {
-      analysis.whatCouldBeImproved.push('Fix not verified');
-    }
-    
-  } catch {
-    analysis.whatWentWell.push('Debug session completed');
-  }
-}
 
 async function analyzeScriptProject(projectPath: string, analysis: AgentAnalysis): Promise<void> {
   try {
@@ -496,32 +469,6 @@ async function analyzeScriptProject(projectPath: string, analysis: AgentAnalysis
   }
 }
 
-async function analyzeReviewProject(projectPath: string, analysis: AgentAnalysis): Promise<void> {
-  try {
-    const findingsExists = await fileExists(path.join(projectPath, 'findings.md'));
-    const recommendationsExists = await fileExists(path.join(projectPath, 'recommendations.md'));
-    const approvalExists = await fileExists(path.join(projectPath, 'approval.md'));
-    
-    if (findingsExists) {
-      analysis.whatWentWell.push('Review findings documented');
-    }
-    
-    if (recommendationsExists) {
-      analysis.whatWentWell.push('Recommendations provided');
-    }
-    
-    if (approvalExists) {
-      analysis.whatWentWell.push('Review decision documented');
-    }
-    
-    if (!findingsExists) {
-      analysis.whatCouldBeImproved.push('Review findings not documented');
-    }
-    
-  } catch {
-    analysis.whatWentWell.push('Review completed');
-  }
-}
 
 async function analyzeVibeProject(projectPath: string, analysis: AgentAnalysis): Promise<void> {
   try {
@@ -606,23 +553,6 @@ async function generateSessionInsights(mode: CounselMode, projectPath: string): 
         }
         break;
         
-      case 'debug':
-        // Analyze debug project progress
-        const hasDiagnosis = await fileExists(path.join(projectPath, 'diagnosis.md'));
-        const hasFix = await fileExists(path.join(projectPath, 'fix.md'));
-        const hasVerification = await fileExists(path.join(projectPath, 'verification.md'));
-        
-        if (hasDiagnosis && hasFix && hasVerification) {
-          insights.push('Issue fully resolved: root cause identified, fix implemented, and verification complete.');
-        } else if (hasDiagnosis && hasFix) {
-          insights.push('Root cause identified and fix implemented.');
-        } else if (hasDiagnosis) {
-          insights.push('Root cause analysis complete.');
-        } else {
-          insights.push('Debug investigation complete.');
-        }
-        break;
-        
       case 'script':
         // Analyze script project
         const hasTests = await fileExists(path.join(projectPath, 'test-results.md'));
@@ -634,20 +564,6 @@ async function generateSessionInsights(mode: CounselMode, projectPath: string): 
         }
         if (hasUsage) {
           insights.push('Usage instructions documented.');
-        }
-        break;
-        
-      case 'review':
-        // Analyze review project
-        const hasFindings = await fileExists(path.join(projectPath, 'findings.md'));
-        const hasRecommendations = await fileExists(path.join(projectPath, 'recommendations.md'));
-        
-        if (hasFindings && hasRecommendations) {
-          insights.push('Review complete with findings and recommendations documented.');
-        } else if (hasFindings) {
-          insights.push('Review findings documented.');
-        } else {
-          insights.push('Review session complete.');
         }
         break;
         

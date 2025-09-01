@@ -37,7 +37,7 @@ export const OverviewSection: React.FC = () => (
         {counselModes.map((mode) => (
           <div key={mode.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center mb-2">
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 bg-${mode.id === 'feature' ? 'blue' : mode.id === 'script' ? 'green' : mode.id === 'debug' ? 'red' : mode.id === 'review' ? 'purple' : 'yellow'}-500`}></span>
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 bg-${mode.id === 'feature' ? 'blue' : mode.id === 'script' ? 'green' : mode.id === 'prompt' ? 'purple' : 'yellow'}-500`}></span>
               <h3 className="font-semibold">{mode.name}</h3>
             </div>
             <p className="text-sm text-gray-600">{mode.description}</p>
@@ -159,7 +159,7 @@ export const CounselModesSection: React.FC = () => (
     {counselModes.map((mode) => (
       <div key={mode.id} id={`${mode.id}-mode`} className="scroll-mt-20">
         <div className="flex items-center mb-4">
-          <span className={`inline-block w-4 h-4 rounded-full mr-3 bg-${mode.id === 'feature' ? 'blue' : mode.id === 'script' ? 'green' : mode.id === 'debug' ? 'red' : mode.id === 'review' ? 'purple' : 'yellow'}-500`}></span>
+          <span className={`inline-block w-4 h-4 rounded-full mr-3 bg-${mode.id === 'feature' ? 'blue' : mode.id === 'script' ? 'green' : mode.id === 'prompt' ? 'purple' : 'yellow'}-500`}></span>
           <h2 className="text-2xl font-bold">{mode.name}</h2>
         </div>
         

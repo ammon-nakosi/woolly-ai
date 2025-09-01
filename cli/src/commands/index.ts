@@ -10,7 +10,7 @@ import { CounselMode } from '../types';
 const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
 
 async function findCounselWork(name: string): Promise<{ mode: CounselMode; path: string } | null> {
-  const modes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe'];
+  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
   
   for (const mode of modes) {
     const workPath = path.join(COUNSEL_BASE, `${mode}s`, name);
@@ -86,7 +86,7 @@ export function registerIndexCommands(program: Command) {
         
         // Index by mode
         if (options.mode) {
-          const validModes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe'];
+          const validModes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
           if (!validModes.includes(options.mode as CounselMode)) {
             spinner.fail(`Invalid mode: ${options.mode}`);
             console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));
@@ -149,7 +149,7 @@ export function registerIndexCommands(program: Command) {
         spinner.text = 'Detecting counsel work to index...';
         
         const unindexed: { name: string; mode: CounselMode; path: string }[] = [];
-        const modes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe'];
+        const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
         
         for (const mode of modes) {
           const modePath = path.join(COUNSEL_BASE, `${mode}s`);

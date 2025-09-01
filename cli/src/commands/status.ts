@@ -252,7 +252,7 @@ export function registerStatusCommands(program: Command) {
 }
 
 async function findCounselPath(name: string, mode?: string): Promise<string | null> {
-  const modes = mode ? [mode] : ['feature', 'script', 'debug', 'review', 'vibe'];
+  const modes = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
   
   for (const m of modes) {
     const counselPath = path.join(COUNSEL_BASE, `${m}s`, name);

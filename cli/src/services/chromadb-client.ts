@@ -543,7 +543,7 @@ export const indexAllCounselWork = async (
   mode?: CounselMode
 ): Promise<{ itemsIndexed: number; filesIndexed: number; errors: string[] }> => {
   const counselBase = path.join(os.homedir(), '.counsel');
-  const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'debug', 'review', 'vibe'];
+  const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
   const result = { itemsIndexed: 0, filesIndexed: 0, errors: [] as string[] };
   
   for (const currentMode of modes) {

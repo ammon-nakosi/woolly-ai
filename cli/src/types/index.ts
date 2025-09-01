@@ -1,6 +1,6 @@
 // Core types for Counsel CLI
 
-export type CounselMode = 'feature' | 'script' | 'debug' | 'review' | 'vibe' | 'prompt';
+export type CounselMode = 'feature' | 'script' | 'vibe' | 'prompt';
 export type ProjectStatus = 'active' | 'completed' | 'closed' | 'archived';
 export type TaskStatus = 'to-do' | 'doing' | 'done' | 'skipped' | 'canceled';
 export type Priority = 'urgent' | 'high' | 'medium' | 'low' | 'none';

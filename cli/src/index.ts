@@ -20,6 +20,9 @@ import { registerSessionCommands } from './commands/session';
 import { registerGuidelinesCommand } from './commands/guidelines';
 import { registerReloadCommands } from './commands/reload';
 import { registerCloseCommands } from './commands/close';
+import { registerContextCommands } from './commands/context';
+import { registerRuleCommands } from './commands/rule';
+import { registerPromptCommands } from './commands/prompt';
 
 const program = new Command();
 
@@ -46,6 +49,7 @@ async function main() {
   registerAwarenessCommands(program);
   registerChromaDBCommands(program);
   registerCloseCommands(program);
+  registerContextCommands(program);
   registerGuidelinesCommand(program);
   registerIndexCommands(program);
   registerLinearCommands(program);
@@ -58,6 +62,8 @@ async function main() {
   registerTimeCommands(program);
   registerSessionCommands(program);
   registerReloadCommands(program);
+  registerRuleCommands(program);
+  registerPromptCommands(program);
 
   // Global options
   program

@@ -113,86 +113,6 @@ export const counselModes: CounselMode[] = [
     relatedCommands: ['counsel add script', '/counsel-feature-requirements', '/counsel-feature-implement']
   },
   {
-    name: 'Debug Mode',
-    id: 'debug',
-    description: 'Systematically investigate and resolve bugs and issues',
-    purpose: 'For tracking bug investigations, root cause analysis, and fix implementation',
-    directoryStructure: [
-      '.debug/',
-      '.debug/[issue-name]/',
-      '.debug/[issue-name]/investigation.md',
-      '.debug/[issue-name]/solution.md',
-      '.debug/[issue-name]/status.json'
-    ],
-    workflow: [
-      {
-        step: 1,
-        title: 'Issue Discovery',
-        description: 'Identify and document the bug or issue',
-        commands: ['counsel add debug', '/counsel-feature-discovery']
-      },
-      {
-        step: 2,
-        title: 'Investigation',
-        description: 'Analyze the problem and identify root causes',
-        commands: ['/counsel-feature-discovery', '/counsel-reload']
-      },
-      {
-        step: 3,
-        title: 'Solution Implementation',
-        description: 'Implement and test the fix',
-        commands: ['/counsel-feature-implement']
-      }
-    ],
-    useCases: [
-      'Performance bottleneck investigation',
-      'Memory leak debugging',
-      'API error troubleshooting',
-      'UI rendering issues'
-    ],
-    relatedCommands: ['counsel add debug', '/counsel-feature-discovery', '/counsel-reload']
-  },
-  {
-    name: 'Review Mode',
-    id: 'review',
-    description: 'Conduct thorough code reviews and quality assessments',
-    purpose: 'For systematic code review, security audits, and quality improvements',
-    directoryStructure: [
-      '.review/',
-      '.review/[review-name]/',
-      '.review/[review-name]/analysis.md',
-      '.review/[review-name]/recommendations.md',
-      '.review/[review-name]/status.json'
-    ],
-    workflow: [
-      {
-        step: 1,
-        title: 'Code Analysis',
-        description: 'Examine code for quality, security, and best practices',
-        commands: ['counsel add review', '/counsel-feature-discovery']
-      },
-      {
-        step: 2,
-        title: 'Issue Identification',
-        description: 'Document findings and potential improvements',
-        commands: ['/counsel-reload']
-      },
-      {
-        step: 3,
-        title: 'Recommendations',
-        description: 'Provide actionable recommendations for improvements',
-        commands: ['/counsel-feature-planning']
-      }
-    ],
-    useCases: [
-      'Security vulnerability assessment',
-      'Performance optimization review',
-      'Code quality audit',
-      'Architecture review'
-    ],
-    relatedCommands: ['counsel add review', '/counsel-feature-discovery', '/counsel-reload']
-  },
-  {
     name: 'Vibe Mode',
     id: 'vibe',
     description: 'Explore ideas and experiment with new concepts',
@@ -797,18 +717,6 @@ export const docsContent: DocContent = {
           title: "Script Mode",
           level: 2,
           content: "Create and manage automation scripts and utilities"
-        },
-        {
-          id: "debug-mode",
-          title: "Debug Mode",
-          level: 2,
-          content: "Systematically investigate and resolve bugs and issues"
-        },
-        {
-          id: "review-mode",
-          title: "Review Mode",
-          level: 2,
-          content: "Conduct thorough code reviews and quality assessments"
         },
         {
           id: "vibe-mode",

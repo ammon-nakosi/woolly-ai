@@ -47,8 +47,6 @@ counsel status [name]
 If a name is provided, check which directory structure it belongs to:
 - Check `~/.counsel/features/[name]/` → Feature mode
 - Check `~/.counsel/scripts/[name]/` → Script mode  
-- Check `~/.counsel/debugs/[name]/` → Debug mode
-- Check `~/.counsel/reviews/[name]/` → Review mode
 - Check `~/.counsel/vibes/[name]/` → Vibe mode
 - Check `~/.counsel/prompts/[name]/` → Prompt mode
 
@@ -261,48 +259,6 @@ Load the script context by reading:
 - ✓ Progress tracking and clear output
 
 Then provide status and recommend next steps for enhancement or testing.
-
-#### Debug Mode  
-If it's a debug session (in `~/.counsel/debugs/[name]/`):
-
-**First, understand debug mode principles:**
-- Systematic investigation approach
-- Clear reproduction steps
-- Root cause analysis before fixing
-- Verification of fixes
-
-Load the debug context by reading:
-1. `~/.counsel/debugs/[name]/context.md` - Project background and objectives
-2. `~/.counsel/debugs/[name]/issue.md` - Problem description
-3. `~/.counsel/debugs/[name]/reproduction.md` - How to reproduce
-4. `~/.counsel/debugs/[name]/investigation.md` - What's been tried
-4. `~/.counsel/debugs/[name]/diagnosis.md` - Root cause analysis
-5. `~/.counsel/debugs/[name]/fix.md` - Solution implemented
-
-Then provide current debug status and recommend investigation or fix steps.
-
-#### Review Mode
-If it's a review session (in `~/.counsel/reviews/[name]/`):
-
-**First, understand review mode principles:**
-- Systematic evaluation against criteria
-- Constructive feedback focus
-- Clear recommendations
-- Actionable improvements
-
-Load the review context by reading:
-1. `~/.counsel/reviews/[name]/context.md` - Project background and objectives
-2. `~/.counsel/reviews/[name]/scope.md` - What's being reviewed and criteria
-3. `~/.counsel/reviews/[name]/findings.md` - Issues and observations
-4. `~/.counsel/reviews/[name]/recommendations.md` - Suggested improvements
-5. `~/.counsel/reviews/[name]/approval.md` - Final decision if exists
-
-If reviewing counsel work, also load the original work:
-- For feature reviews: load from `~/.counsel/features/[target]/`
-- For script reviews: load from `~/.counsel/scripts/[target]/` and verify against `docs/SCRIPT-MODE-GUIDELINES.md`
-- For debug reviews: load from `~/.counsel/debugs/[target]/`
-
-Then provide review status and next review steps.
 
 #### Vibe Mode
 If it's a vibe session (in `~/.counsel/vibes/[name]/`), load the exploration context by reading:

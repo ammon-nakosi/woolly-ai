@@ -158,7 +158,7 @@ AI: [Proceeds with closing dark-mode]
 
 The finalize command will auto-detect the mode from the project path. If ambiguous:
 ```bash
-counsel finalize <name> --mode <feature|script|debug|review|vibe>
+counsel finalize <name> --mode <feature|script|vibe|prompt>
 ```
 
 ## Error Handling

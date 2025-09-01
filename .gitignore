@@ -39,3 +39,6 @@ coverage/
 # Temporary files
 tmp/
 temp/
+
+# Counsel session rules (temporary)
+.claude/counsel-session-rules.md

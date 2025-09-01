@@ -56,7 +56,7 @@ class SessionCommand {
   private async getWorkContext(workName?: string, mode?: CounselMode): Promise<{ name: string; mode: CounselMode; path: string } | null> {
     // If work name specified, find it
     if (workName) {
-      const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'debug', 'review', 'vibe', 'prompt'];
+      const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
       
       for (const m of modes) {
         const workPath = path.join(COUNSEL_DIR, `${m}s`, workName);

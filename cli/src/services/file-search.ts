@@ -27,7 +27,7 @@ export class FileBasedDocumentParser {
    */
   async parseAllDocuments(): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
-    const modes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe'];
+    const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
 
     for (const mode of modes) {
       const modeDir = path.join(this.counselDir, `${mode}s`);

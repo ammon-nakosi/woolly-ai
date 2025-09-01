@@ -28,7 +28,7 @@ export function registerAddCommands(program: Command) {
       
       try {
         // Validate mode
-        const validModes: CounselMode[] = ['feature', 'script', 'debug', 'review', 'vibe'];
+        const validModes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
         if (!validModes.includes(mode as CounselMode)) {
           spinner.fail(`Invalid mode: ${mode}`);
           console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));

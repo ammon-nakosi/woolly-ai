@@ -13,7 +13,7 @@ export function registerListCommands(program: Command) {
   program
     .command('list')
     .description('List counsel work')
-    .option('-m, --mode <mode>', 'Filter by mode (feature, script, debug, review, vibe)')
+    .option('-m, --mode <mode>', 'Filter by mode (feature, script, vibe, prompt)')
     .option('-s, --status <status>', 'Filter by status (planned, in-progress, completed)')
     .option('-r, --recent', 'Sort by recently updated')
     .option('-p, --project <project>', 'Filter by project name')
@@ -185,7 +185,7 @@ async function listFromChromaDB(options: any) {
 
 async function listFromFilesystem(options: any) {
   const items = [];
-  const modes: CounselMode[] = options.mode ? [options.mode] : ['feature', 'script', 'debug', 'review', 'vibe'];
+  const modes: CounselMode[] = options.mode ? [options.mode] : ['feature', 'script', 'vibe', 'prompt'];
   
   for (const mode of modes) {
     // All directories use plural form

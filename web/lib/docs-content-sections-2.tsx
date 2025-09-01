@@ -162,9 +162,8 @@ project-root/
 │   │       ├── implementation.md
 │   │       └── status.json
 │   ├── .scripts/            # Script mode items
-│   ├── .debug/              # Debug mode items
-│   ├── .review/             # Review mode items
-│   └── .vibe/               # Vibe mode items
+│   ├── .vibe/               # Vibe mode items
+│   └── .prompts/            # Prompt mode items
 └── your-project-files/`}</code>
       </pre>
     </div>

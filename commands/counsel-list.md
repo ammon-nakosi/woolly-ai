@@ -17,8 +17,6 @@ Interpret the user's hint smartly to build the appropriate counsel CLI command:
 ### Mode Filtering → Use `--mode`
 - "feature", "features" → `counsel list --mode feature`
 - "script", "scripts" → `counsel list --mode script`
-- "debug", "debugging" → `counsel list --mode debug`
-- "review", "reviews" → `counsel list --mode review`
 - "vibe", "vibes", "explore" → `counsel list --mode vibe`
 - "prompt", "prompts" → `counsel list --mode prompt`
 
@@ -82,7 +80,7 @@ handle_cli_not_available() {
   echo ""
   
   # Fallback to filesystem scan
-  for mode in features scripts debugs reviews vibes prompts; do
+  for mode in features scripts vibes prompts; do
     if [ -d "~/.counsel/$mode" ]; then
       find "~/.counsel/$mode" -maxdepth 1 -type d -not -path "~/.counsel/$mode" -exec basename {} \;
     fi
@@ -170,7 +168,7 @@ User input → Command executed:
 - "asc" → `counsel list | sort`
 - "desc" → `counsel list | sort -r`
 - "completed" → `counsel list --status completed`
-- "recent debug" → `counsel list --mode debug --recent`
+- "recent vibe" → `counsel list --mode vibe --recent`
 - "my-project" → `counsel list --project my-project`
 
 ## Implementation Notes
