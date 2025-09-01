@@ -115,13 +115,13 @@ Once the user approves or provides an alternative name, create the appropriate d
 Created: ~/.counsel/features/[name]/
 
 The Counsel Framework will guide you through:
-1. Requirements gathering
-2. Technical discovery
-3. Implementation planning
+1. Specifications gathering
+2. Technical scoping
+3. Implementation plan
 4. Phased development
 
-Next step: Let's define the requirements
-Run: /counsel-feature-requirements [name]
+Next step: Let's define the specifications
+Run: /counsel-feature-specs [name]
 
 💡 CLI Tips:
   • Check status anytime: counsel status [name]
@@ -132,6 +132,8 @@ Run: /counsel-feature-requirements [name]
 Ready to begin?
 ═══════════════════════════════════════════════════════════════
 ```
+
+Then create `context.md` using the universal template, populating it with the user's description and feature-specific context.
 
 ### Script Mode
 ```
@@ -150,9 +152,9 @@ Let me help you define this script. I'll need to understand:
 Tell me about the script's purpose:
 ```
 
-Then create `purpose.md` with the user's responses.
+Then create both `context.md` using the universal template and `purpose.md` with the user's responses.
 
-**Before implementing, consider asking 2-3 relevant architecture questions:**
+**Before coding, consider asking 2-3 relevant architecture questions:**
 
 - **Decomposition**: If fetching + processing large data: "Would you prefer this as two separate scripts (one to fetch data, another to process it) for better caching and re-runs?"
 - **Idempotency**: If resource-intensive operations: "Should the script check if items are already processed? This adds overhead but makes re-runs safer."
@@ -164,7 +166,7 @@ Then create `purpose.md` with the user's responses.
 Ask only the most relevant questions. Don't ask about dry-run mode, limits, or batching - these are always included.
 Document decisions briefly in the script header comments.
 
-Then begin implementation.
+Then begin coding.
 
 **IMPORTANT**: Follow production script guidelines for all scripts:
 - **Prioritize readability**: Use clear variable names, add section comments, break complex logic into functions
@@ -197,7 +199,7 @@ Let's systematically debug this issue. First, I need to understand:
 Describe the issue:
 ```
 
-Then create `issue.md` with the problem description and begin investigation.
+Then create both `context.md` using the universal template and `issue.md` with the problem description and begin investigation.
 
 ### Review Mode
 ```
@@ -226,7 +228,7 @@ Please specify what to review:
 - For external: describe what needs reviewing
 ```
 
-Then create `scope.md` with review criteria and begin systematic review.
+Then create both `context.md` using the universal template and `scope.md` with review criteria and begin systematic review.
 
 ### Vibe Mode
 Since vibe mode auto-generates the name, the flow is streamlined. After creating the directory, immediately show:
@@ -265,7 +267,7 @@ Let's create your AI prompt. What should this prompt do?
 Describe the task or behavior you want the AI to perform:
 ```
 
-Then immediately create the initial `prompt.md` file with the user's description and begin iterating on the prompt content. Focus on crafting effective prompt text rather than documentation.
+Then immediately create both `context.md` using the universal template and the initial `prompt.md` file with the user's description and begin iterating on the prompt content. Focus on crafting effective prompt text rather than documentation.
 
 ## Special Handling
 
@@ -287,17 +289,17 @@ What would you prefer?
 
 Create initial files based on mode:
 
-**Feature Mode**: No initial files (will be created by subsequent commands)
+**Feature Mode**: Create `context.md` to track project context (other files created by subsequent commands)
 
-**Script Mode**: Create `purpose.md` after gathering requirements
+**Script Mode**: Create `context.md` and `purpose.md` after gathering specifications
 
-**Debug Mode**: Create `issue.md` with initial problem description
+**Debug Mode**: Create `context.md` and `issue.md` with initial problem description
 
-**Review Mode**: Create `scope.md` with review criteria and target
+**Review Mode**: Create `context.md` and `scope.md` with review criteria and target
 
-**Vibe Mode**: Create lightweight `context.md` to track exploration
+**Vibe Mode**: Create `context.md` to track exploration
 
-**Prompt Mode**: Create `prompt.md` directly with the prompt content
+**Prompt Mode**: Create `context.md` and `prompt.md` directly with the prompt content
 
 ## Remember
 

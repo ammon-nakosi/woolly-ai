@@ -23,8 +23,8 @@ export function registerGuidelinesCommand(program: Command) {
     .command('guidelines')
     .description('Display mode-specific guidelines and best practices')
     .argument('<mode>', 'Mode to get guidelines for (script, feature, debug, review, vibe, prompt)')
-    .option('-s, --summary', 'Show only core principles and requirements')
-    .option('-c, --checklist', 'Show only the requirements checklist')
+    .option('-s, --summary', 'Show only core principles and specs')
+    .option('-c, --checklist', 'Show only the specs checklist')
     .option('-e, --examples', 'Show only code examples')
     .action(async (mode: string, options) => {
       try {

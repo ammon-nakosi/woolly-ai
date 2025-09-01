@@ -22,7 +22,7 @@ counsel search "<user's description>"
 
 **Example**:
 ```
-User: "I need to implement user authentication"
+User: "I need to code user authentication"
 Agent: [Runs: counsel search "user authentication"]
        [Finds similar work]
        "I found existing counsel work on authentication. Let me review it first..."
@@ -207,8 +207,8 @@ counsel list --mode debug --recent          # Recent debug work
 
 The CLI is your tool for:
 - Quick information retrieval
-- Pattern discovery
+- Pattern scope
 - Context gathering
-- Work discovery
+- Work scope
 
 Use it liberally and proactively to provide better, more informed assistance to users.

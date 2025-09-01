@@ -11,7 +11,7 @@ The framework emphasizes:
 - **Deep Discovery**: Thorough investigation before implementation to avoid costly mistakes
 - **Status Tracking**: Real-time visibility into what's planned vs what's actually implemented
 - **Simplicity**: Choosing elegant solutions over complex engineering
-- **Verification**: Continuous validation that implementation matches planning
+- **Verification**: Continuous validation that implementation matches plan
 
 ## Counsel Modes
 
@@ -20,7 +20,7 @@ The framework supports four distinct modes for different types of work:
 ### 1. Feature Mode
 **Purpose**: Full feature development lifecycle  
 **Directory**: `.features/{feature-name}/`  
-**Workflow**: Requirements → Discovery → Planning → Implementation → Verification  
+**Workflow**: Specs → Scope → Plan → Code → Verification  
 **Use Cases**: New features, major enhancements, complex functionality
 
 ### 2. Script Mode
@@ -56,8 +56,8 @@ Work is organized by mode:
 Project Root/
 ├── .features/          # Feature development
 │   └── {feature-name}/
-│       ├── requirements.md                    # Initial feature requirements
-│       ├── discovery_*.md                     # Discovery documents from different agents
+│       ├── specs.md                          # Initial feature specifications
+│       ├── scope_*.md                        # Scoping documents from different agents
 │       ├── plan-notes.md                      # Direct implementation notes (optional)
 │       ├── plan-approved.overview.md          # High-level implementation plan
 │       ├── plan-approved.phase-1.md           # Detailed plan for Phase 1
@@ -66,7 +66,7 @@ Project Root/
 │       └── plan-approved.plan-status.json     # Current implementation status
 ├── .scripts/           # Script automation
 │   └── {script-name}/
-│       ├── purpose.md                         # Script purpose and requirements
+│       ├── purpose.md                         # Script purpose and specs
 │       ├── script.{ext}                       # The actual script
 │       ├── test-results.md                    # Testing documentation
 │       └── usage.md                           # Usage instructions
@@ -113,30 +113,30 @@ Examples:
 
 ## Feature Mode Workflow
 
-### 1. Requirements Gathering (`/counsel-feature-requirements`)
+### 1. Specifications Gathering (`/counsel-feature-specs`)
 **Purpose**: Define what needs to be built
 
-- Captures feature requirements from stakeholder input
+- Captures feature specifications from stakeholder input
 - Asks clarifying questions to ensure completeness
 - Searches codebase for relevant context
-- Creates structured requirements document
-- **Output**: `requirements.md` with clear feature specification
+- Creates structured specifications document
+- **Output**: `specs.md` with clear feature specification
 
-### 2. Discovery & Scoping (`/counsel-feature-discovery`)
+### 2. Scoping & Discovery (`/counsel-feature-scope`)
 **Purpose**: Understand technical implications and complexity
 
-- Reviews requirements and existing codebase thoroughly
+- Reviews specifications and existing codebase thoroughly
 - Identifies potential gotchas and technical challenges
 - Evaluates architectural impacts and dependencies
 - Proposes solutions and alternatives
 - Asks critical questions about implementation approach
-- **Output**: `discovery_{model_name}.md` with technical analysis
+- **Output**: `scope_{model_name}.md` with technical analysis
 
-### 3. Planning (`/counsel-feature-planning`)
+### 3. Planning (`/counsel-feature-plan`)
 **Purpose**: Create detailed implementation roadmap
 
 **Phase 1: High-Level Planning**
-- Reviews requirements and discovery documents
+- Reviews specifications and scoping documents
 - Prioritizes feedback in curly braces {{like this}}
 - Creates overview of implementation approach
 - **Output**: `plan-approved.overview.md`
@@ -152,11 +152,11 @@ Examples:
 - Creates JSON structure for progress tracking
 - **Output**: `plan-approved.plan-status.json`
 
-### 4. Implementation (`/counsel-feature-implement`)
+### 4. Coding (`/counsel-feature-code`)
 **Purpose**: Execute the planned work
 
 - Implements specific phase following approved plan
-- Reviews requirements and overall plan for context
+- Reviews specifications and overall plan for context
 - Can suggest modifications to approach if needed
 - Updates status JSON as tasks are completed
 - Emphasizes quality and user experience
@@ -178,7 +178,7 @@ Examples:
 **Purpose**: Comprehensive status with validation
 
 - Launches subagent for deep investigation
-- Verifies actual implementation vs planned
+- Verifies actual coding vs planned
 - Identifies discrepancies
 - Provides detailed progress report
 - **Accuracy**: Validates against actual code
@@ -187,7 +187,7 @@ Examples:
 **Purpose**: Synchronize status with reality
 
 - Launches subagent to scan entire codebase
-- Updates task statuses based on actual implementation
+- Updates task statuses based on actual coding
 - Adds implementation details and notes
 - Shows diff before saving changes
 - **Maintenance**: Keeps tracking accurate
@@ -221,7 +221,7 @@ The framework uses these standard statuses:
           "description": "Task description",
           "status": "done|doing|to-do|skipped|canceled",
           "priority": "high|medium|low",
-          "implementationDetails": "Where/how implemented",
+          "implementationDetails": "Where/how coded",
           "notes": "Additional context"
         }
       ],
@@ -233,13 +233,13 @@ The framework uses these standard statuses:
 
 ## Best Practices
 
-### For Requirements
+### For Specifications
 - Be specific about user needs
 - Include acceptance criteria
 - Note technical constraints
 - Reference existing functionality
 
-### For Discovery
+### For Scoping
 - Search extensively through codebase
 - Consider edge cases and failure modes
 - Identify dependencies and impacts
@@ -251,7 +251,7 @@ The framework uses these standard statuses:
 - Create specific, measurable tasks
 - Prioritize simplicity over complexity
 
-### For Implementation
+### For Coding
 - Follow established codebase patterns
 - Maintain type safety
 - Update status as you progress
@@ -259,7 +259,7 @@ The framework uses these standard statuses:
 
 ### For Status Tracking
 - Update immediately after completing tasks
-- Add implementation details for future reference
+- Add coding details for future reference
 - Note any deviations from plan
 - Keep status JSON as source of truth
 
@@ -271,7 +271,7 @@ Throughout the framework, feedback and answers to questions are provided in curl
 {{This is user feedback that must be addressed}}
 ```
 
-Agents must prioritize addressing this feedback during planning and implementation.
+Agents must prioritize addressing this feedback during plan and coding.
 
 ## Subagent Usage
 
@@ -284,10 +284,10 @@ The framework leverages specialized subagents for complex tasks:
 ## Success Criteria
 
 A well-executed Counsel workflow results in:
-1. Clear requirements understood by all parties
-2. Thorough discovery preventing surprises during implementation
+1. Clear specifications understood by all parties
+2. Thorough scoping preventing surprises during coding
 3. Practical plans that balance ideal and pragmatic approaches
-4. Consistent implementation following established patterns
+4. Consistent coding following established patterns
 5. Accurate status tracking enabling informed decisions
 6. Completed features that meet user needs elegantly
 
@@ -327,17 +327,17 @@ This will:
 /counsel-create feature "add dark mode"
 # → Creates .features/dark-mode/
 
-# Gather requirements
-/counsel-feature-requirements dark-mode
+# Gather specifications
+/counsel-feature-specs dark-mode
 
-# Technical discovery
-/counsel-feature-discovery dark-mode
+# Technical scoping
+/counsel-feature-scope dark-mode
 
 # Create implementation plan
-/counsel-feature-planning dark-mode
+/counsel-feature-plan dark-mode
 
-# Implement Phase 1
-/counsel-feature-implement dark-mode 1
+# Code Phase 1
+/counsel-feature-code dark-mode 1
 
 # Check status anytime
 /counsel-status dark-mode

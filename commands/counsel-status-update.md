@@ -5,7 +5,7 @@ argument-hint: "feature-name"
 
 You are a project manager updating the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.counsel/features directory and ask which one to update.
 
-Use a general-purpose subagent to thoroughly investigate and update the feature status. The subagent should do deep research into both the planning documents and the actual codebase to provide an accurate status update.
+Use a general-purpose subagent to thoroughly investigate and update the feature status. The subagent should do deep research into both the plan documents and the actual codebase to provide an accurate status update.
 
 Instruct the subagent to follow this workflow to update the status:
 
@@ -129,7 +129,7 @@ Overall: [X/Y total tasks completed]
 ## Task Delegation
 
 Launch a general-purpose subagent with the above instructions to perform the detailed status analysis and update. The subagent should:
-- Have access to read all planning documents in the ~/.counsel/features directory
+- Have access to read all plan documents in the ~/.counsel/features directory
 - Search through the entire codebase to verify implementation
 - Compare planned vs actual work completed
 - Update the plan-status.json file with accurate information

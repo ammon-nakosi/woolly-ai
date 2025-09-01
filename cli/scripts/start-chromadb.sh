@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-CHROMADB_PORT=${CHROMADB_PORT:-8090}
+CHROMADB_PORT=${CHROMADB_PORT:-8444}
 CHROMADB_DATA_DIR=${CHROMADB_DATA_DIR:-~/.counsel/chromadb}
 
 echo -e "${GREEN}Starting ChromaDB server for Counsel Framework...${NC}"
@@ -44,7 +44,7 @@ else
     echo -e "${GREEN}Starting ChromaDB container...${NC}"
     docker run -d \
         --name chromadb \
-        -p ${CHROMADB_PORT}:8090 \
+        -p ${CHROMADB_PORT}:8000 \
         -v ${CHROMADB_DATA_DIR}:/chroma/chroma \
         -e ANONYMIZED_TELEMETRY=false \
         -e ALLOW_RESET=true \

@@ -58,7 +58,7 @@ Next steps:
 
 - This is a QUICK status check - do not verify implementation
 - Only read from the plan-status.json file
-- If the JSON file doesn't exist, report that formal planning needs to be completed
+- If the JSON file doesn't exist, report that formal plan needs to be completed
 - For "Task:" field, show the current task marked as "doing", or if none, show the next "to-do" task
 - If all tasks in current phase are done, show "All tasks completed" and indicate moving to next phase
 - Keep the response concise and fast

@@ -24,8 +24,8 @@ const COLLECTIONS = {
 // File patterns for vectorization with semantic weights
 const VECTORIZATION_CONFIG = {
   index: {
-    'requirements.md': 10,
-    'discovery_*.md': 9,
+    'specs.md': 10,
+    'scope_*.md': 9,
     'plan-approved.overview.md': 8,
     'plan-approved.phase-*.md': 7,
     'purpose.md': 10,
@@ -80,9 +80,15 @@ export const getChromaClient = async (): Promise<ChromaClient> => {
     
   } catch (error) {
     console.log('ChromaDB server not available, using ephemeral client for now');
+    console.log(`💡 To fix: Run "counsel chromadb start" or check connection at http://localhost:${CHROMADB_CONFIG.port}`);
     // Fall back to ephemeral client for development
-    chromaClient = new ChromaClient();
-    isConnected = true;
+    try {
+      chromaClient = new ChromaClient();
+      isConnected = true;
+    } catch (ephemeralError) {
+      console.log('❌ Failed to connect to ChromaDB. Please run "counsel chromadb health" for diagnosis.');
+      throw new Error(`ChromaDB unavailable: ${error}. Ephemeral fallback also failed: ${ephemeralError}`);
+    }
   }
 
   return chromaClient;
@@ -387,6 +393,7 @@ const searchCollection = async (
     return results;
   } catch (error) {
     console.error(`Error searching ${collectionName}:`, error);
+    console.log('💡 Troubleshooting: Run "counsel chromadb health" to check ChromaDB status');
     return { ids: [[]], documents: [[]], metadatas: [[]], distances: [[]] };
   }
 };
@@ -443,6 +450,9 @@ export const initializeCollections = async () => {
     return true;
   } catch (error) {
     console.error('Failed to initialize ChromaDB collections:', error);
+    console.log('💡 This usually means ChromaDB is not running. Try:');
+    console.log('   1. counsel chromadb start');
+    console.log('   2. counsel chromadb health');
     return false;
   }
 };

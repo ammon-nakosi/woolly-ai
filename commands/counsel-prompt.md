@@ -25,7 +25,7 @@ Read all relevant files from `~/.counsel/prompts/[prompt-name]/`:
 3. `refinements.md` - History of previous refinements (if exists)
 4. `test-cases.md` - Specific scenarios that need to work
 
-Extract the prompt's goals and requirements from the prompt content itself.
+Extract the prompt's goals and specs from the prompt content itself.
 
 ## Step 2: Analyze Current Performance
 
@@ -335,7 +335,7 @@ Based on the prompt's purpose, create diverse test scenarios that cover:
 
 ### Core Functionality Tests
 - **Basic Use Case**: The most common, straightforward scenario
-- **Complex Use Case**: A scenario with multiple requirements or constraints
+- **Complex Use Case**: A scenario with multiple specs or constraints
 - **Edge Cases**: Unusual but valid inputs that might challenge the prompt
 
 ### Robustness Tests
@@ -381,7 +381,7 @@ Output Summary:
 [Brief description of what the prompt produced]
 
 Evaluation:
-- Accuracy: [How well it met the requirements]
+- Accuracy: [How well it met the specs]
 - Clarity: [How clear and understandable the output was]
 - Completeness: [Whether all aspects were addressed]
 - Consistency: [How it compares to other test results]

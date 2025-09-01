@@ -103,7 +103,7 @@ Suggest counsel usage when you detect:
 - **Complex task starting** → "Would you like to counsel this as a feature?"
 - **Debugging session** → "Should we track this in counsel debug mode?"
 - **Multiple related changes** → "This could be a counsel feature with phases"
-- **Learning/discovery** → "Want to counsel this exploration in vibe mode?"
+- **Learning/scope** → "Want to counsel this exploration in vibe mode?"
 
 ## Integration with Commands
 

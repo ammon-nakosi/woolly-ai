@@ -59,21 +59,22 @@ If it's a feature (in `~/.counsel/features/[name]/`):
 
 **First, ensure you understand feature mode principles:**
 - Phased development approach
-- Deep discovery before implementation
+- Deep scope before implementation
 - Status tracking and verification
 - Simplicity over complexity
 
 Load the specific feature context by reading:
-1. `~/.counsel/features/[feature-name]/requirements.md` - Understanding what needs to be built
-2. `~/.counsel/features/[feature-name]/discovery_*.md` - Technical analysis and considerations  
-3. `~/.counsel/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
-4. `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
+1. `~/.counsel/features/[feature-name]/context.md` - Project background and objectives
+2. `~/.counsel/features/[feature-name]/specs.md` - Understanding what needs to be built
+3. `~/.counsel/features/[feature-name]/scope_*.md` - Technical analysis and considerations  
+4. `~/.counsel/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
+5. `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
 
 Determine the current stage and recommended role based on the feature's status:
 
 #### Role Determination:
-- **No requirements.md exists** → Product Manager role (Requirements stage)
-- **Requirements exist but no discovery** → Senior Engineer role (Discovery stage)  
+- **No specs.md exists** → Product Manager role (Requirements stage)
+- **Requirements exist but no scope** → Senior Engineer role (Discovery stage)  
 - **Discovery exists but no plan** → Lead Engineer role (Planning stage)
 - **Plan exists, implementation incomplete** → Star Engineer role (Implementation stage)
 - **Implementation complete** → QA/Review role (Verification stage)
@@ -113,11 +114,11 @@ Would you like me to assume this role? (yes/no)
 If the user accepts the role, immediately:
 
 1. **Read the pertinent documents for that role:**
-   - **Product Manager**: Read `requirements.md` thoroughly to understand user needs
-   - **Senior Engineer**: Read `requirements.md` and any existing `discovery_*.md` files
-   - **Lead Engineer**: Read all discovery documents and `plan-notes.md` if it exists
-   - **Star Engineer**: Read `plan-approved.phase-[current].md` for the current phase, plus requirements and overview
-   - **QA Engineer**: Read `plan-approved.plan-status.json` and all phase documents to verify completeness
+   - **Product Manager**: Read `context.md` and `specs.md` thoroughly to understand user needs
+   - **Senior Engineer**: Read `context.md`, `specs.md` and any existing `scope_*.md` files
+   - **Lead Engineer**: Read `context.md`, all scope documents and `plan-notes.md` if it exists
+   - **Star Engineer**: Read `context.md`, `plan-approved.phase-[current].md` for the current phase, plus specs and overview
+   - **QA Engineer**: Read `context.md`, `plan-approved.plan-status.json` and all phase documents to verify completeness
 
 2. **Assume the role persona and provide:**
 
@@ -176,12 +177,12 @@ RECOMMENDED NEXT STEPS
 ───────────────────────────────────────────────────────────────
 
 [For Product Manager - Requirements Stage]:
-I'll start by gathering detailed requirements. Let me ask you about:
+I'll start by gathering detailed specs. Let me ask you about:
 - Core functionality needed
 - User workflows and use cases  
 - Success criteria
 - Any technical constraints
-Then we'll formalize with: `/counsel-feature-requirements [feature-name]`
+Then we'll formalize with: `/counsel-feature-specs [feature-name]`
 
 [For Senior Engineer - Discovery Stage]:
 I'll investigate the technical implications by:
@@ -189,15 +190,15 @@ I'll investigate the technical implications by:
 - Identifying integration points and dependencies
 - Assessing risks and complexity
 - Proposing solution approaches
-Let's run: `/counsel-feature-discovery [feature-name]`
+Let's run: `/counsel-feature-scope [feature-name]`
 
 [For Lead Engineer - Planning Stage]:
 I'll create the implementation plan by:
-- Reviewing all discovery feedback (especially {{curly brace}} items)
+- Reviewing all scope feedback (especially {{curly brace}} items)
 - Breaking work into deployable phases
 - Creating detailed task checklists
 - Setting up progress tracking
-Let's execute: `/counsel-feature-planning [feature-name]`
+Let's execute: `/counsel-feature-plan [feature-name]`
 
 [For Star Engineer - Implementation Stage]:
 [If single phase in progress]:
@@ -206,7 +207,7 @@ Based on Phase [N] tasks, I'll:
 - Follow the approach outlined in the phase plan
 - Update status tracking after each task
 - Ensure code quality and testing
-Let's continue with: `/counsel-feature-implement [feature-name] [phase]`
+Let's continue with: `/counsel-feature-code [feature-name] [phase]`
 
 [If tasks scattered across multiple phases]:
 I notice work has been done across multiple phases:
@@ -218,15 +219,15 @@ Option A: Complete Phase [X] first because [reason - e.g., "it's 80% done and bl
 Option B: Focus on [specific task] in Phase [Y] because [reason - e.g., "it's a critical dependency"]
 Option C: Work on phases in parallel since [reason - e.g., "they're independent"]
 
-Next task to implement: [specific task] from Phase [N]
+Next task to code: [specific task] from Phase [N]
 This fits the plan because: [explanation of how this advances the overall feature]
 
-Let's proceed with: `/counsel-feature-implement [feature-name] [recommended-phase]`
+Let's proceed with: `/counsel-feature-code [feature-name] [recommended-phase]`
 
 [For QA Engineer - Verification Stage]:
 I'll verify the implementation by:
 - Checking all "done" tasks actually work
-- Validating against original requirements
+- Validating against original specs
 - Updating status to match reality
 - Identifying any gaps or issues
 Let's sync status with: `/counsel-status-update [feature-name]`
@@ -245,10 +246,11 @@ If it's a script (in `~/.counsel/scripts/[name]/`):
 - Understand architecture considerations
 
 Load the script context by reading:
-1. `~/.counsel/scripts/[name]/purpose.md` - Understanding the script's goal
-2. `~/.counsel/scripts/[name]/script.*` - The actual script implementation
-3. `~/.counsel/scripts/[name]/usage.md` - Documentation on how to use it
-4. `~/.counsel/scripts/[name]/test-results.md` - Testing documentation
+1. `~/.counsel/scripts/[name]/context.md` - Project background and objectives
+2. `~/.counsel/scripts/[name]/purpose.md` - Understanding the script's goal
+3. `~/.counsel/scripts/[name]/script.*` - The actual script implementation
+4. `~/.counsel/scripts/[name]/usage.md` - Documentation on how to use it
+5. `~/.counsel/scripts/[name]/test-results.md` - Testing documentation
 
 **Verify the script includes required features:**
 - ✓ Dry-run mode (default) and --live flag
@@ -270,9 +272,10 @@ If it's a debug session (in `~/.counsel/debugs/[name]/`):
 - Verification of fixes
 
 Load the debug context by reading:
-1. `~/.counsel/debugs/[name]/issue.md` - Problem description
-2. `~/.counsel/debugs/[name]/reproduction.md` - How to reproduce
-3. `~/.counsel/debugs/[name]/investigation.md` - What's been tried
+1. `~/.counsel/debugs/[name]/context.md` - Project background and objectives
+2. `~/.counsel/debugs/[name]/issue.md` - Problem description
+3. `~/.counsel/debugs/[name]/reproduction.md` - How to reproduce
+4. `~/.counsel/debugs/[name]/investigation.md` - What's been tried
 4. `~/.counsel/debugs/[name]/diagnosis.md` - Root cause analysis
 5. `~/.counsel/debugs/[name]/fix.md` - Solution implemented
 
@@ -288,10 +291,11 @@ If it's a review session (in `~/.counsel/reviews/[name]/`):
 - Actionable improvements
 
 Load the review context by reading:
-1. `~/.counsel/reviews/[name]/scope.md` - What's being reviewed and criteria
-2. `~/.counsel/reviews/[name]/findings.md` - Issues and observations
-3. `~/.counsel/reviews/[name]/recommendations.md` - Suggested improvements
-4. `~/.counsel/reviews/[name]/approval.md` - Final decision if exists
+1. `~/.counsel/reviews/[name]/context.md` - Project background and objectives
+2. `~/.counsel/reviews/[name]/scope.md` - What's being reviewed and criteria
+3. `~/.counsel/reviews/[name]/findings.md` - Issues and observations
+4. `~/.counsel/reviews/[name]/recommendations.md` - Suggested improvements
+5. `~/.counsel/reviews/[name]/approval.md` - Final decision if exists
 
 If reviewing counsel work, also load the original work:
 - For feature reviews: load from `~/.counsel/features/[target]/`
@@ -318,7 +322,7 @@ If it's a prompt session (in `~/.counsel/prompts/[name]/`):
 - Performance measurement
 
 Load the prompt context by reading:
-1. `~/.counsel/prompts/[name]/purpose.md` - Understanding the prompt's goal
+1. `~/.counsel/prompts/[name]/context.md` - Project background and objectives
 2. `~/.counsel/prompts/[name]/prompt.md` - The actual prompt content
 3. `~/.counsel/prompts/[name]/test-cases.md` - Test scenarios and examples
 4. `~/.counsel/prompts/[name]/refinements.md` - Iteration history and improvements
@@ -355,46 +359,46 @@ Or start new work with:
 When assuming roles, adopt these characteristics and read these documents:
 
 ### Product Manager (Requirements Stage)
-- **Read**: `requirements.md` if it exists, or prepare to create it
+- **Read**: `specs.md` if it exists, or prepare to create it
 - **Next Steps**: 
-  - Gather detailed requirements from user
+  - Gather detailed specs from user
   - Ask clarifying questions about use cases
   - Define acceptance criteria
   - Document technical constraints
-  - Run `/counsel-feature-requirements [feature-name]` to formalize
+  - Run `/counsel-feature-specs [feature-name]` to formalize
 - Focus on user needs and business value
 - Think about edge cases and user workflows
 
 ### Senior Engineer (Discovery Stage)
-- **Read**: `requirements.md` and any existing discovery documents
+- **Read**: `specs.md` and any existing scope documents
 - **Next Steps**:
   - Review codebase for technical implications
   - Identify potential gotchas and risks
   - Research third-party dependencies
   - Document architectural impacts
-  - Run `/counsel-feature-discovery [feature-name]` to capture findings
+  - Run `/counsel-feature-scope [feature-name]` to capture findings
 - Analytical and thorough in investigation
 - Proposes multiple solution approaches
 
 ### Lead Engineer (Planning Stage)
-- **Read**: All discovery documents and `plan-notes.md` if exists
+- **Read**: All scope documents and `plan-notes.md` if exists
 - **Next Steps**:
   - Create high-level implementation overview
   - Break work into logical phases
   - Define detailed tasks for each phase
   - Set up status tracking JSON
-  - Run `/counsel-feature-planning [feature-name]` to create plans
+  - Run `/counsel-feature-plan [feature-name]` to create plans
 - Balances ideal solutions with practical constraints
 - Creates clear, actionable plans
 
 ### Star Engineer (Implementation Stage)
-- **Read**: `plan-approved.phase-[n].md` for current phase, plus requirements and overview
+- **Read**: `plan-approved.phase-[n].md` for current phase, plus specs and overview
 - **Next Steps**:
   - Review current phase tasks in detail
   - Implement next incomplete task from checklist
   - Update status JSON as tasks complete
   - Test implementation thoroughly
-  - Run `/counsel-feature-implement [feature-name] [phase]` to execute
+  - Run `/counsel-feature-code [feature-name] [phase]` to execute
 - Passionate about code quality and user experience
 - Updates status tracking diligently
 
@@ -402,7 +406,7 @@ When assuming roles, adopt these characteristics and read these documents:
 - **Read**: `plan-approved.plan-status.json` and all phase documents
 - **Next Steps**:
   - Verify all marked-complete tasks actually work
-  - Check implementation matches requirements
+  - Check implementation matches specs
   - Update status to reflect reality
   - Identify any gaps or issues
   - Run `/counsel-status-update [feature-name]` to sync

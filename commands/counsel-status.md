@@ -5,7 +5,7 @@ argument-hint: "feature-name"
 
 You are a project manager checking the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.counsel/features directory and ask which one to check.
 
-Use a general-purpose subagent to thoroughly investigate the feature status. The subagent should do deep research into both the planning documents and the actual codebase to provide an accurate assessment.
+Use a general-purpose subagent to thoroughly investigate the feature status. The subagent should do deep research into both the plan documents and the actual codebase to provide an accurate assessment.
 
 Instruct the subagent to follow this workflow to provide an accurate status report:
 
@@ -20,7 +20,7 @@ Cross-check the reported status by:
 - Reading commit messages if necessary to understand recent work
 
 ## 3. Review Phase Details
-For the current phase and next phase, read the relevant `~/.counsel/features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and requirements.
+For the current phase and next phase, read the relevant `~/.counsel/features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and specs.
 
 ## 4. Generate Status Report
 
@@ -89,7 +89,7 @@ NEXT STEPS
 
 ## 5. Special Cases
 
-- If no plan-status.json exists, check for any planning documents and report that formal planning needs to be completed
+- If no plan-status.json exists, check for any plan documents and report that formal plan needs to be completed
 - If there are discrepancies between the plan status and actual implementation, highlight them clearly
 - If a phase is marked complete but implementation is missing, note this as a critical issue
 - If implementation exists that isn't in the plan, note it as "unplanned work completed"
@@ -99,7 +99,7 @@ Always be thorough in verification - don't just trust the JSON status, actually 
 ## Task Delegation
 
 Launch a general-purpose subagent with the above instructions to perform the detailed status analysis. The subagent should:
-- Have access to read all planning documents in the ~/.counsel/features directory
+- Have access to read all plan documents in the ~/.counsel/features directory
 - Search through the codebase to verify implementation
 - Compare planned vs actual work completed
 - Return a comprehensive status report in the format specified above

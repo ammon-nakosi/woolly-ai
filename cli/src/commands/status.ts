@@ -63,15 +63,15 @@ export function registerStatusCommands(program: Command) {
         
         // Read description from files
         let description = '';
-        let requirements = '';
+        let specs = '';
         try {
           const files = await fs.readdir(counselPath);
           for (const file of files) {
-            if (file === 'requirements.md' || file === 'purpose.md' || file === 'issue.md' || file === 'scope.md' || file === 'context.md') {
+            if (file === 'specs.md' || file === 'purpose.md' || file === 'issue.md' || file === 'scope.md' || file === 'context.md') {
               const content = await fs.readFile(path.join(counselPath, file), 'utf-8');
               const lines = content.split('\n');
               description = lines.find(line => line.trim() && !line.startsWith('#')) || '';
-              requirements = content;
+              specs = content;
               break;
             }
           }
@@ -89,7 +89,7 @@ export function registerStatusCommands(program: Command) {
             metadata,
             planStatus,
             description,
-            requirements
+            specs
           }, null, 2));
           return;
         }

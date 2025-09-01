@@ -9,7 +9,7 @@ import fs from 'fs/promises';
 
 const execAsync = promisify(exec);
 
-const CHROMADB_PORT = process.env.CHROMADB_PORT || '8090';
+const CHROMADB_PORT = process.env.CHROMADB_PORT || '8444';
 const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.counsel', 'chromadb');
 
 async function checkDocker(): Promise<boolean> {
@@ -103,7 +103,7 @@ export function registerChromaDBCommands(program: Command) {
         const dockerCommand = [
           'run', '-d',
           '--name', 'chromadb',
-          '-p', `${options.port}:8090`,
+          '-p', `${options.port}:8000`,
           '-v', `${options.dataDir}:/chroma/chroma`,
           '-e', 'ANONYMIZED_TELEMETRY=false',
           '-e', 'ALLOW_RESET=true',
@@ -321,6 +321,91 @@ export function registerChromaDBCommands(program: Command) {
           spinner.fail('Failed to remove ChromaDB');
           console.error(chalk.red('Error:'), error.message);
         }
+      }
+    });
+
+  chromadb
+    .command('health')
+    .description('Check ChromaDB health and diagnose common issues')
+    .action(async () => {
+      const spinner = ora('Running ChromaDB health check...').start();
+      
+      try {
+        // Check Docker
+        if (!await checkDocker()) {
+          spinner.fail('Docker is not installed');
+          console.log(chalk.red('\n❌ Docker Installation Required'));
+          console.log(chalk.yellow('ChromaDB requires Docker to run.'));
+          console.log(chalk.gray('Install Docker: https://docs.docker.com/get-docker/'));
+          console.log(chalk.gray('Alternative: Use Python venv method (see documentation)'));
+          return;
+        }
+        
+        if (!await checkDockerRunning()) {
+          spinner.fail('Docker is not running');
+          console.log(chalk.red('\n❌ Docker Not Running'));
+          console.log(chalk.yellow('Docker Desktop is not running.'));
+          console.log(chalk.gray('Fix: Start Docker Desktop and try again'));
+          return;
+        }
+        
+        // Check ChromaDB container
+        if (!await isChromaDBRunning()) {
+          spinner.fail('ChromaDB container is not running');
+          console.log(chalk.red('\n❌ ChromaDB Not Running'));
+          console.log(chalk.yellow('ChromaDB container is not started.'));
+          console.log(chalk.gray('Fix: Run "counsel chromadb start"'));
+          return;
+        }
+        
+        // Check API connectivity
+        spinner.text = 'Testing API connectivity...';
+        try {
+          const response = await fetch(`http://localhost:${CHROMADB_PORT}/api/v1`);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          
+          // Test basic functionality
+          spinner.text = 'Testing ChromaDB functionality...';
+          const versionResponse = await fetch(`http://localhost:${CHROMADB_PORT}/api/v1/version`);
+          if (versionResponse.ok) {
+            const versionData = await versionResponse.json();
+            spinner.succeed('ChromaDB is healthy and fully operational');
+            
+            console.log(chalk.green('\n✅ Health Check Passed'));
+            console.log(chalk.cyan(`📍 Server: http://localhost:${CHROMADB_PORT}`));
+            console.log(chalk.cyan(`📂 Data: ${CHROMADB_DATA_DIR}`));
+            console.log(chalk.cyan(`📋 Version: ${versionData.version || 'Unknown'}`));
+            
+            // Show next steps
+            console.log(chalk.gray('\nNext steps:'));
+            console.log('  Index your work: counsel index --all');
+            console.log('  Search your work: counsel search "<query>"');
+            
+          } else {
+            throw new Error('Version endpoint failed');
+          }
+          
+        } catch (fetchError: any) {
+          spinner.fail('API connectivity failed');
+          console.log(chalk.red('\n❌ API Connection Failed'));
+          console.log(chalk.yellow('ChromaDB container is running but API is not responding.'));
+          console.log(chalk.gray('Troubleshooting steps:'));
+          console.log(chalk.gray('  1. Check logs: counsel chromadb logs'));
+          console.log(chalk.gray('  2. Restart container: counsel chromadb restart'));
+          console.log(chalk.gray('  3. Check port conflicts (make sure nothing else uses 8444)'));
+          console.log(chalk.gray(`  4. Test manually: curl http://localhost:${CHROMADB_PORT}/api/v1`));
+        }
+        
+      } catch (error: any) {
+        spinner.fail('Health check failed');
+        console.log(chalk.red('\n❌ Unexpected Error'));
+        console.error(chalk.gray('Error details:'), error.message);
+        console.log(chalk.yellow('\nFor support:'));
+        console.log(chalk.gray('  1. Check documentation: docs/CHROMADB-SETUP.md'));
+        console.log(chalk.gray('  2. View logs: counsel chromadb logs'));
+        console.log(chalk.gray('  3. Report issue: https://github.com/ammon-nakosi/counsel-framework/issues'));
       }
     });
 }

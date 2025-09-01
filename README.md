@@ -38,6 +38,36 @@ counsel-framework/
 
 ## 🚀 Quick Start
 
+### ⚡ 5-Minute Setup
+
+**New to Counsel?** Get search working in under 5 minutes:
+
+```bash
+# 1. Install & Setup
+git clone https://github.com/ammon-nakosi/counsel-framework.git
+cd counsel-framework && npm install && npm run setup
+
+# 2. Make CLI available
+npm link
+
+# 3. Configure
+counsel init
+
+# 4. Start ChromaDB (choose one method)
+counsel chromadb start        # Docker (recommended)
+# OR
+./cli/scripts/start-chromadb.sh  # Shell script
+
+# 5. Verify everything works
+counsel chromadb health
+
+# 6. Start using it!
+counsel index --all
+counsel search "your query here"
+```
+
+**Having issues?** Run `counsel chromadb health` for diagnosis and troubleshooting.
+
 ### 1. Install the Framework
 
 ```bash
@@ -89,7 +119,7 @@ ChromaDB enables semantic search across all your counsel work. Start it using Do
 # Or manually with Docker
 docker run -d \
   --name chromadb \
-  -p 8000:8000 \
+  -p 8444:8000 \
   -v ~/.counsel/chromadb:/chroma/chroma \
   chromadb/chroma:latest
 ```
@@ -105,6 +135,28 @@ counsel index --mode feature
 
 # Index specific work
 counsel index --name user-auth
+```
+
+#### 🔧 ChromaDB Troubleshooting
+
+**Connection Issues?**
+```bash
+counsel chromadb health  # Diagnose problems
+```
+
+**Common Issues:**
+- **Port conflicts**: ChromaDB uses port 8444. Check nothing else is using it.
+- **Docker not running**: Ensure Docker Desktop is started before running commands.
+- **Python venv issues**: Try running setup again: `npm run setup`
+
+**Alternative Setup (No Docker)**:
+```bash
+# Use Python virtual environment instead
+source ~/.counsel/venv/bin/activate  # Linux/Mac
+# or
+~\.counsel\venv\Scripts\activate     # Windows
+
+python ~/.counsel/bin/chromadb-server.py
 ```
 
 ### 5. Set Up Git Backup/Sync (Optional but Recommended)

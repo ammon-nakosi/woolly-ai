@@ -157,7 +157,7 @@ project-root/
 │   ├── config.json          # Project configuration
 │   ├── .features/           # Feature mode items
 │   │   └── user-auth/
-│   │       ├── requirements.md
+│   │       ├── specs.md
 │   │       ├── design.md
 │   │       ├── implementation.md
 │   │       └── status.json
@@ -270,7 +270,7 @@ export const ExamplesSection: React.FC = () => (
             In your AI assistant (Claude/Cursor):
           </p>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-requirements</code>
+            <code>/counsel-feature-specs</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI guides you through defining user stories and acceptance criteria
@@ -280,7 +280,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 3: Create Design</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-planning</code>
+            <code>/counsel-feature-plan</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps create technical design and architecture decisions
@@ -290,7 +290,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 4: Implement</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-implement</code>
+            <code>/counsel-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI assists with code implementation following the design
@@ -329,7 +329,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Define Requirements</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-requirements</code>
+            <code>/counsel-feature-specs</code>
           </pre>
           <p className="text-sm text-gray-600">
             Specify backup frequency, storage location, error handling
@@ -339,7 +339,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Implement Script</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-implement</code>
+            <code>/counsel-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps write the backup script with proper error handling
@@ -365,7 +365,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Investigate Issue</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-discovery</code>
+            <code>/counsel-feature-scope</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps analyze code and identify potential memory leak sources
@@ -385,7 +385,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Implement Fix</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-implement</code>
+            <code>/counsel-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI assists with implementing the memory leak fix
@@ -446,7 +446,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-2">Documentation</h3>
           <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-            <li>Always start with clear requirements before implementation</li>
+            <li>Always start with clear specs before implementation</li>
             <li>Update status regularly to track progress</li>
             <li>Document decisions and trade-offs in design files</li>
             <li>Include examples and usage instructions</li>
@@ -459,7 +459,7 @@ export const ExamplesSection: React.FC = () => (
             <li>Use slash commands to maintain context across sessions</li>
             <li>Provide clear, specific prompts to the AI assistant</li>
             <li>Review and validate AI-generated code before implementation</li>
-            <li>Iterate on requirements and design with AI feedback</li>
+            <li>Iterate on specs and design with AI feedback</li>
           </ul>
         </div>
 

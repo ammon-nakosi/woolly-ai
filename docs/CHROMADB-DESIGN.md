@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the design for integrating ChromaDB as the semantic search and knowledge management layer for the Counsel Framework. ChromaDB will enable intelligent search, knowledge discovery, and pattern recognition across all counsel work.
+This document outlines the design for integrating ChromaDB as the semantic search and knowledge management layer for the Counsel Framework. ChromaDB will enable intelligent search, knowledge scope, and pattern recognition across all counsel work.
 
 ## Goals
 
@@ -58,9 +58,9 @@ Indexes the actual content of markdown documents for deep search.
   itemId: string;          // Reference to counsel_items
   mode: string;
   name: string;            // Item name
-  documentType: 'requirements' | 'discovery' | 'plan' | 'implementation' | 
+  documentType: 'specs' | 'scope' | 'plan' | 'implementation' | 
                 'status' | 'notes' | 'issue' | 'findings';
-  fileName: string;        // e.g., "requirements.md"
+  fileName: string;        // e.g., "specs.md"
   path: string;            // Full file path
   phase?: number;          // If applicable
   chunkIndex?: number;     // For large documents
@@ -203,12 +203,12 @@ await counselIndex.addItem({
   priority: 'high'
 });
 
-// Index requirements document
+// Index specs document
 await counselIndex.addDocument({
   itemId: itemId,
-  documentType: 'requirements',
-  content: requirementsMarkdown,
-  fileName: 'requirements.md'
+  documentType: 'specs',
+  content: specsMarkdown,
+  fileName: 'specs.md'
 });
 ```
 
@@ -216,7 +216,7 @@ await counselIndex.addDocument({
 ```typescript
 // Find similar features
 const similar = await counselSearch.findSimilar({
-  query: "implement authentication with social login",
+  query: "code authentication with social login",
   type: 'items',
   mode: 'feature',
   limit: 5
@@ -248,7 +248,7 @@ await counselKnowledge.extract({
 ```bash
 # ChromaDB Configuration
 CHROMADB_HOST=localhost
-CHROMADB_PORT=8000
+CHROMADB_PORT=8444
 CHROMADB_PERSIST_DIR=~/.counsel/chromadb
 
 # Embedding Configuration
@@ -265,7 +265,7 @@ DEFAULT_SIMILARITY_THRESHOLD=0.7
 {
   "connection": {
     "host": "localhost",
-    "port": 8000,
+    "port": 8444,
     "persistDirectory": "~/.counsel/chromadb"
   },
   "embedding": {

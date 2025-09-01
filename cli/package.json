@@ -19,6 +19,8 @@
     "chromadb": "^1.7.3",
     "chromadb-default-embed": "^2.14.0",
     "commander": "^11.1.0",
+    "flexsearch": "^0.7.31",
+    "fuse.js": "^7.0.0",
     "cosmiconfig": "^9.0.0",
     "dotenv": "^16.3.1",
     "inquirer": "^9.2.12",

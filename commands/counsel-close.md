@@ -50,9 +50,9 @@ This command will:
 - Save the retrospective
 
 **Your analysis should be thoughtful and specific to the actual work done**, for example:
-- What went well: "Successfully implemented all core requirements with clean code structure"
+- What went well: "Successfully implemented all core specs with clean code structure"
 - What could improve: "Test coverage could be more comprehensive, especially edge cases"
-- What to avoid: "Avoid making assumptions about user requirements without clarification"
+- What to avoid: "Avoid making assumptions about user specs without clarification"
 
 ### Step 3: Share Your Analysis and Ask for User Insights
 

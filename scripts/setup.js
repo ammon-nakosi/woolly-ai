@@ -40,6 +40,9 @@ class CounselSetup {
     // Setup AI awareness
     await this.setupAIAwareness();
     
+    // Verify ChromaDB setup
+    await this.verifySetup();
+    
     console.log(chalk.green('\n✅ Counsel Framework setup complete!\n'));
     console.log(chalk.cyan('Next steps:'));
     console.log('  1. Run ' + chalk.bold('counsel init') + ' to configure your settings');
@@ -217,11 +220,11 @@ def start_chromadb():
     
     print(f"Starting ChromaDB server...")
     print(f"Data directory: {persist_directory}")
-    print(f"Server URL: http://localhost:8000")
+    print(f"Server URL: http://localhost:8444")
     print(f"Press Ctrl+C to stop")
     
     # Run the server
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8444, log_level="info")
 
 if __name__ == "__main__":
     try:
@@ -265,7 +268,7 @@ ${this.venvPython} ${scriptPath}
       version: '1.0.0',
       chromadb: {
         host: 'localhost',
-        port: 8000,
+        port: 8444,
         path: path.join(COUNSEL_DIR, 'chromadb')
       },
       patternExtraction: {
@@ -514,6 +517,50 @@ if (command === 'start') {
     } catch (error) {
       spinner.warn('AI awareness setup partially completed');
       console.log(chalk.yellow('  Manual setup may be required. See docs/CLAUDE-INTEGRATION.md'));
+    }
+  }
+  
+  async verifySetup() {
+    const spinner = ora('Verifying ChromaDB setup...').start();
+    
+    try {
+      // Check if Python venv was created successfully
+      const venvPath = path.join(COUNSEL_DIR, 'venv');
+      const isWindows = process.platform === 'win32';
+      const pythonPath = isWindows 
+        ? path.join(venvPath, 'Scripts', 'python')
+        : path.join(venvPath, 'bin', 'python');
+      
+      if (!fs.existsSync(pythonPath)) {
+        spinner.warn('Python virtual environment verification failed');
+        console.log(chalk.yellow('⚠️  Python venv may not be set up correctly'));
+        console.log(chalk.gray('This may cause issues with ChromaDB server startup'));
+        return;
+      }
+      
+      // Test ChromaDB import
+      try {
+        execSync(`${pythonPath} -c "import chromadb; print('ChromaDB import successful')"`, { 
+          stdio: 'pipe', 
+          encoding: 'utf-8' 
+        });
+        
+        spinner.succeed('ChromaDB setup verification passed');
+        console.log(chalk.green('✅ ChromaDB is ready to use'));
+        console.log(chalk.gray(`   Virtual environment: ${venvPath}`));
+        console.log(chalk.gray('   Test with: counsel chromadb health'));
+        
+      } catch (importError) {
+        spinner.warn('ChromaDB import test failed');
+        console.log(chalk.yellow('⚠️  ChromaDB may not be installed correctly in the virtual environment'));
+        console.log(chalk.gray('You can still use the framework, but search functionality may be limited'));
+        console.log(chalk.gray('To fix: Re-run setup or install ChromaDB manually'));
+      }
+      
+    } catch (error) {
+      spinner.warn('Setup verification encountered issues');
+      console.log(chalk.yellow('⚠️  Some components may not be configured correctly'));
+      console.log(chalk.gray('The framework should still work, but you may need manual configuration'));
     }
   }
 }
