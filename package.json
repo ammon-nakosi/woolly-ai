@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "cd cli && npm run build",
-    "postinstall": "npm run build && node scripts/postinstall.js",
+    "postinstall": "cd cli && npm install && cd .. && npm run build && node scripts/postinstall.js",
     "setup": "node scripts/setup.js",
     "dev": "cd cli && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
