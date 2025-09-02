@@ -9,7 +9,7 @@
   "scripts": {
     "build": "cd cli && npm run build",
     "postinstall": "cd cli && npm install && cd .. && npm run build && node scripts/postinstall.js",
-    "setup": "node scripts/setup.js",
+    "setup": "npm install && node scripts/setup.js",
     "dev": "cd cli && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

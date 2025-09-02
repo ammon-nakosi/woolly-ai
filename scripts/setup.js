@@ -69,33 +69,29 @@ class CounselSetup {
   }
 
   async installDependencies() {
-    const spinner = ora('Installing dependencies...').start();
+    const spinner = ora('Verifying dependencies...').start();
     
     try {
-      // Install root dependencies
-      spinner.text = 'Installing root dependencies...';
-      execSync('npm install', {
-        stdio: 'ignore',
-        encoding: 'utf-8'
-      });
-      
-      // Install CLI dependencies
-      spinner.text = 'Installing CLI dependencies...';
+      // Since npm install is run before this script, just verify CLI dependencies
       const cliPath = path.join(process.cwd(), 'cli');
       if (fs.existsSync(cliPath)) {
-        execSync('npm install', {
-          cwd: cliPath,
-          stdio: 'ignore',
-          encoding: 'utf-8'
-        });
+        // Check if CLI node_modules exists
+        const cliModulesPath = path.join(cliPath, 'node_modules');
+        if (!fs.existsSync(cliModulesPath)) {
+          spinner.text = 'Installing CLI dependencies...';
+          execSync('npm install', {
+            cwd: cliPath,
+            stdio: 'ignore',
+            encoding: 'utf-8'
+          });
+        }
       }
       
-      spinner.succeed('Dependencies installed successfully');
+      spinner.succeed('Dependencies verified');
     } catch (error) {
-      spinner.fail('Failed to install dependencies');
+      spinner.fail('Failed to verify dependencies');
       console.error(chalk.red('Error:'), error.message);
       console.log(chalk.yellow('\nTry running manually:'));
-      console.log(chalk.gray('  npm install'));
       console.log(chalk.gray('  cd cli && npm install'));
       process.exit(1);
     }
