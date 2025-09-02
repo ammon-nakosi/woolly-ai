@@ -18,6 +18,9 @@ class CounselSetup {
     // Check Node version
     this.checkNodeVersion();
     
+    // Install dependencies first
+    await this.installDependencies();
+    
     // Create counsel directories
     await this.createDirectories();
     
@@ -61,6 +64,39 @@ class CounselSetup {
     if (majorVersion < 16) {
       console.error(chalk.red('Error: Node.js 16 or higher is required'));
       console.error(chalk.yellow(`Your version: ${nodeVersion}`));
+      process.exit(1);
+    }
+  }
+
+  async installDependencies() {
+    const spinner = ora('Installing dependencies...').start();
+    
+    try {
+      // Install root dependencies
+      spinner.text = 'Installing root dependencies...';
+      execSync('npm install', {
+        stdio: 'ignore',
+        encoding: 'utf-8'
+      });
+      
+      // Install CLI dependencies
+      spinner.text = 'Installing CLI dependencies...';
+      const cliPath = path.join(process.cwd(), 'cli');
+      if (fs.existsSync(cliPath)) {
+        execSync('npm install', {
+          cwd: cliPath,
+          stdio: 'ignore',
+          encoding: 'utf-8'
+        });
+      }
+      
+      spinner.succeed('Dependencies installed successfully');
+    } catch (error) {
+      spinner.fail('Failed to install dependencies');
+      console.error(chalk.red('Error:'), error.message);
+      console.log(chalk.yellow('\nTry running manually:'));
+      console.log(chalk.gray('  npm install'));
+      console.log(chalk.gray('  cd cli && npm install'));
       process.exit(1);
     }
   }
