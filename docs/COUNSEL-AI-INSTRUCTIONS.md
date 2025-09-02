@@ -46,7 +46,7 @@ Recognize these patterns for closing counsel work:
 ## Command Reference
 
 ### Core Commands
-- **`/counsel-create`** - Start new work (feature/script/vibe/prompt) → `commands/counsel-create.md`
+- **`/counsel-create`** - Start new work (feature/script/vibe) → `commands/counsel-create.md`
 - **`/counsel-reload`** - Load context for existing work → `commands/counsel-reload.md`  
 - **`/counsel-context-update`** - Add structured progress update → `commands/counsel-context-update.md`
 - **`/counsel-close`** - Proper 3-step closing workflow → `commands/counsel-close.md`

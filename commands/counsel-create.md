@@ -1,10 +1,10 @@
 ---
 description: "Create a new counsel workflow with appropriate mode"
-argument-hint: "{feature|script|vibe|prompt} [brief description]"
+argument-hint: "{feature|script|vibe} [brief description]"
 ---
 
 You are initiating a new Counsel Framework workflow. Parse the arguments from $ARGUMENTS as:
-1. **Mode**: The first word should be one of: `feature`, `script`, `vibe`, or `prompt`
+1. **Mode**: The first word should be one of: `feature`, `script`, or `vibe`
 2. **Description**: The rest of the arguments form a brief description
 
 If mode is missing or invalid, show available modes and ask which one to use.
@@ -21,7 +21,6 @@ Validate the mode is one of the supported types. If not, present:
 • feature - Full development lifecycle for new features
 • script - Quick automation scripts and utilities  
 • vibe - Flexible, exploratory work
-• prompt - AI prompt engineering and optimization
 
 Please specify mode: /counsel-create [mode] [description]
 ═══════════════════════════════════════════════════════════════
@@ -35,7 +34,6 @@ Based on the description and mode, suggest an appropriate name:
 - **feature**: kebab-case, feature-focused (e.g., "dark-mode-settings", "user-authentication")
 - **script**: kebab-case, action-oriented (e.g., "db-backup", "log-analyzer")
 - **vibe**: kebab-case, topic-summary (e.g., "api-refactor", "performance-exploration")
-- **prompt**: kebab-case, prompt-purpose (e.g., "code-reviewer", "test-generator", "doc-writer")
 
 ### For Vibe Mode
 **Skip the name confirmation entirely**. Just auto-generate a name and proceed directly:
@@ -96,7 +94,6 @@ Once the user approves or provides an alternative name, create the appropriate d
 - `~/.counsel/features/[name]/` for feature mode
 - `~/.counsel/scripts/[name]/` for script mode
 - `~/.counsel/vibes/[name]/` for vibe mode
-- `~/.counsel/prompts/[name]/` for prompt mode
 
 ## Step 4: Provide Mode-Specific Next Steps
 
@@ -203,21 +200,6 @@ Which of these would you like to dive into first, or is there another angle you'
 - **All progress updates use `/counsel-context-update`** - no session files for routine progress
 - Session files only for full session exports (like Claude Code session export)
 
-### Prompt Mode
-```
-═══════════════════════════════════════════════════════════════
-                  PROMPT MODE INITIALIZED
-═══════════════════════════════════════════════════════════════
-
-Created: ~/.counsel/prompts/[name]/
-
-Let's create your AI prompt. What should this prompt do?
-
-Describe the task or behavior you want the AI to perform:
-```
-
-Then immediately create both `context.md` using the universal template and the initial `prompt.md` file with the user's description and begin iterating on the prompt content. Focus on crafting effective prompt text rather than documentation.
-
 ## Special Handling
 
 ### Existing Directory Check
@@ -243,8 +225,6 @@ Create initial files based on mode:
 **Script Mode**: Create `context.md` and `purpose.md` after gathering specifications
 
 **Vibe Mode**: Create `context.md` to track exploration
-
-**Prompt Mode**: Create `context.md` and `prompt.md` directly with the prompt content
 
 ## Remember
 

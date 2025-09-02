@@ -23,6 +23,7 @@ import { registerCloseCommands } from './commands/close';
 import { registerContextCommands } from './commands/context';
 import { registerRuleCommands } from './commands/rule';
 import { registerPromptCommands } from './commands/prompt';
+import { registerToolCommands } from './commands/tool';
 
 const program = new Command();
 
@@ -64,6 +65,7 @@ async function main() {
   registerReloadCommands(program);
   registerRuleCommands(program);
   registerPromptCommands(program);
+  registerToolCommands(program);
 
   // Global options
   program
