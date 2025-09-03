@@ -1,6 +1,6 @@
-@import "tailwindcss";
-
-@plugin "tailwindcss-animate";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "./prism-theme.css";
 /* Animation library removed - not installed */
 
