@@ -7,9 +7,13 @@ yarn-error.log*
 # Build output
 dist/
 build/
-*.js
-*.js.map
-*.d.ts
+
+# TypeScript compiled files (only in CLI src)
+cli/src/**/*.js
+cli/src/**/*.js.map
+cli/src/**/*.d.ts
+
+# Keep the CLI bin and scripts
 !cli/bin/counsel
 !scripts/*.js
 
