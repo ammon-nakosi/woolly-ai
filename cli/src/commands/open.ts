@@ -6,7 +6,7 @@ import * as fs from 'fs';
 export function registerOpenCommands(program: Command) {
   program
     .command('open')
-    .description('Open the Counsel Framework web interface')
+    .description('Open the Woolly Framework web interface')
     .action(async () => {
       // Find the framework root directory relative to this command file
       const frameworkRoot = path.join(__dirname, '..', '..', '..');
@@ -14,11 +14,11 @@ export function registerOpenCommands(program: Command) {
       
       if (!fs.existsSync(webPath)) {
         console.error('❌ Web directory not found at:', webPath);
-        console.error('Please ensure the counsel-framework is properly installed.');
+        console.error('Please ensure the woolly-framework is properly installed.');
         process.exit(1);
       }
 
-      console.log('🚀 Starting Counsel Framework Web Interface...');
+      console.log('🚀 Starting Woolly Framework Web Interface...');
       console.log('   Access at: http://localhost:3555\n');
       
       const child = spawn('npm', ['run', 'dev'], {

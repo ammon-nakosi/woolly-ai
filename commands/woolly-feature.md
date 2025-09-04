@@ -26,13 +26,13 @@ Follow the specifications agent instructions completely. Key points:
 
 The feature name is the second argument from $ARGUMENTS.
 
-First, read the @~/.counsel/features/[feature-name]/context.md file to understand the project's objective and background before gathering specifications.
+First, read the @~/.woolly/features/[feature-name]/context.md file to understand the project's objective and background before gathering specifications.
 
-The specifications document will be stored at @~/.counsel/features/[feature-name]/specs.md. If the ~/.counsel/features directory or the feature subdirectory doesn't exist yet, create them as needed.
+The specifications document will be stored at @~/.woolly/features/[feature-name]/specs.md. If the ~/.woolly/features directory or the feature subdirectory doesn't exist yet, create them as needed.
 
 After saving the specifications document, index it for search:
 ```bash
-counsel index --name [feature-name] --file specs.md
+woolly index --name [feature-name] --file specs.md
 ```
 
 Now help me put together specifications for this:
@@ -53,7 +53,7 @@ Follow the scoping agent instructions completely. Key points:
 
 The feature name is the second argument from $ARGUMENTS.
 
-Read the @~/.counsel/features/[feature-name]/context.md file to understand the project background, then read the @~/.counsel/features/[feature-name]/specs.md file thoroughly and any other pertinent files in the @~/.counsel/features/[feature-name] directory and come up with scoping:
+Read the @~/.woolly/features/[feature-name]/context.md file to understand the project background, then read the @~/.woolly/features/[feature-name]/specs.md file thoroughly and any other pertinent files in the @~/.woolly/features/[feature-name] directory and come up with scoping:
 
 - Thoroughly review the pertinent parts of the codebase
 - Think about what are potential gotchas
@@ -66,11 +66,11 @@ Read the @~/.counsel/features/[feature-name]/context.md file to understand the p
 
 Your job is to thoroughly scope out the project. Ultimately you have to provide a scoping document to help the requester understand all the information involved, and any nuances or facts that you think they should know. Ask as many questions as you need to understand the problem, and give as much pertinent information to the requester as you can so that the implementation is as seamless as possible. The last thing you want is for the project to get coded a certain way and later you find a fatal flaw in the implementation, or later you discover that they didn't control for certain problems. You will not code, you will only scope.
 
-Save the scoping document to @~/.counsel/features/[feature-name]/scope_[model_name].md where [model_name] is your model identifier (e.g., scope_claude-opus-4-1-20250805.md) once you think you have enough information to create it.
+Save the scoping document to @~/.woolly/features/[feature-name]/scope_[model_name].md where [model_name] is your model identifier (e.g., scope_claude-opus-4-1-20250805.md) once you think you have enough information to create it.
 
 After saving the scoping document, index it for search:
 ```bash
-counsel index --name [feature-name] --file "scope_*.md"
+woolly index --name [feature-name] --file "scope_*.md"
 ```
 
 ## Plan Type
@@ -89,11 +89,11 @@ Follow the planning agent instructions completely. Key points:
 
 The feature name is the second argument from $ARGUMENTS.
 
-Now it is time to thoroughly plan out the engineering implementation. First read the @~/.counsel/features/[feature-name]/context.md to understand the project background and objectives. Then read the specifications at @~/.counsel/features/[feature-name]/specs.md to understand the end goal. Then thoroughly review all of the scoping based on the scope files in @~/.counsel/features/[feature-name] directory and any other pertinent files in the ~/.counsel/features directory. All feedback and answers to the questions in the scope files are in curly braces like this {{}}. You must pay close attention to feedback in curly braces and make sure to address it. When addressing the scoping documents, first group similar concepts, then prioritize addressing the ones that were responded to, then you're free to use your expertise and coding wisdom to figure out what you should actually code, but even if you decide it's not best to go with the suggestions in the curly braces, make sure to highlight that in the plan document. There also may be a plan-notes.md document. If it exists, these are direct notes. Make sure to address it.
+Now it is time to thoroughly plan out the engineering implementation. First read the @~/.woolly/features/[feature-name]/context.md to understand the project background and objectives. Then read the specifications at @~/.woolly/features/[feature-name]/specs.md to understand the end goal. Then thoroughly review all of the scoping based on the scope files in @~/.woolly/features/[feature-name] directory and any other pertinent files in the ~/.woolly/features directory. All feedback and answers to the questions in the scope files are in curly braces like this {{}}. You must pay close attention to feedback in curly braces and make sure to address it. When addressing the scoping documents, first group similar concepts, then prioritize addressing the ones that were responded to, then you're free to use your expertise and coding wisdom to figure out what you should actually code, but even if you decide it's not best to go with the suggestions in the curly braces, make sure to highlight that in the plan document. There also may be a plan-notes.md document. If it exists, these are direct notes. Make sure to address it.
 
 You must use your discernment when it comes to which parts of the scoping to focus on and use your own outside knowledge and wisdom to decide what to focus on and how to best execute, and which parts of the scoping are most important, but you must prioritize understanding and addressing feedback in the scope files where it exists. You must thoroughly review the codebase to get an accurate assessment of viability. Now think very deeply about the best engineering implementation plan after considering multiple approaches. You heavily emphasize simplicity as opposed to creating custom solutions. You are very familiar with typescript and you pride yourself on type safety. Also be sure to review your memory in the CLAUDE.md files.
 
-You will first layout the high level plan. Once we agree on this high level plan, you will store it to @~/.counsel/features/[feature-name]/plan-approved.overview.md. Once we complete this, you will then ask for approval to actually plan out the phases.
+You will first layout the high level plan. Once we agree on this high level plan, you will store it to @~/.woolly/features/[feature-name]/plan-approved.overview.md. Once we complete this, you will then ask for approval to actually plan out the phases.
 
 You will then create a detailed plan for each phase. Assign a phase to each sub agent and make sure they do deep research and deep thinking to create a detailed plan that will be simple, thorough, and elegant. These sub agents should run in parallel. Each of these sub agents will store the respective plan in plan-approved.phase-[n].md. Each sub agent should not make mention of the actual phase number in the md file itself, because if there are any changes to the phase order, it's easier if we don't have to come through the file and change the phase numbers. Make sure the sub agents give it their all. Each phase document should include a high level checklist at the top. This will later be used to create a json out of these checklists.
 
@@ -101,7 +101,7 @@ Once this is complete, you will then move on to creating a json file that stores
 
 After creating all plan documents and the status JSON, index the feature for search:
 ```bash
-counsel index --name [feature-name]
+woolly index --name [feature-name]
 ```
 Note: Only markdown files are indexed; JSON files are automatically skipped.
 
@@ -207,11 +207,11 @@ Now you have been given a new feature task to build. Based on the parsed argumen
 - Feature name: second argument
 - Phase number: third argument
 
-The files that describe the feature are in @~/.counsel/features/[feature]/. You must first read the context.md to understand the project background and objectives. Then read the specs.md to get an understanding of the goal of the project. Then next you must read the plan-approved_overview.md to get an understanding for the engineering implementation. Then you must read the plan-approved.plan-status.json to understand the implementation details.
+The files that describe the feature are in @~/.woolly/features/[feature]/. You must first read the context.md to understand the project background and objectives. Then read the specs.md to get an understanding of the goal of the project. Then next you must read the plan-approved_overview.md to get an understanding for the engineering implementation. Then you must read the plan-approved.plan-status.json to understand the implementation details.
 
 Your task is to code the phase - plan-approved.phase-[phase_number].md. We will refer to this phase as "the current phase".
 
-You must thoroughly review the codebase for pertinent parts. You don't necessarily have to blindly follow the implementation details in the current phase, but it is a good suggestion. However since your goal is to complete the task in the best way possible, you are free to suggest any modifications to the approach. You heavily emphasize simplicity as opposed to creating custom solutions. Also be sure to review your memory in the CLAUDE.md files to make sure that you follow the proper standards. Make sure to update the @~/.counsel/features/[feature]/plan-phases.json appropriately as you complete the features in the current phase. Present your high level to do plan for execution, and once this is approved, begin implementing it. Give it your all and don't hold back.
+You must thoroughly review the codebase for pertinent parts. You don't necessarily have to blindly follow the implementation details in the current phase, but it is a good suggestion. However since your goal is to complete the task in the best way possible, you are free to suggest any modifications to the approach. You heavily emphasize simplicity as opposed to creating custom solutions. Also be sure to review your memory in the CLAUDE.md files to make sure that you follow the proper standards. Make sure to update the @~/.woolly/features/[feature]/plan-phases.json appropriately as you complete the features in the current phase. Present your high level to do plan for execution, and once this is approved, begin implementing it. Give it your all and don't hold back.
 
 Once you are done completing a step of the phase, explicitly ask before updating the plan-phases.json
 
@@ -221,7 +221,7 @@ Do not mark phases as completed until I tell you to, but you can mark phase task
 
 After coding significant changes or creating new documentation files (like implementation.md or notes.md), update the search index:
 ```bash
-counsel index --name [feature-name] --modified
+woolly index --name [feature-name] --modified
 ```
 This ensures new documentation is searchable. Status JSON updates do not require re-indexing.
 
@@ -231,10 +231,10 @@ If the first argument is not one of the supported types, show:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                   COUNSEL FEATURE COMMANDS
+                   WOOLLY FEATURE COMMANDS
 ═══════════════════════════════════════════════════════════════
 
-Usage: /counsel-feature {type} [feature-name] [additional-args]
+Usage: /woolly-feature {type} [feature-name] [additional-args]
 
 Available types:
 • specs - Gather and document feature specifications
@@ -243,10 +243,10 @@ Available types:
 • code - Execute a specific implementation phase
 
 Examples:
-• /counsel-feature specs user-auth
-• /counsel-feature scope user-auth
-• /counsel-feature plan user-auth
-• /counsel-feature code user-auth 1
+• /woolly-feature specs user-auth
+• /woolly-feature scope user-auth
+• /woolly-feature plan user-auth
+• /woolly-feature code user-auth 1
 
 ═══════════════════════════════════════════════════════════════
 ```

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { PlanStatus } from '@/lib/counsel-reader';
+import { PlanStatus } from '@/lib/woolly-reader';
 import { InteractiveKanban } from '@/components/InteractiveKanban';
 
 interface TopLevelKanbanProps {

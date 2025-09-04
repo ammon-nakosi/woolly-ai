@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as os from 'os';
 import { Rule, Prompt, RuleScope, RuleStatus, LibraryMetadata } from '../types/library';
 
-const LIBRARY_BASE = path.join(os.homedir(), '.counsel', 'library');
+const LIBRARY_BASE = path.join(os.homedir(), '.woolly', 'library');
 const RULES_DIR = path.join(LIBRARY_BASE, 'rules');
 const PROMPTS_DIR = path.join(LIBRARY_BASE, 'prompts');
 const METADATA_FILE = path.join(LIBRARY_BASE, 'metadata.json');

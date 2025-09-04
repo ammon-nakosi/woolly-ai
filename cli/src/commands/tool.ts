@@ -35,7 +35,7 @@ interface Tool {
 export function registerToolCommands(program: Command) {
   const tool = program
     .command('tool')
-    .description('Manage counsel tools library');
+    .description('Manage woolly tools library');
 
   // List tools
   tool
@@ -73,11 +73,11 @@ export function registerToolCommands(program: Command) {
 
         if (tools.length === 0) {
           console.log(chalk.gray('No tools found.'));
-          console.log(chalk.gray('Add your first tool with: counsel tool add'));
+          console.log(chalk.gray('Add your first tool with: woolly tool add'));
           return;
         }
 
-        console.log(chalk.bold(`\n🧰 Counsel Tools (${tools.length})\n`));
+        console.log(chalk.bold(`\n🧰 Woolly Tools (${tools.length})\n`));
 
         // Group by type
         const byType = {

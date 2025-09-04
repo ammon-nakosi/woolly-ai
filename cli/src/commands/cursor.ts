@@ -28,8 +28,8 @@ export function registerCursorCommands(program: Command) {
         await fs.access(cursorCommandsDir);
         if (!options.force) {
           console.log(chalk.yellow('ℹ️  Cursor commands already initialized.'));
-          console.log(chalk.gray(`   Use ${chalk.bold('counsel cursor update')} to update to latest version`));
-          console.log(chalk.gray(`   Use ${chalk.bold('counsel cursor init --force')} to overwrite`));
+          console.log(chalk.gray(`   Use ${chalk.bold('woolly cursor update')} to update to latest version`));
+          console.log(chalk.gray(`   Use ${chalk.bold('woolly cursor init --force')} to overwrite`));
           return;
         }
       } catch {
@@ -68,7 +68,7 @@ export function registerCursorCommands(program: Command) {
           return;
         } else {
           console.log(chalk.red('❌ Cursor commands not initialized in this project.'));
-          console.log(chalk.gray(`   Run ${chalk.bold('counsel cursor init')} first`));
+          console.log(chalk.gray(`   Run ${chalk.bold('woolly cursor init')} first`));
           return;
         }
       }
@@ -90,14 +90,14 @@ async function installCursorCommands(overwrite: boolean): Promise<void> {
     let commandFiles: string[];
     try {
       const files = await fs.readdir(commandsDir);
-      commandFiles = files.filter(f => f.startsWith('counsel-') && f.endsWith('.md'));
+      commandFiles = files.filter(f => f.startsWith('woolly-') && f.endsWith('.md'));
     } catch (error) {
-      spinner.fail('Could not find Counsel Framework commands');
-      throw new Error('Make sure counsel-framework is properly installed');
+      spinner.fail('Could not find Woolly Framework commands');
+      throw new Error('Make sure woolly-framework is properly installed');
     }
     
     if (commandFiles.length === 0) {
-      spinner.fail('No counsel commands found');
+      spinner.fail('No woolly commands found');
       return;
     }
     
@@ -125,7 +125,7 @@ async function installCursorCommands(overwrite: boolean): Promise<void> {
         if (frontmatterEnd > -1) {
           content = content.slice(0, frontmatterEnd) + 
             '# Note: Cursor commands are in beta. Syntax may change.\n' +
-            '# Installed by Counsel Framework\n' +
+            '# Installed by Woolly Framework\n' +
             content.slice(frontmatterEnd);
         }
       }
@@ -168,7 +168,7 @@ async function addToGitignore(): Promise<void> {
     }
     
     // Add to .gitignore
-    const addition = '\n# Counsel Framework - Cursor IDE commands (project-specific)\n.cursor/commands/\n';
+    const addition = '\n# Woolly Framework - Cursor IDE commands (project-specific)\n.cursor/commands/\n';
     await fs.writeFile(gitignorePath, content + addition);
     console.log(chalk.gray('📝 Added .cursor/commands/ to .gitignore'));
   } catch (error) {
@@ -181,6 +181,6 @@ function showSuccessMessage(action: 'init' | 'update'): void {
   console.log(chalk.cyan('Next steps:'));
   console.log(`  1. ${action === 'init' ? 'Restart' : 'Reload'} Cursor IDE`);
   console.log('  2. Open the chat/composer (Cmd/Ctrl + L)');
-  console.log('  3. Type / to see available Counsel commands');
+  console.log('  3. Type / to see available Woolly commands');
   console.log(chalk.gray('\nNote: Commands are project-specific and in beta'));
 }

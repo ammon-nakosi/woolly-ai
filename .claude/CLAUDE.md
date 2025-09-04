@@ -2,6 +2,6 @@
 
 This file contains project-specific configuration for Claude Code.
 
-# Counsel Rules
-@.claude/counsel-project-rules.md
-@.claude/counsel-session-rules.md
+# Woolly Rules
+@.claude/woolly-project-rules.md
+@.claude/woolly-session-rules.md

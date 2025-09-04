@@ -1,19 +1,19 @@
-# Counsel Close Command
+# Woolly Close Command
 
-You are closing a counsel project. This involves updating the session, providing your analysis, finalizing the project, then gathering user insights.
+You are closing a woolly project. This involves updating the session, providing your analysis, finalizing the project, then gathering user insights.
 
-**IMPORTANT**: This is a slash command workflow (/counsel-close) for AI agents. The actual CLI command is `counsel finalize` (not `counsel close`).
+**IMPORTANT**: This is a slash command workflow (/woolly-close) for AI agents. The actual CLI command is `woolly finalize` (not `woolly close`).
 
 ## Determining Which Project to Close
 
 Parse the user's request for the project name. If not explicitly provided:
 
 1. **Use context if clear**: If you've been actively working on a specific project, use that name
-   - Example: If you just ran `counsel reload fix-counsel-close-interactive`, you know the project
+   - Example: If you just ran `woolly reload fix-woolly-close-interactive`, you know the project
 
 2. **Only if genuinely uncertain**, check what's available:
    ```bash
-   counsel list --recent
+   woolly list --recent
    ```
 
 3. **Ask for confirmation only when necessary**:
@@ -28,7 +28,7 @@ Parse the user's request for the project name. If not explicitly provided:
 First, update the session with latest insights WITHOUT mentioning closing:
 
 ```bash
-counsel session "Summary of what was accomplished and key decisions made" --work <name> --mode <mode>
+woolly session "Summary of what was accomplished and key decisions made" --work <name> --mode <mode>
 ```
 
 This should be a natural session update, as if the user just asked for a status update.
@@ -38,7 +38,7 @@ This should be a natural session update, as if the user just asked for a status 
 Analyze the work done and finalize the project with your retrospective:
 
 ```bash
-counsel finalize <name> \
+woolly finalize <name> \
   --ai-went-well "Your analysis of what went well" \
   --ai-improve "Your analysis of what could be improved" \
   --ai-avoid "Your analysis of what to avoid"
@@ -80,10 +80,10 @@ If the user provides insights, directly update the retro.md file to add a "User 
 
 ```bash
 # Read the current retro
-current_retro=$(cat ~/.counsel/<mode>s/<name>/retro.md)
+current_retro=$(cat ~/.woolly/<mode>s/<name>/retro.md)
 
 # Append user insights section
-cat >> ~/.counsel/<mode>s/<name>/retro.md << EOF
+cat >> ~/.woolly/<mode>s/<name>/retro.md << EOF
 
 ## User Insights
 
@@ -115,13 +115,13 @@ EOF
 ```
 User: Let's close this project
 
-AI: [Already knows we're working on fix-counsel-close-interactive, proceeds directly]
+AI: [Already knows we're working on fix-woolly-close-interactive, proceeds directly]
     
     [Updates session naturally]
-    counsel session "Completed implementation of non-interactive close command..."
+    woolly session "Completed implementation of non-interactive close command..."
     
     [Provides analysis and finalizes]
-    counsel finalize fix-counsel-close-interactive \
+    woolly finalize fix-woolly-close-interactive \
       --ai-went-well "..." \
       --ai-improve "..." \
       --ai-avoid "..."
@@ -132,7 +132,7 @@ AI: [Already knows we're working on fix-counsel-close-interactive, proceeds dire
 ```
 User: Close the project
 
-AI: I'll close the fix-counsel-close-interactive project we've been working on.
+AI: I'll close the fix-woolly-close-interactive project we've been working on.
     
     [Proceeds with closing workflow]
 ```
@@ -143,7 +143,7 @@ AI: I'll close the fix-counsel-close-interactive project we've been working on.
 User: Close that feature from yesterday
 
 AI: [Not sure which feature, checks]
-    counsel list --recent
+    woolly list --recent
     
     Which feature from yesterday? I see:
     - feature/dark-mode 
@@ -158,7 +158,7 @@ AI: [Proceeds with closing dark-mode]
 
 The finalize command will auto-detect the mode from the project path. If ambiguous:
 ```bash
-counsel finalize <name> --mode <feature|script|vibe|prompt>
+woolly finalize <name> --mode <feature|script|vibe|prompt>
 ```
 
 ## Error Handling

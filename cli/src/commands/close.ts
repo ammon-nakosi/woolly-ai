@@ -9,7 +9,7 @@ import { CounselMode } from '../types';
 import { getChromaClient } from '../services/chromadb-client';
 import { ruleInjectionService } from '../services/rule-injection';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 interface ProjectMetadata {
   name: string;
@@ -36,7 +36,7 @@ interface UserInsights {
 export function registerCloseCommands(program: Command) {
   program
     .command('finalize <name>')
-    .description('Finalize a counsel project and generate retrospective')
+    .description('Finalize a woolly project and generate retrospective')
     .option('-m, --mode <mode>', 'Specify mode if ambiguous')
     .option('--interactive', 'Enable interactive mode to prompt for user insights')
     .option('--agent', 'Running in agent mode (enforces AI analysis)')
@@ -100,11 +100,11 @@ export function registerCloseCommands(program: Command) {
           // Agent mode requires AI analysis
           spinner.fail('Agent mode requires AI analysis flags (--ai-went-well, --ai-improve, --ai-avoid)');
           console.log(chalk.yellow('\nUsage for agents:'));
-          console.log(chalk.gray('  counsel finalize <name> --agent \\'));
+          console.log(chalk.gray('  woolly finalize <name> --agent \\'));
           console.log(chalk.gray('    --ai-went-well "What went well" \\'));
           console.log(chalk.gray('    --ai-improve "What could be improved" \\'));
           console.log(chalk.gray('    --ai-avoid "What to avoid"'));
-          console.log(chalk.yellow('\nOr follow the /counsel-close workflow for proper instructions'));
+          console.log(chalk.yellow('\nOr follow the /woolly-close workflow for proper instructions'));
           return;
         } else {
           // Fallback to programmatic analysis (deprecated path)
@@ -228,7 +228,7 @@ export function registerCloseCommands(program: Command) {
   
   program
     .command('reopen <name>')
-    .description('Reopen a closed counsel project')
+    .description('Reopen a closed woolly project')
     .option('-m, --mode <mode>', 'Specify mode if ambiguous')
     .action(async (name: string, options) => {
       const spinner = ora('Finding project...').start();
@@ -248,7 +248,7 @@ export function registerCloseCommands(program: Command) {
         
         await reopenProject(projectPath, metadata);
         spinner.succeed(`Project "${name}" has been reopened`);
-        console.log(chalk.gray('Use counsel-reload to continue working on it'));
+        console.log(chalk.gray('Use woolly-reload to continue working on it'));
         
       } catch (error: any) {
         spinner.fail('Failed to reopen project');

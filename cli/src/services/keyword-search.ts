@@ -33,10 +33,10 @@ export class KeywordSearchService {
    */
   async initializeIndex(): Promise<void> {
     try {
-      // Check if counsel directory exists
+      // Check if woolly directory exists
       const exists = await this.parser.counselDirectoryExists();
       if (!exists) {
-        console.log('Counsel directory not found, keyword search unavailable');
+        console.log('Woolly directory not found, keyword search unavailable');
         return;
       }
 

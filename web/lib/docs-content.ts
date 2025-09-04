@@ -23,7 +23,7 @@ import {
 } from './docs-content-sections-2';
 
 
-// Counsel Modes Data
+// Woolly Modes Data
 export const counselModes: CounselMode[] = [
   {
     name: 'Feature Mode',
@@ -43,25 +43,25 @@ export const counselModes: CounselMode[] = [
         step: 1,
         title: 'Requirements Gathering',
         description: 'Define what the feature should do and capture user stories',
-        commands: ['/counsel-feature-requirements', 'counsel add feature']
+        commands: ['/woolly-feature-requirements', 'woolly add feature']
       },
       {
         step: 2,
         title: 'Design Planning',
         description: 'Create technical design and architecture decisions',
-        commands: ['/counsel-feature-planning']
+        commands: ['/woolly-feature-planning']
       },
       {
         step: 3,
         title: 'Implementation',
         description: 'Build the feature following the design specifications',
-        commands: ['/counsel-feature-implement']
+        commands: ['/woolly-feature-implement']
       },
       {
         step: 4,
         title: 'Status Tracking',
         description: 'Monitor progress and update status throughout development',
-        commands: ['/counsel-status', '/counsel-status-update']
+        commands: ['/woolly-status', '/woolly-status-update']
       }
     ],
     useCases: [
@@ -70,7 +70,7 @@ export const counselModes: CounselMode[] = [
       'Creating admin dashboard features',
       'Implementing API endpoints'
     ],
-    relatedCommands: ['counsel add feature', '/counsel-feature-requirements', '/counsel-feature-planning', '/counsel-feature-implement']
+    relatedCommands: ['woolly add feature', '/woolly-feature-requirements', '/woolly-feature-planning', '/woolly-feature-implement']
   },
   {
     name: 'Script Mode',
@@ -89,19 +89,19 @@ export const counselModes: CounselMode[] = [
         step: 1,
         title: 'Script Planning',
         description: 'Define what the script should accomplish and its requirements',
-        commands: ['counsel add script', '/counsel-feature-requirements']
+        commands: ['woolly add script', '/woolly-feature-requirements']
       },
       {
         step: 2,
         title: 'Implementation',
         description: 'Write the script with proper error handling and documentation',
-        commands: ['/counsel-feature-implement']
+        commands: ['/woolly-feature-implement']
       },
       {
         step: 3,
         title: 'Testing & Validation',
         description: 'Test the script and ensure it works as expected',
-        commands: ['/counsel-status']
+        commands: ['/woolly-status']
       }
     ],
     useCases: [
@@ -110,7 +110,7 @@ export const counselModes: CounselMode[] = [
       'Data processing utilities',
       'Deployment scripts'
     ],
-    relatedCommands: ['counsel add script', '/counsel-feature-requirements', '/counsel-feature-implement']
+    relatedCommands: ['woolly add script', '/woolly-feature-requirements', '/woolly-feature-implement']
   },
   {
     name: 'Vibe Mode',
@@ -129,19 +129,19 @@ export const counselModes: CounselMode[] = [
         step: 1,
         title: 'Idea Exploration',
         description: 'Brainstorm and explore new concepts or approaches',
-        commands: ['counsel add vibe', '/counsel-feature-discovery']
+        commands: ['woolly add vibe', '/woolly-feature-discovery']
       },
       {
         step: 2,
         title: 'Experimentation',
         description: 'Build prototypes and test ideas',
-        commands: ['/counsel-reload', '/counsel-feature-implement']
+        commands: ['/woolly-reload', '/woolly-feature-implement']
       },
       {
         step: 3,
         title: 'Documentation',
         description: 'Document findings and lessons learned',
-        commands: ['/counsel-status']
+        commands: ['/woolly-status']
       }
     ],
     useCases: [
@@ -150,53 +150,53 @@ export const counselModes: CounselMode[] = [
       'Architecture experimentation',
       'Creative problem solving'
     ],
-    relatedCommands: ['counsel add vibe', '/counsel-feature-discovery', '/counsel-reload']
+    relatedCommands: ['woolly add vibe', '/woolly-feature-discovery', '/woolly-reload']
   }
 ];
 
 // CLI Commands Data
 export const cliCommands: Command[] = [
   {
-    name: 'counsel init',
+    name: 'woolly init',
     type: 'cli',
-    description: 'Initialize Counsel framework in the current directory',
-    syntax: 'counsel init [options]',
+    description: 'Initialize Woolly framework in the current directory',
+    syntax: 'woolly init [options]',
     examples: [
       {
-        command: 'counsel init',
+        command: 'woolly init',
         description: 'Initialize with default settings'
       },
       {
-        command: 'counsel init --force',
+        command: 'woolly init --force',
         description: 'Force initialization even if already initialized'
       }
     ],
     options: [
       {
         name: '--force',
-        description: 'Force initialization even if .counsel directory exists',
+        description: 'Force initialization even if .woolly directory exists',
         required: false,
         type: 'boolean'
       }
     ],
-    relatedCommands: ['counsel status', 'counsel add']
+    relatedCommands: ['woolly status', 'woolly add']
   },
   {
-    name: 'counsel add',
+    name: 'woolly add',
     type: 'cli',
     description: 'Add a new item to track (feature, script, debug, review, or vibe)',
-    syntax: 'counsel add <type> <name> [options]',
+    syntax: 'woolly add <type> <name> [options]',
     examples: [
       {
-        command: 'counsel add feature user-auth',
+        command: 'woolly add feature user-auth',
         description: 'Add a new feature called "user-auth"'
       },
       {
-        command: 'counsel add script backup-db',
+        command: 'woolly add script backup-db',
         description: 'Add a new script called "backup-db"'
       },
       {
-        command: 'counsel add debug memory-leak --priority high',
+        command: 'woolly add debug memory-leak --priority high',
         description: 'Add a high-priority debug item'
       }
     ],
@@ -215,24 +215,24 @@ export const cliCommands: Command[] = [
         type: 'string'
       }
     ],
-    relatedCommands: ['counsel list', 'counsel status']
+    relatedCommands: ['woolly list', 'woolly status']
   },
   {
-    name: 'counsel list',
+    name: 'woolly list',
     type: 'cli',
     description: 'List all tracked items with their current status',
-    syntax: 'counsel list [type] [options]',
+    syntax: 'woolly list [type] [options]',
     examples: [
       {
-        command: 'counsel list',
+        command: 'woolly list',
         description: 'List all items across all types'
       },
       {
-        command: 'counsel list feature',
+        command: 'woolly list feature',
         description: 'List only feature items'
       },
       {
-        command: 'counsel list --status active',
+        command: 'woolly list --status active',
         description: 'List only active items'
       }
     ],
@@ -250,20 +250,20 @@ export const cliCommands: Command[] = [
         type: 'string'
       }
     ],
-    relatedCommands: ['counsel add', 'counsel status']
+    relatedCommands: ['woolly add', 'woolly status']
   },
   {
-    name: 'counsel status',
+    name: 'woolly status',
     type: 'cli',
     description: 'Show detailed status of a specific item or overview of all items',
-    syntax: 'counsel status [type] [name] [options]',
+    syntax: 'woolly status [type] [name] [options]',
     examples: [
       {
-        command: 'counsel status',
+        command: 'woolly status',
         description: 'Show overview of all items'
       },
       {
-        command: 'counsel status feature user-auth',
+        command: 'woolly status feature user-auth',
         description: 'Show detailed status of user-auth feature'
       }
     ],
@@ -275,20 +275,20 @@ export const cliCommands: Command[] = [
         type: 'boolean'
       }
     ],
-    relatedCommands: ['counsel list', 'counsel add']
+    relatedCommands: ['woolly list', 'woolly add']
   },
   {
-    name: 'counsel search',
+    name: 'woolly search',
     type: 'cli',
     description: 'Search through all tracked items and their content',
-    syntax: 'counsel search <query> [options]',
+    syntax: 'woolly search <query> [options]',
     examples: [
       {
-        command: 'counsel search "authentication"',
+        command: 'woolly search "authentication"',
         description: 'Search for items containing "authentication"'
       },
       {
-        command: 'counsel search "API" --type feature',
+        command: 'woolly search "API" --type feature',
         description: 'Search for "API" only in features'
       }
     ],
@@ -307,137 +307,137 @@ export const cliCommands: Command[] = [
         default: '10'
       }
     ],
-    relatedCommands: ['counsel list', 'counsel status']
+    relatedCommands: ['woolly list', 'woolly status']
   }
 ];
 
 // Slash Commands Data
 export const slashCommands: Command[] = [
   {
-    name: '/counsel-feature-requirements',
+    name: '/woolly-feature-requirements',
     type: 'slash',
     description: 'Help gather and document requirements for a feature or project',
-    syntax: '/counsel-feature-requirements',
+    syntax: '/woolly-feature-requirements',
     examples: [
       {
-        command: '/counsel-feature-requirements',
+        command: '/woolly-feature-requirements',
         description: 'Start interactive requirements gathering session',
         output: 'AI will guide you through defining user stories, acceptance criteria, and technical requirements'
       }
     ],
-    relatedCommands: ['/counsel-feature-planning', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-feature-planning', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-feature-planning',
+    name: '/woolly-feature-planning',
     type: 'slash',
     description: 'Create technical design and implementation plan',
-    syntax: '/counsel-feature-planning',
+    syntax: '/woolly-feature-planning',
     examples: [
       {
-        command: '/counsel-feature-planning',
+        command: '/woolly-feature-planning',
         description: 'Generate design document and implementation strategy',
         output: 'AI will help create architecture decisions, component design, and implementation roadmap'
       }
     ],
-    relatedCommands: ['/counsel-feature-requirements', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-feature-requirements', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-feature-implement',
+    name: '/woolly-feature-implement',
     type: 'slash',
     description: 'Get assistance with implementation of planned features',
-    syntax: '/counsel-feature-implement',
+    syntax: '/woolly-feature-implement',
     examples: [
       {
-        command: '/counsel-feature-implement',
+        command: '/woolly-feature-implement',
         description: 'Start implementation with AI guidance',
         output: 'AI will help write code, suggest best practices, and guide implementation'
       }
     ],
-    relatedCommands: ['/counsel-feature-planning', '/counsel-status']
+    relatedCommands: ['/woolly-feature-planning', '/woolly-status']
   },
   {
-    name: '/counsel-feature-discovery',
+    name: '/woolly-feature-discovery',
     type: 'slash',
     description: 'Explore and understand existing codebase or investigate issues',
-    syntax: '/counsel-feature-discovery',
+    syntax: '/woolly-feature-discovery',
     examples: [
       {
-        command: '/counsel-feature-discovery',
+        command: '/woolly-feature-discovery',
         description: 'Start codebase exploration session',
         output: 'AI will help analyze code structure, identify patterns, and understand system architecture'
       }
     ],
-    relatedCommands: ['/counsel-reload', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-reload', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-reload',
+    name: '/woolly-reload',
     type: 'slash',
     description: 'Get up to speed on existing code and prepare for development',
-    syntax: '/counsel-reload',
+    syntax: '/woolly-reload',
     examples: [
       {
-        command: '/counsel-reload',
+        command: '/woolly-reload',
         description: 'Learn about codebase and development environment',
         output: 'AI will provide codebase overview, setup instructions, and development guidelines'
       }
     ],
-    relatedCommands: ['/counsel-feature-discovery', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-feature-discovery', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-status',
+    name: '/woolly-status',
     type: 'slash',
     description: 'Get current status and progress summary',
-    syntax: '/counsel-status',
+    syntax: '/woolly-status',
     examples: [
       {
-        command: '/counsel-status',
+        command: '/woolly-status',
         description: 'Show current progress and next steps',
         output: 'AI will summarize current status, completed work, and recommended next actions'
       }
     ],
-    relatedCommands: ['/counsel-status-update', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-status-update', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-status-update',
+    name: '/woolly-status-update',
     type: 'slash',
     description: 'Update progress and status information',
-    syntax: '/counsel-status-update',
+    syntax: '/woolly-status-update',
     examples: [
       {
-        command: '/counsel-status-update',
+        command: '/woolly-status-update',
         description: 'Update current progress and status',
         output: 'AI will help document completed work and update status tracking'
       }
     ],
-    relatedCommands: ['/counsel-status', '/counsel-feature-implement']
+    relatedCommands: ['/woolly-status', '/woolly-feature-implement']
   },
   {
-    name: '/counsel-create',
+    name: '/woolly-create',
     type: 'slash',
     description: 'Create new items or initialize new development workflows',
-    syntax: '/counsel-create',
+    syntax: '/woolly-create',
     examples: [
       {
-        command: '/counsel-create',
+        command: '/woolly-create',
         description: 'Start creation workflow for new items',
         output: 'AI will guide you through creating new features, scripts, or other tracked items'
       }
     ],
-    relatedCommands: ['/counsel-feature-requirements', '/counsel-feature-planning']
+    relatedCommands: ['/woolly-feature-requirements', '/woolly-feature-planning']
   },
   {
-    name: '/counsel-status-light',
+    name: '/woolly-status-light',
     type: 'slash',
     description: 'Get a brief, lightweight status summary',
-    syntax: '/counsel-status-light',
+    syntax: '/woolly-status-light',
     examples: [
       {
-        command: '/counsel-status-light',
+        command: '/woolly-status-light',
         description: 'Show quick status overview',
         output: 'AI will provide a concise summary of current status and immediate next steps'
       }
     ],
-    relatedCommands: ['/counsel-status', '/counsel-status-update']
+    relatedCommands: ['/woolly-status', '/woolly-status-update']
   }
 ];
 
@@ -464,9 +464,9 @@ export const integrations: Integration[] = [
       },
       {
         step: 3,
-        title: 'Configure Counsel',
-        description: 'Set ChromaDB connection details in Counsel configuration',
-        code: 'counsel init --chromadb-url http://localhost:8000',
+        title: 'Configure Woolly',
+        description: 'Set ChromaDB connection details in Woolly configuration',
+        code: 'woolly init --chromadb-url http://localhost:8000',
         language: 'bash'
       }
     ],
@@ -525,8 +525,8 @@ export const integrations: Integration[] = [
       {
         step: 3,
         title: 'Initialize Linear Integration',
-        description: 'Configure Counsel to use Linear for issue tracking',
-        code: 'counsel init --linear-api-key $LINEAR_API_KEY',
+        description: 'Configure Woolly to use Linear for issue tracking',
+        code: 'woolly init --linear-api-key $LINEAR_API_KEY',
         language: 'bash'
       }
     ],
@@ -547,10 +547,10 @@ export const integrations: Integration[] = [
       }
     ],
     features: [
-      'Automatic issue creation from Counsel items',
-      'Sync status between Counsel and Linear',
+      'Automatic issue creation from Woolly items',
+      'Sync status between Woolly and Linear',
       'Link code changes to Linear issues',
-      'Import existing Linear issues into Counsel'
+      'Import existing Linear issues into Woolly'
     ],
     troubleshooting: [
       {
@@ -585,30 +585,30 @@ export const integrations: Integration[] = [
       {
         step: 3,
         title: 'Enable Git Integration',
-        description: 'Configure Counsel to use Git for backup and sync',
-        code: 'counsel init --git-backup',
+        description: 'Configure Woolly to use Git for backup and sync',
+        code: 'woolly init --git-backup',
         language: 'bash'
       }
     ],
     configuration: [
       {
         name: 'GIT_BACKUP_ENABLED',
-        description: 'Enable automatic Git backup of Counsel data',
+        description: 'Enable automatic Git backup of Woolly data',
         required: false,
         type: 'boolean',
         example: 'true'
       },
       {
         name: 'GIT_BACKUP_BRANCH',
-        description: 'Branch to use for Counsel data backup',
+        description: 'Branch to use for Woolly data backup',
         required: false,
         type: 'string',
-        example: 'counsel-backup'
+        example: 'woolly-backup'
       }
     ],
     features: [
-      'Automatic backup of Counsel data to Git',
-      'Sync Counsel state across multiple machines',
+      'Automatic backup of Woolly data to Git',
+      'Sync Woolly state across multiple machines',
       'Version history of all tracked items',
       'Integration with existing Git workflows'
     ],
@@ -618,8 +618,8 @@ export const integrations: Integration[] = [
         solution: 'Check Git credentials and remote repository permissions'
       },
       {
-        issue: 'Merge conflicts in Counsel data',
-        solution: 'Use counsel sync command to resolve conflicts automatically'
+        issue: 'Merge conflicts in Woolly data',
+        solution: 'Use woolly sync command to resolve conflicts automatically'
       }
     ]
   }
@@ -630,8 +630,8 @@ export default integrations;
 // Main Documentation Content Structure
 export const docsContent: DocContent = {
   metadata: {
-    title: "Counsel Framework Documentation",
-    description: "Comprehensive guide to the Counsel Framework for AI-assisted development",
+    title: "Woolly Framework Documentation",
+    description: "Comprehensive guide to the Woolly Framework for AI-assisted development",
     lastUpdated: "2025-01-26",
     version: "1.0.0"
   },
@@ -643,10 +643,10 @@ export const docsContent: DocContent = {
       content: React.createElement(OverviewSection),
       subsections: [
         {
-          id: "what-is-counsel",
-          title: "What is Counsel?",
+          id: "what-is-woolly",
+          title: "What is Woolly?",
           level: 2,
-          content: "Counsel is a comprehensive framework designed to enhance AI-assisted development workflows."
+          content: "Woolly is a comprehensive framework designed to enhance AI-assisted development workflows."
         },
         {
           id: "key-features",
@@ -684,13 +684,13 @@ export const docsContent: DocContent = {
           id: "installation",
           title: "Installation",
           level: 2,
-          content: "Install via npm: npm install -g counsel-framework"
+          content: "Install via npm: npm install -g woolly-framework"
         },
         {
           id: "initial-setup",
           title: "Initial Setup",
           level: 2,
-          content: "Initialize with: counsel init"
+          content: "Initialize with: woolly init"
         },
         {
           id: "first-steps",
@@ -701,8 +701,8 @@ export const docsContent: DocContent = {
       ]
     },
     {
-      id: "counsel-modes",
-      title: "Counsel Modes",
+      id: "woolly-modes",
+      title: "Woolly Modes",
       level: 1,
       content: React.createElement(CounselModesSection),
       subsections: [
@@ -888,7 +888,7 @@ export const docsContent: DocContent = {
           id: "best-practices",
           title: "Best Practices",
           level: 2,
-          content: "Recommended practices for using Counsel effectively"
+          content: "Recommended practices for using Woolly effectively"
         }
       ]
     },

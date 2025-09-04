@@ -1,7 +1,7 @@
-# Counsel Framework Script Logging Templates
+# Woolly Framework Script Logging Templates
 
 ## Purpose
-These templates provide crash-resistant logging and outcome tracking for counsel scripts, ensuring users always have logs and execution summaries to refer to even if scripts crash unexpectedly.
+These templates provide crash-resistant logging and outcome tracking for woolly scripts, ensuring users always have logs and execution summaries to refer to even if scripts crash unexpectedly.
 
 ## Key Principles
 
@@ -11,13 +11,13 @@ These templates provide crash-resistant logging and outcome tracking for counsel
 4. **Automatic Outcome Tracking**: JSON summaries saved after each run
 5. **Graceful Cleanup**: Handle script termination properly
 6. **Consistent Locations**: 
-   - Logs: `~/.counsel/scripts/{script-name}/logs/`
-   - Outcomes: `~/.counsel/scripts/{script-name}/outcomes/`
+   - Logs: `~/.woolly/scripts/{script-name}/logs/`
+   - Outcomes: `~/.woolly/scripts/{script-name}/outcomes/`
 
 ## Available Templates
 
 ### Basic Templates (Simple Scripts)
-- **counsel-logger.ts**: Reusable logging utility with outcome tracking
+- **woolly-logger.ts**: Reusable logging utility with outcome tracking
 - **example-script.ts**: Example implementation showing basic usage
 - **bash-logging.sh**: Complete bash logging template with outcome support
 
@@ -31,7 +31,7 @@ These templates provide crash-resistant logging and outcome tracking for counsel
 ### TypeScript/Node.js Scripts
 
 ```typescript
-import { getCounselLogger } from './counsel-logger';
+import { getCounselLogger } from './woolly-logger';
 
 const logger = getCounselLogger({
   scriptName: 'my-script',
@@ -99,7 +99,7 @@ from pathlib import Path
 
 def setup_counsel_logger(script_name, no_log=False, verbose=False):
     # Create log directory
-    log_dir = Path.home() / '.counsel' / 'scripts' / script_name / 'logs'
+    log_dir = Path.home() / '.woolly' / 'scripts' / script_name / 'logs'
     log_dir.mkdir(parents=True, exist_ok=True)
     
     # Create timestamped log file
@@ -138,7 +138,7 @@ class CounselLogger
     
     unless no_log
       # Create log directory
-      log_dir = File.join(Dir.home, '.counsel', 'scripts', script_name, 'logs')
+      log_dir = File.join(Dir.home, '.woolly', 'scripts', script_name, 'logs')
       FileUtils.mkdir_p(log_dir)
       
       # Create timestamped log file
@@ -173,7 +173,7 @@ Files are named with context indicators for easy identification:
 
 ### Directory Structure
 ```
-~/.counsel/scripts/my-script/
+~/.woolly/scripts/my-script/
 ├── logs/
 │   ├── my-script-2025-01-27T09-00-00-dryrun.log
 │   └── my-script-2025-01-27T10-00-00.log
@@ -225,7 +225,7 @@ Files are named with context indicators for easy identification:
 5. **User Transparency**: Always know where files are saved
 6. **Easy Comparison**: Compare dry-run vs live outcomes side-by-side
 
-## Integration with Counsel Framework
+## Integration with Woolly Framework
 
 When creating scripts in script mode, agents should:
 
@@ -284,17 +284,17 @@ Users can manage their logs with standard commands:
 
 ```bash
 # View recent logs for a script
-ls -la ~/.counsel/scripts/my-script/logs/
+ls -la ~/.woolly/scripts/my-script/logs/
 
 # View latest outcome
-cat ~/.counsel/scripts/my-script/outcomes/latest.json | jq
+cat ~/.woolly/scripts/my-script/outcomes/latest.json | jq
 
 # Clean old logs (keep last 10)
-cd ~/.counsel/scripts/my-script/logs/
+cd ~/.woolly/scripts/my-script/logs/
 ls -t | tail -n +11 | xargs rm -f
 
 # Search across all logs
-grep -r "ERROR" ~/.counsel/scripts/*/logs/
+grep -r "ERROR" ~/.woolly/scripts/*/logs/
 
 # Compare dry-run vs live outcomes
 diff <(jq . outcomes/*-dryrun.json) <(jq . outcomes/*-live.json)

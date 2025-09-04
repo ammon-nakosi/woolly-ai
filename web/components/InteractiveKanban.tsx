@@ -17,7 +17,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { PlanStatus } from '@/lib/counsel-reader';
+import { PlanStatus } from '@/lib/woolly-reader';
 import { KanbanColumn } from './KanbanColumn';
 import { KanbanCard } from './KanbanCard';
 

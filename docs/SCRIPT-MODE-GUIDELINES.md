@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the required patterns and best practices for all scripts created in Counsel Framework's script mode. These guidelines ensure scripts are safe, testable, observable, and production-ready from the start.
+This document outlines the required patterns and best practices for all scripts created in Woolly Framework's script mode. These guidelines ensure scripts are safe, testable, observable, and production-ready from the start.
 
 ## Core Principles
 
@@ -24,11 +24,11 @@ Every production script MUST include:
 - [ ] Progress indicators showing current/total items
 - [ ] Outcome JSON with execution statistics
 - [ ] Confirmation prompts for destructive operations
-- [ ] Logging to both console and file in `~/.counsel/scripts/{script-name}/logs/`
+- [ ] Logging to both console and file in `~/.woolly/scripts/{script-name}/logs/`
 
-**IMPORTANT**: Logs and outcomes must be saved in the counsel directory structure:
-- Logs: `~/.counsel/scripts/{script-name}/logs/{script-name}-{timestamp}.log`
-- Outcomes: `~/.counsel/scripts/{script-name}/outcomes/{script-name}-{timestamp}.json`
+**IMPORTANT**: Logs and outcomes must be saved in the woolly directory structure:
+- Logs: `~/.woolly/scripts/{script-name}/logs/{script-name}-{timestamp}.log`
+- Outcomes: `~/.woolly/scripts/{script-name}/outcomes/{script-name}-{timestamp}.json`
 - Do NOT save logs in the current working directory
 
 ## Optional Features (When Appropriate)
@@ -412,7 +412,7 @@ Before running a script in production:
 
 ## Summary
 
-Following these guidelines ensures that counsel scripts are:
+Following these guidelines ensures that woolly scripts are:
 - **Safe** - Won't accidentally damage production data
 - **Testable** - Can be validated incrementally
 - **Observable** - Clear progress and comprehensive logging

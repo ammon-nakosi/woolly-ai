@@ -25,7 +25,7 @@ export interface Rule {
   scope: RuleScope;
   status: RuleStatus;
   repo?: RuleRepo;
-  projectName?: string;  // For session rules - tracks which counsel project owns this rule
+  projectName?: string;  // For session rules - tracks which woolly project owns this rule
   created: string;
   updated: string;
   summary: string;

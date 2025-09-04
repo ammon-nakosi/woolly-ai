@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Counsel Framework documentation page will be a new route (`/docs`) within the existing Next.js visualizer application. The page will serve as the primary reference for understanding and using the Counsel Framework, featuring clear navigation, responsive design, and interactive elements to enhance the user experience.
+The Woolly Framework documentation page will be a new route (`/docs`) within the existing Next.js visualizer application. The page will serve as the primary reference for understanding and using the Woolly Framework, featuring clear navigation, responsive design, and interactive elements to enhance the user experience.
 
 The design extends the existing visualizer infrastructure by adding a dedicated documentation route and reusable components, while maintaining consistency with the current project list interface and leveraging the already-configured Tailwind CSS and TypeScript setup.
 
@@ -37,7 +37,7 @@ visualizer/
 │       ├── Badge.tsx                # Mode badges and status indicators
 │       └── Button.tsx               # Consistent button styling
 ├── lib/
-│   ├── counsel-reader.ts            # EXISTING: Counsel data reading
+│   ├── woolly-reader.ts            # EXISTING: Woolly data reading
 │   ├── docs-content.ts              # NEW: Structured documentation content
 │   └── search-utils.ts              # NEW: Client-side search functionality
 └── public/
@@ -242,7 +242,7 @@ The documentation content will be organized into the following main sections:
 
 1. **Overview** - Framework introduction and key concepts
 2. **Getting Started** - Installation and setup instructions
-3. **Counsel Modes** - Detailed explanation of each mode
+3. **Woolly Modes** - Detailed explanation of each mode
 4. **CLI Reference** - Complete command documentation
 5. **Slash Commands** - Interactive workflow commands
 6. **Integrations** - ChromaDB, Linear, and Git setup
@@ -263,8 +263,8 @@ Example structure:
 ```typescript
 export const docsContent: DocContent = {
   metadata: {
-    title: "Counsel Framework Documentation",
-    description: "Comprehensive guide to the Counsel Framework",
+    title: "Woolly Framework Documentation",
+    description: "Comprehensive guide to the Woolly Framework",
     lastUpdated: "2025-01-26",
     version: "1.0.0"
   },
@@ -276,8 +276,8 @@ export const docsContent: DocContent = {
       content: OverviewSection,
       subsections: [
         {
-          id: "what-is-counsel",
-          title: "What is Counsel?",
+          id: "what-is-woolly",
+          title: "What is Woolly?",
           level: 2,
           content: "..."
         }
@@ -513,4 +513,4 @@ export function SearchBox({ onResultSelect }: SearchBoxProps) {
 - Clean URL structure
 - XML sitemap generation
 
-This design provides a solid foundation for creating a comprehensive, user-friendly documentation page that effectively showcases all aspects of the Counsel Framework while maintaining excellent performance and accessibility standards.
+This design provides a solid foundation for creating a comprehensive, user-friendly documentation page that effectively showcases all aspects of the Woolly Framework while maintaining excellent performance and accessibility standards.

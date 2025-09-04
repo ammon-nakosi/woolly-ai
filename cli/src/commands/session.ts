@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { CounselMode } from '../types';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.counsel');
+const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
 const FOUR_HOURS = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
 interface SessionFile {
@@ -21,10 +21,10 @@ class SessionCommand {
 
   constructor() {
     this.program = new Command('session')
-      .description('Add entry to current counsel work session')
+      .description('Add entry to current woolly work session')
       .argument('<message>', 'Session entry message')
-      .option('-w, --work <name>', 'Specify counsel work name')
-      .option('-m, --mode <mode>', 'Specify counsel mode (feature, script, debug, review, vibe, prompt)')
+      .option('-w, --work <name>', 'Specify woolly work name')
+      .option('-m, --mode <mode>', 'Specify woolly mode (feature, script, debug, review, vibe, prompt)')
       .option('--list', 'List recent session entries')
       .action((message, options) => this.handleSession(message, options));
   }
@@ -43,9 +43,9 @@ class SessionCommand {
     // Get work context
     const work = await this.getWorkContext(options.work, options.mode as CounselMode);
     if (!work) {
-      console.error(chalk.red('No active counsel work found.'));
-      console.log(chalk.yellow('Specify work with: counsel session "message" --work <name> --mode <mode>'));
-      console.log(chalk.yellow('Or reload work first: counsel reload <name>'));
+      console.error(chalk.red('No active woolly work found.'));
+      console.log(chalk.yellow('Specify work with: woolly session "message" --work <name> --mode <mode>'));
+      console.log(chalk.yellow('Or reload work first: woolly reload <name>'));
       return;
     }
 
@@ -65,21 +65,21 @@ class SessionCommand {
         }
       }
 
-      console.error(chalk.red(`Counsel work not found: ${workName}`));
+      console.error(chalk.red(`Woolly work not found: ${workName}`));
       return null;
     }
 
     // Try to detect from current directory
     const cwd = process.cwd();
-    const counselMatch = cwd.match(/\.counsel[\/\\](\w+)s[\/\\]([^\/\\]+)/);
+    const counselMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
     if (counselMatch) {
       const [, modePrefix, name] = counselMatch;
       const mode = modePrefix as CounselMode;
       return { name, mode, path: path.join(COUNSEL_DIR, `${mode}s`, name) };
     }
 
-    // Check for .counsel-active file (could be set by counsel-reload)
-    const activeFile = path.join(COUNSEL_DIR, '.counsel-active');
+    // Check for .woolly-active file (could be set by woolly-reload)
+    const activeFile = path.join(COUNSEL_DIR, '.woolly-active');
     if (fs.existsSync(activeFile)) {
       try {
         const active = JSON.parse(fs.readFileSync(activeFile, 'utf8'));
@@ -163,7 +163,7 @@ class SessionCommand {
   private async listSessions(workName?: string, mode?: CounselMode): Promise<void> {
     const work = await this.getWorkContext(workName, mode);
     if (!work) {
-      console.error(chalk.red('No counsel work specified or found.'));
+      console.error(chalk.red('No woolly work specified or found.'));
       return;
     }
 
@@ -204,10 +204,10 @@ class SessionCommand {
 // Export register function for main CLI
 export function registerSessionCommands(program: Command) {
   const sessionCmd = new Command('session')
-    .description('Manage counsel work sessions')
+    .description('Manage woolly work sessions')
     .argument('[message]', 'Session entry message')
-    .option('-w, --work <name>', 'Specify counsel work name')
-    .option('-m, --mode <mode>', 'Specify counsel mode')
+    .option('-w, --work <name>', 'Specify woolly work name')
+    .option('-m, --mode <mode>', 'Specify woolly mode')
     .option('-l, --list', 'List recent sessions')
     .action(async (message, options) => {
       const sessionCommand = new SessionCommand();

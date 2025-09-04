@@ -10,7 +10,7 @@ import { Rule, RuleScope, RuleStatus, RuleType, RuleDisplay } from '../types/lib
 export function registerRuleCommands(program: Command) {
   const rule = program
     .command('rule')
-    .description('Manage counsel rules library');
+    .description('Manage woolly rules library');
 
   // List rules
   rule
@@ -34,11 +34,11 @@ export function registerRuleCommands(program: Command) {
 
         if (rules.length === 0) {
           console.log(chalk.gray('No rules found.'));
-          console.log(chalk.gray('Create your first rule with: /counsel-remember rule "your guideline"'));
+          console.log(chalk.gray('Create your first rule with: /woolly-remember rule "your guideline"'));
           return;
         }
 
-        console.log(chalk.bold(`\n📚 Counsel Rules (${rules.length})\n`));
+        console.log(chalk.bold(`\n📚 Woolly Rules (${rules.length})\n`));
 
         // Group by scope
         const byScope = {
@@ -68,7 +68,7 @@ export function registerRuleCommands(program: Command) {
           }
         }
 
-        console.log(chalk.gray('\nManage rules with: counsel rule show|edit|toggle|delete [id]'));
+        console.log(chalk.gray('\nManage rules with: woolly rule show|edit|toggle|delete [id]'));
       } catch (error: any) {
         spinner.fail('Failed to list rules');
         console.error(chalk.red('Error:'), error.message);
@@ -140,7 +140,7 @@ export function registerRuleCommands(program: Command) {
     .option('--repo-path <path>', 'Repository path')
     .option('--repo-name <name>', 'Repository name')
     .option('--repo-url <url>', 'Repository URL')
-    .option('--project-name <name>', 'Counsel project name (for session rules)')
+    .option('--project-name <name>', 'Woolly project name (for session rules)')
     .action(async (options) => {
       const spinner = ora('Creating rule...').start();
       
@@ -407,8 +407,8 @@ export function registerRuleCommands(program: Command) {
         
         spinner.succeed('Rule files refreshed');
         console.log(chalk.gray('Files updated:'));
-        console.log(chalk.gray('  .claude/counsel-project-rules.md'));
-        console.log(chalk.gray('  .claude/counsel-session-rules.md'));
+        console.log(chalk.gray('  .claude/woolly-project-rules.md'));
+        console.log(chalk.gray('  .claude/woolly-session-rules.md'));
       } catch (error: any) {
         spinner.fail('Failed to refresh rules');
         console.error(chalk.red('Error:'), error.message);

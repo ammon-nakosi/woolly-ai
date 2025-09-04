@@ -46,7 +46,7 @@ Create an overview document that includes:
 - Key technical decisions
 - Success criteria
 
-Store this as: `~/.counsel/features/[feature-name]/plan-approved.overview.md`
+Store this as: `~/.woolly/features/[feature-name]/plan-approved.overview.md`
 
 ### Phase 2: Detailed Phase Plans
 For each phase, create a detailed plan using parallel sub-agents:
@@ -55,7 +55,7 @@ For each phase, create a detailed plan using parallel sub-agents:
 - Consider testing and validation
 - Document dependencies between tasks
 
-Store as: `~/.counsel/features/[feature-name]/plan-approved.phase-[n].md`
+Store as: `~/.woolly/features/[feature-name]/plan-approved.phase-[n].md`
 
 **Important**: Sub-agents should not mention phase numbers in the documents themselves (for easier reordering)
 
@@ -85,7 +85,7 @@ Create a JSON structure for tracking progress:
 }
 ```
 
-Store as: `~/.counsel/features/[feature-name]/plan-approved.plan-status.json`
+Store as: `~/.woolly/features/[feature-name]/plan-approved.plan-status.json`
 
 ## Deliverables
 
@@ -161,7 +161,7 @@ The planning step is complete when:
 
 After planning is complete, guide the user to run:
 ```
-/counsel-feature code [feature-name] 1
+/woolly-feature code [feature-name] 1
 ```
 
 This will begin implementation of Phase 1 with the Star Engineer persona.

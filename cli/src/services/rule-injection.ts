@@ -3,9 +3,9 @@ import * as path from 'path';
 import { Rule, RuleDisplay } from '../types/library';
 import { libraryService } from './library-service';
 
-const RULE_HEADER = `# Counsel Project Rules
+const RULE_HEADER = `# Woolly Project Rules
 
-This file contains project-specific rules managed by the Counsel Framework.
+This file contains project-specific rules managed by the Woolly Framework.
 Each rule is managed programmatically - do not edit manually.
 
 **Rule Types:**
@@ -17,16 +17,16 @@ Each rule is managed programmatically - do not edit manually.
 - \`guideline\` - Directives ("do this", "don't do that")
 - \`general-note\` - Miscellaneous important info
 
-**Management:** Use \`counsel rule\` commands to modify rules
+**Management:** Use \`woolly rule\` commands to modify rules
 
 ---
 
 `;
 
-const SESSION_HEADER = `# Counsel Session Rules
+const SESSION_HEADER = `# Woolly Session Rules
 
 This file contains temporary session-specific rules.
-These rules will be cleared when the counsel session ends.
+These rules will be cleared when the woolly session ends.
 
 ---
 
@@ -62,7 +62,7 @@ export class RuleInjectionService {
 
   async generateProjectRulesFile(projectPath: string): Promise<void> {
     const claudeDir = path.join(projectPath, '.claude');
-    const rulesFile = path.join(claudeDir, 'counsel-project-rules.md');
+    const rulesFile = path.join(claudeDir, 'woolly-project-rules.md');
     
     // Ensure .claude directory exists
     await fs.mkdir(claudeDir, { recursive: true });
@@ -90,7 +90,7 @@ export class RuleInjectionService {
 
   async generateSessionRulesFile(projectPath: string): Promise<void> {
     const claudeDir = path.join(projectPath, '.claude');
-    const rulesFile = path.join(claudeDir, 'counsel-session-rules.md');
+    const rulesFile = path.join(claudeDir, 'woolly-session-rules.md');
     
     // Ensure .claude directory exists
     await fs.mkdir(claudeDir, { recursive: true });
@@ -115,7 +115,7 @@ export class RuleInjectionService {
     await fs.writeFile(rulesFile, content, 'utf-8');
     
     // Ensure it's in .gitignore
-    await this.ensureGitignored(projectPath, '.claude/counsel-session-rules.md');
+    await this.ensureGitignored(projectPath, '.claude/woolly-session-rules.md');
   }
 
   async ensureGitignored(projectPath: string, pattern: string): Promise<void> {
@@ -130,11 +130,11 @@ export class RuleInjectionService {
       }
       
       // Add pattern to .gitignore
-      const newContent = content.trimEnd() + '\n\n# Counsel session rules (temporary)\n' + pattern + '\n';
+      const newContent = content.trimEnd() + '\n\n# Woolly session rules (temporary)\n' + pattern + '\n';
       await fs.writeFile(gitignorePath, newContent, 'utf-8');
     } catch (error) {
       // .gitignore doesn't exist, create it
-      const content = `# Counsel session rules (temporary)\n${pattern}\n`;
+      const content = `# Woolly session rules (temporary)\n${pattern}\n`;
       await fs.writeFile(gitignorePath, content, 'utf-8');
     }
   }
@@ -146,12 +146,12 @@ export class RuleInjectionService {
       let content = await fs.readFile(claudeMdPath, 'utf-8');
       
       // Check if imports already exist
-      if (content.includes('@.claude/counsel-project-rules.md')) {
+      if (content.includes('@.claude/woolly-project-rules.md')) {
         return;
       }
       
       // Add imports section
-      const imports = `\n# Counsel Rules\n@.claude/counsel-project-rules.md\n@.claude/counsel-session-rules.md\n`;
+      const imports = `\n# Woolly Rules\n@.claude/woolly-project-rules.md\n@.claude/woolly-session-rules.md\n`;
       
       content = content.trimEnd() + '\n' + imports;
       await fs.writeFile(claudeMdPath, content, 'utf-8');
@@ -161,9 +161,9 @@ export class RuleInjectionService {
 
 This file contains project-specific configuration for Claude Code.
 
-# Counsel Rules
-@.claude/counsel-project-rules.md
-@.claude/counsel-session-rules.md
+# Woolly Rules
+@.claude/woolly-project-rules.md
+@.claude/woolly-session-rules.md
 `;
       
       const claudeDir = path.join(projectPath, '.claude');
@@ -182,7 +182,7 @@ This file contains project-specific configuration for Claude Code.
   }
 
   async clearSessionRules(projectPath: string, projectName?: string): Promise<void> {
-    const rulesFile = path.join(projectPath, '.claude', 'counsel-session-rules.md');
+    const rulesFile = path.join(projectPath, '.claude', 'woolly-session-rules.md');
     
     try {
       if (projectName) {

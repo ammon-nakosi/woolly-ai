@@ -4,17 +4,17 @@ import { counselModes, cliCommands, slashCommands } from './docs-content';
 // Overview Section Content
 export const OverviewSection: React.FC = () => (
   <div className="space-y-6">
-    <div id="what-is-counsel" className="scroll-mt-20">
-      <h2 className="text-2xl font-bold mb-4">What is Counsel?</h2>
+    <div id="what-is-woolly" className="scroll-mt-20">
+      <h2 className="text-2xl font-bold mb-4">What is Woolly?</h2>
       <p className="text-gray-700 mb-4">
-        Counsel is a comprehensive framework designed to enhance AI-assisted development workflows. 
+        Woolly is a comprehensive framework designed to enhance AI-assisted development workflows. 
         It provides structured approaches to feature development, debugging, code review, and experimentation, 
         making it easier to collaborate with AI assistants like Claude and Cursor IDE.
       </p>
       <p className="text-gray-700 mb-4">
         The framework organizes development work into five distinct modes, each optimized for different 
         types of tasks. Whether you&apos;re building new features, debugging issues, or exploring new ideas, 
-        Counsel provides the structure and tools to make your AI-assisted development more effective.
+        Woolly provides the structure and tools to make your AI-assisted development more effective.
       </p>
     </div>
 
@@ -71,7 +71,7 @@ export const GettingStartedSection: React.FC = () => (
   <div className="space-y-6">
     <div id="prerequisites" className="scroll-mt-20">
       <h2 className="text-2xl font-bold mb-4">Prerequisites</h2>
-      <p className="text-gray-700 mb-4">Before installing Counsel, ensure you have the following prerequisites:</p>
+      <p className="text-gray-700 mb-4">Before installing Woolly, ensure you have the following prerequisites:</p>
       <ul className="list-disc list-inside space-y-2 text-gray-700">
         <li><strong>Node.js:</strong> Version 18.0 or higher</li>
         <li><strong>npm or yarn:</strong> For package management</li>
@@ -87,19 +87,19 @@ export const GettingStartedSection: React.FC = () => (
         <div>
           <h3 className="text-lg font-semibold mb-2">Install via npm</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>npm install -g counsel-framework</code>
+            <code>npm install -g woolly-framework</code>
           </pre>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Install via yarn</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>yarn global add counsel-framework</code>
+            <code>yarn global add woolly-framework</code>
           </pre>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Verify Installation</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>counsel --version</code>
+            <code>woolly --version</code>
           </pre>
         </div>
       </div>
@@ -109,18 +109,18 @@ export const GettingStartedSection: React.FC = () => (
       <h2 className="text-2xl font-bold mb-4">Initial Setup</h2>
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2">Initialize Counsel in your project</h3>
+          <h3 className="text-lg font-semibold mb-2">Initialize Woolly in your project</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>cd your-project-directory{'\n'}counsel init</code>
+            <code>cd your-project-directory{'\n'}woolly init</code>
           </pre>
           <p className="text-sm text-gray-600 mt-2">
-            This creates a <code>.counsel</code> directory with configuration files and sets up the basic structure.
+            This creates a <code>.woolly</code> directory with configuration files and sets up the basic structure.
           </p>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Configure integrations (optional)</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code># Set up ChromaDB integration{'\n'}counsel init --chromadb-url http://localhost:8000{'\n'}{'\n'}# Set up Linear integration{'\n'}counsel init --linear-api-key your_api_key{'\n'}{'\n'}# Enable Git backup{'\n'}counsel init --git-backup</code>
+            <code># Set up ChromaDB integration{'\n'}woolly init --chromadb-url http://localhost:8000{'\n'}{'\n'}# Set up Linear integration{'\n'}woolly init --linear-api-key your_api_key{'\n'}{'\n'}# Enable Git backup{'\n'}woolly init --git-backup</code>
           </pre>
         </div>
       </div>
@@ -132,20 +132,20 @@ export const GettingStartedSection: React.FC = () => (
         <div>
           <h3 className="text-lg font-semibold mb-2">Create your first feature</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>counsel add feature user-authentication</code>
+            <code>woolly add feature user-authentication</code>
           </pre>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Check status</h3>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>counsel status</code>
+            <code>woolly status</code>
           </pre>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Start working with AI assistant</h3>
           <p className="text-gray-700 mb-2">Use slash commands in your AI assistant:</p>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            <code>/counsel-feature-specs</code>
+            <code>/woolly-feature-specs</code>
           </pre>
         </div>
       </div>
@@ -153,7 +153,7 @@ export const GettingStartedSection: React.FC = () => (
   </div>
 );
 
-// Counsel Modes Section Content
+// Woolly Modes Section Content
 export const CounselModesSection: React.FC = () => (
   <div className="space-y-8">
     {counselModes.map((mode) => (
@@ -212,11 +212,11 @@ export const CLIReferenceSection: React.FC = () => (
     <div id="cli-overview" className="scroll-mt-20">
       <h2 className="text-2xl font-bold mb-4">CLI Overview</h2>
       <p className="text-gray-700 mb-4">
-        The Counsel CLI provides programmatic access to all framework functionality. 
+        The Woolly CLI provides programmatic access to all framework functionality. 
         Use these commands to manage your projects, track progress, and integrate with external tools.
       </p>
       <p className="text-gray-700 mb-4">
-        All CLI commands follow the pattern: <code className="bg-gray-100 px-2 py-1 rounded">counsel &lt;command&gt; [options]</code>
+        All CLI commands follow the pattern: <code className="bg-gray-100 px-2 py-1 rounded">woolly &lt;command&gt; [options]</code>
       </p>
     </div>
 
@@ -281,9 +281,9 @@ export const CLIReferenceSection: React.FC = () => (
       <div className="space-y-4">
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-2">Command not found</h3>
-          <p className="text-gray-700 mb-2">If you get &quot;counsel: command not found&quot;:</p>
+          <p className="text-gray-700 mb-2">If you get &quot;woolly: command not found&quot;:</p>
           <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-            <li>Ensure Counsel is installed globally: <code>npm install -g counsel-framework</code></li>
+            <li>Ensure Woolly is installed globally: <code>npm install -g woolly-framework</code></li>
             <li>Check your PATH includes npm global binaries</li>
             <li>Try restarting your terminal</li>
           </ul>
@@ -293,7 +293,7 @@ export const CLIReferenceSection: React.FC = () => (
           <p className="text-gray-700 mb-2">If you encounter permission errors:</p>
           <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
             <li>Ensure you have write permissions in the project directory</li>
-            <li>Check that .counsel directory is not read-only</li>
+            <li>Check that .woolly directory is not read-only</li>
             <li>On Unix systems, verify file ownership and permissions</li>
           </ul>
         </div>

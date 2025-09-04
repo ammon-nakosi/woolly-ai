@@ -30,7 +30,7 @@ export function registerLinearCommands(program: Command) {
         
         if (!config.linear?.apiKey) {
           spinner.fail('Linear API key not configured');
-          console.log(chalk.yellow('\nPlease add your Linear API key to ~/.counsel/config.json:'));
+          console.log(chalk.yellow('\nPlease add your Linear API key to ~/.woolly/config.json:'));
           console.log(chalk.gray(JSON.stringify({ linear: { apiKey: 'lin_api_xxx' } }, null, 2)));
           return;
         }
@@ -54,7 +54,7 @@ export function registerLinearCommands(program: Command) {
           const userEmail = await getUserEmail();
           if (!userEmail) {
             spinner.fail('User email not configured');
-            console.log(chalk.yellow('\nPlease add your email to ~/.counsel/config.json:'));
+            console.log(chalk.yellow('\nPlease add your email to ~/.woolly/config.json:'));
             console.log(chalk.gray(JSON.stringify({ linear: { userEmail: 'you@company.com' } }, null, 2)));
             return;
           }
@@ -114,7 +114,7 @@ export function registerLinearCommands(program: Command) {
   // Pull ticket command
   linear
     .command('pull [ticketId]')
-    .description('Pull Linear ticket and create counsel work')
+    .description('Pull Linear ticket and create woolly work')
     .action(async (ticketId) => {
       const spinner = ora('Pulling ticket...').start();
       
@@ -156,8 +156,8 @@ export function registerLinearCommands(program: Command) {
           console.log(ticket.description);
         }
         
-        // TODO: Create counsel work from ticket
-        console.log(chalk.yellow('\n→ Use `counsel init` to create counsel work from this ticket'));
+        // TODO: Create woolly work from ticket
+        console.log(chalk.yellow('\n→ Use `woolly init` to create woolly work from this ticket'));
         
       } catch (error: any) {
         spinner.fail('Failed to pull ticket');
@@ -263,7 +263,7 @@ export function registerLinearCommands(program: Command) {
           }
         }
         
-        console.log(chalk.cyan('\n→ Use `counsel linear pull` to start working on this'));
+        console.log(chalk.cyan('\n→ Use `woolly linear pull` to start working on this'));
         
       } catch (error: any) {
         spinner.fail('Failed to find next ticket');

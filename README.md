@@ -1,10 +1,10 @@
-# Counsel AI
+# Woolly AI
 
 A comprehensive framework for structured development workflows, combining AI-assisted slash commands with a powerful CLI for project management and knowledge extraction.
 
 ## 🎯 Overview
 
-The Counsel Framework provides:
+The Woolly Framework provides:
 - **Structured workflows** for features, scripts, debugging, reviews, and exploratory work
 - **AI-powered slash commands** for Claude and Cursor IDE with guided workflows
 - **CLI tool** for programmatic access and automation
@@ -20,13 +20,13 @@ The Counsel Framework provides:
 ## 🏗️ Architecture
 
 ```
-counsel-framework/
+woolly-framework/
 ├── cli/                    # TypeScript CLI implementation
 ├── commands/               # Slash commands for Claude
 ├── docs/                   # Framework documentation
-│   ├── COUNSEL-FRAMEWORK.md       # Complete framework guide
-│   └── COUNSEL-AGENT-STRATEGY.md  # Agent usage patterns
-└── examples/               # Example counsel work
+│   ├── WOOLLY-FRAMEWORK.md       # Complete framework guide
+│   └── WOOLLY-AGENT-STRATEGY.md  # Agent usage patterns
+└── examples/               # Example woolly work
 ```
 
 ## 📋 Requirements
@@ -40,40 +40,40 @@ counsel-framework/
 
 ### ⚡ 5-Minute Setup
 
-**New to Counsel?** Get search working in under 5 minutes:
+**New to Woolly?** Get search working in under 5 minutes:
 
 ```bash
 # 1. Install & Setup
-git clone https://github.com/ammon-nakosi/counsel-framework.git
-cd counsel-framework && npm install && npm run setup
+git clone https://github.com/ammon-nakosi/woolly-framework.git
+cd woolly-framework && npm install && npm run setup
 
 # 2. Make CLI available
 npm link
 
 # 3. Configure
-counsel init
+woolly init
 
 # 4. Start ChromaDB (choose one method)
-counsel chromadb start        # Docker (recommended)
+woolly chromadb start        # Docker (recommended)
 # OR
 ./cli/scripts/start-chromadb.sh  # Shell script
 
 # 5. Verify everything works
-counsel chromadb health
+woolly chromadb health
 
 # 6. Start using it!
-counsel index --all
-counsel search "your query here"
+woolly index --all
+woolly search "your query here"
 ```
 
-**Having issues?** Run `counsel chromadb health` for diagnosis and troubleshooting.
+**Having issues?** Run `woolly chromadb health` for diagnosis and troubleshooting.
 
 ### 1. Install the Framework
 
 ```bash
 # Clone the repository
-git clone https://github.com/ammon-nakosi/counsel-framework.git
-cd counsel-framework
+git clone https://github.com/ammon-nakosi/woolly-framework.git
+cd woolly-framework
 
 # Install dependencies
 npm install
@@ -83,8 +83,8 @@ npm run setup
 ```
 
 The setup script will:
-- Create `~/.counsel` directories
-- Set up a Python virtual environment at `~/.counsel/venv`
+- Create `~/.woolly` directories
+- Set up a Python virtual environment at `~/.woolly/venv`
 - Install ChromaDB in the virtual environment (no system packages affected)
 - Copy/update slash commands to `~/.claude/commands/` (if Claude is installed)
 - Create ChromaDB startup scripts
@@ -93,13 +93,13 @@ The setup script will:
 ### 2. Make CLI Available Globally
 
 ```bash
-npm link  # Makes 'counsel' command available globally
+npm link  # Makes 'woolly' command available globally
 ```
 
 ### 3. Initialize Your Configuration
 
 ```bash
-counsel init
+woolly init
 ```
 
 This will prompt for:
@@ -110,7 +110,7 @@ This will prompt for:
 
 ### 4. Start ChromaDB (Optional but Recommended)
 
-ChromaDB enables semantic search across all your counsel work. Start it using Docker:
+ChromaDB enables semantic search across all your woolly work. Start it using Docker:
 
 ```bash
 # Using the provided script
@@ -120,28 +120,28 @@ ChromaDB enables semantic search across all your counsel work. Start it using Do
 docker run -d \
   --name chromadb \
   -p 8444:8000 \
-  -v ~/.counsel/chromadb:/chroma/chroma \
+  -v ~/.woolly/chromadb:/chroma/chroma \
   chromadb/chroma:latest
 ```
 
-Once ChromaDB is running, index your existing counsel work:
+Once ChromaDB is running, index your existing woolly work:
 
 ```bash
-# Index all counsel work
-counsel index --all
+# Index all woolly work
+woolly index --all
 
 # Index specific mode
-counsel index --mode feature
+woolly index --mode feature
 
 # Index specific work
-counsel index --name user-auth
+woolly index --name user-auth
 ```
 
 #### 🔧 ChromaDB Troubleshooting
 
 **Connection Issues?**
 ```bash
-counsel chromadb health  # Diagnose problems
+woolly chromadb health  # Diagnose problems
 ```
 
 **Common Issues:**
@@ -152,11 +152,11 @@ counsel chromadb health  # Diagnose problems
 **Alternative Setup (No Docker)**:
 ```bash
 # Use Python virtual environment instead
-source ~/.counsel/venv/bin/activate  # Linux/Mac
+source ~/.woolly/venv/bin/activate  # Linux/Mac
 # or
-~\.counsel\venv\Scripts\activate     # Windows
+~\.woolly\venv\Scripts\activate     # Windows
 
-python ~/.counsel/bin/chromadb-server.py
+python ~/.woolly/bin/chromadb-server.py
 ```
 
 ### 5. Set Up Git Backup/Sync (Optional but Recommended)
@@ -165,17 +165,17 @@ Enable version control and sync across machines:
 
 ```bash
 # During initial setup
-counsel init  # Will prompt about git initialization
+woolly init  # Will prompt about git initialization
 
 # Or manually later
-counsel git init
-counsel git remote git@github.com:yourusername/counsel-backup.git
+woolly git init
+woolly git remote git@github.com:yourusername/woolly-backup.git
 
 # Sync your work
-counsel git sync
+woolly git sync
 ```
 
-Your counsel work in `~/.counsel/` can now be:
+Your woolly work in `~/.woolly/` can now be:
 - Backed up to GitHub/GitLab/etc
 - Synced across multiple machines
 - Versioned with full history
@@ -183,7 +183,7 @@ Your counsel work in `~/.counsel/` can now be:
 
 ## 📚 Core Concepts
 
-### Counsel Modes
+### Woolly Modes
 
 The framework supports five distinct modes:
 
@@ -199,78 +199,78 @@ The framework supports five distinct modes:
 
 ```bash
 # Create new feature work (via slash command in Claude or Cursor)
-/counsel-create feature "add user authentication"
+/woolly-create feature "add user authentication"
 
 # Check status
-counsel status user-authentication
+woolly status user-authentication
 
 # Search for patterns
-counsel search "authentication patterns"
+woolly search "authentication patterns"
 
 # List all features
-counsel list --mode feature
+woolly list --mode feature
 ```
 
 ### Using Commands in AI Assistants
 
 **In Claude:**
 - Type `/` in any Claude session
-- Select a counsel command from the dropdown
+- Select a woolly command from the dropdown
 - Commands are fully supported
 
 **In Cursor IDE (Beta):**
 1. Initialize commands in your project:
    ```bash
-   counsel cursor init
+   woolly cursor init
    ```
 2. Restart Cursor IDE
 3. Open the chat/composer (Cmd/Ctrl + L)
 4. Type `/` to see available commands
-5. To update commands: `counsel cursor update`
+5. To update commands: `woolly cursor update`
 
 Note: Cursor requires project-level commands (stored in `.cursor/commands/`)
 
 ## 🔧 CLI Commands
 
 ### Core Commands
-- `counsel init` - Initialize configuration (includes optional git setup)
-- `counsel add <mode> <name>` - Add existing work to index
-- `counsel list` - List counsel work
-- `counsel status <name>` - Get detailed status
-- `counsel search <query>` - Semantic search
+- `woolly init` - Initialize configuration (includes optional git setup)
+- `woolly add <mode> <name>` - Add existing work to index
+- `woolly list` - List woolly work
+- `woolly status <name>` - Get detailed status
+- `woolly search <query>` - Semantic search
 
 ### Git Integration (New!)
-- `counsel git init` - Initialize git repository for counsel work
-- `counsel git status` - Show git status of counsel work
-- `counsel git sync` - Pull and push changes (backup/sync)
-- `counsel git remote <url>` - Configure remote repository
+- `woolly git init` - Initialize git repository for woolly work
+- `woolly git status` - Show git status of woolly work
+- `woolly git sync` - Pull and push changes (backup/sync)
+- `woolly git remote <url>` - Configure remote repository
 
 ### Cursor IDE Integration
-- `counsel cursor init` - Install Counsel commands in current project
-- `counsel cursor update` - Update commands to latest version
+- `woolly cursor init` - Install Woolly commands in current project
+- `woolly cursor update` - Update commands to latest version
 
 ### Linear Integration
-- `counsel linear` - List your tickets
-- `counsel linear --urgent` - High priority tickets
-- `counsel linear --team` - Team tickets
+- `woolly linear` - List your tickets
+- `woolly linear --urgent` - High priority tickets
+- `woolly linear --team` - Team tickets
 
 ## 📖 Documentation
 
-- [COUNSEL-FRAMEWORK.md](docs/COUNSEL-FRAMEWORK.md) - Complete framework guide
-- [COUNSEL-AGENT-STRATEGY.md](docs/COUNSEL-AGENT-STRATEGY.md) - When/how agents use CLI vs slash commands
+- [WOOLLY-FRAMEWORK.md](docs/WOOLLY-FRAMEWORK.md) - Complete framework guide
+- [WOOLLY-AGENT-STRATEGY.md](docs/WOOLLY-AGENT-STRATEGY.md) - When/how agents use CLI vs slash commands
 - [CLI README](cli/README.md) - Detailed CLI documentation
 
 ## 🔌 Integrations
 
 ### ChromaDB
-- Semantic search across all counsel work
+- Semantic search across all woolly work
 - Pattern matching and knowledge extraction
 - Similar work detection
 
 ### Linear
-- Import tickets as counsel work
+- Import tickets as woolly work
 - Sync status updates
-- Create tickets from counsel work
+- Create tickets from woolly work
 
 ### Git
 - Automatic project detection
@@ -279,10 +279,10 @@ Note: Cursor requires project-level commands (stored in `.cursor/commands/`)
 
 ## 🗂️ Storage Structure
 
-All counsel work is stored at `~/.counsel/`:
+All woolly work is stored at `~/.woolly/`:
 
 ```
-~/.counsel/
+~/.woolly/
 ├── .git/                   # Git repository (if initialized)
 ├── .gitignore              # Controls what gets synced
 ├── config.json             # User configuration
@@ -298,7 +298,7 @@ All counsel work is stored at `~/.counsel/`:
 └── knowledge/              # Extracted patterns (synced)
 ```
 
-**Git Sync:** By default, your counsel work (features, scripts, etc.) is synced while large/regenerable files (venv, chromadb) are excluded.
+**Git Sync:** By default, your woolly work (features, scripts, etc.) is synced while large/regenerable files (venv, chromadb) are excluded.
 
 ## 🤝 Contributing
 
@@ -306,8 +306,8 @@ All counsel work is stored at `~/.counsel/`:
 
 ```bash
 # Clone the repository
-git clone https://github.com/ammon-nakosi/counsel-framework.git
-cd counsel-framework
+git clone https://github.com/ammon-nakosi/woolly-framework.git
+cd woolly-framework
 
 # Install dependencies and run setup
 npm install
@@ -352,7 +352,7 @@ The framework uses a sophisticated status tracking system:
 
 ## 🎨 Philosophy
 
-The Counsel Framework emphasizes:
+The Woolly Framework emphasizes:
 - **Phased Development** - Break work into manageable phases
 - **Deep Discovery** - Thorough investigation before implementation
 - **Status Tracking** - Real-time visibility into progress

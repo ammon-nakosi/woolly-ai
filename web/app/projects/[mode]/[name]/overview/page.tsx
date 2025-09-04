@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { CounselProject } from '@/lib/counsel-reader';
+import { CounselProject } from '@/lib/woolly-reader';
 
 interface OverviewPageProps {
   params: Promise<{ mode: string; name: string }>;

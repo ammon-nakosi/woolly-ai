@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useParams } from 'next/navigation';
-import { PlanStatus } from '@/lib/counsel-reader';
+import { PlanStatus } from '@/lib/woolly-reader';
 
 interface KanbanLayoutProps {
   children: React.ReactNode;

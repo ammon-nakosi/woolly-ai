@@ -58,7 +58,7 @@ You have great discretion with figuring out how much detail for the feature you 
 
 ## Deliverable
 
-The specifications document will be stored at `~/.counsel/features/[feature-name]/specs.md`
+The specifications document will be stored at `~/.woolly/features/[feature-name]/specs.md`
 
 ### Document Structure
 ```markdown
@@ -123,7 +123,7 @@ The specs step is complete when:
 
 After specs are complete, guide the user to run:
 ```
-/counsel-feature scope [feature-name]
+/woolly-feature scope [feature-name]
 ```
 
 This will begin the technical discovery phase with the Senior Engineer persona.

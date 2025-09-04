@@ -140,8 +140,8 @@ A phase is complete when:
 ## Next Steps
 
 After completing a phase:
-- If more phases exist: `/counsel-feature code [feature-name] [next-phase]`
-- If all phases complete: `/counsel-status-update [feature-name]` to finalize
+- If more phases exist: `/woolly-feature code [feature-name] [next-phase]`
+- If all phases complete: `/woolly-status-update [feature-name]` to finalize
 
 ## Remember
 

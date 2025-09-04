@@ -7,12 +7,12 @@ import fs from 'fs/promises';
 import { getChromaClient } from '../services/chromadb-client';
 import { CounselMode, ProjectMetadata } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerListCommands(program: Command) {
   program
     .command('list')
-    .description('List counsel work')
+    .description('List woolly work')
     .option('-m, --mode <mode>', 'Filter by mode (feature, script, vibe, prompt)')
     .option('-s, --status <status>', 'Filter by status (planned, in-progress, completed)')
     .option('-r, --recent', 'Sort by recently updated')
@@ -21,7 +21,7 @@ export function registerListCommands(program: Command) {
     .option('--json', 'Output as JSON')
     .option('--chroma', 'List from ChromaDB instead of local filesystem')
     .action(async (options) => {
-      const spinner = ora('Fetching counsel work...').start();
+      const spinner = ora('Fetching woolly work...').start();
       
       try {
         let items = [];
@@ -30,15 +30,15 @@ export function registerListCommands(program: Command) {
         if (options.chroma) {
           // List from ChromaDB (only if explicitly requested)
           items = await listFromChromaDB(options);
-          spinner.succeed(`Found ${items.length} counsel items (ChromaDB)`);
+          spinner.succeed(`Found ${items.length} woolly items (ChromaDB)`);
         } else {
           // List from filesystem (default)
           items = await listFromFilesystem(options);
-          spinner.succeed(`Found ${items.length} counsel items (local)`);
+          spinner.succeed(`Found ${items.length} woolly items (local)`);
         }
         
         if (items.length === 0) {
-          console.log(chalk.gray('\nNo counsel work found matching criteria'));
+          console.log(chalk.gray('\nNo woolly work found matching criteria'));
           return;
         }
         
@@ -131,7 +131,7 @@ export function registerListCommands(program: Command) {
         console.log(chalk.gray(`Total: ${items.length} items (${summary})`));
         
       } catch (error: any) {
-        spinner.fail('Failed to list counsel work');
+        spinner.fail('Failed to list woolly work');
         console.error(chalk.red('Error:'), error.message);
       }
     });

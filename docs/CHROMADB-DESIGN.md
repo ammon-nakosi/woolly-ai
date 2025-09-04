@@ -1,12 +1,12 @@
-# ChromaDB Integration Design for Counsel Framework
+# ChromaDB Integration Design for Woolly Framework
 
 ## Overview
 
-This document outlines the design for integrating ChromaDB as the semantic search and knowledge management layer for the Counsel Framework. ChromaDB will enable intelligent search, knowledge scope, and pattern recognition across all counsel work.
+This document outlines the design for integrating ChromaDB as the semantic search and knowledge management layer for the Woolly Framework. ChromaDB will enable intelligent search, knowledge scope, and pattern recognition across all woolly work.
 
 ## Goals
 
-1. **Semantic Search**: Enable natural language search across all counsel work
+1. **Semantic Search**: Enable natural language search across all woolly work
 2. **Knowledge Discovery**: Find similar problems, solutions, and patterns
 3. **Context Awareness**: Provide relevant context from past work during new development
 4. **Learning Capture**: Index learnings and patterns for future reference
@@ -19,9 +19,9 @@ This document outlines the design for integrating ChromaDB as the semantic searc
 We'll use four main collections to organize different types of data:
 
 #### 1. `counsel_items` Collection
-Primary collection for tracking all counsel work items.
+Primary collection for tracking all woolly work items.
 
-**Documents**: Brief description/summary of each counsel item
+**Documents**: Brief description/summary of each woolly item
 **Metadata**:
 ```typescript
 {
@@ -46,7 +46,7 @@ Primary collection for tracking all counsel work items.
 }
 ```
 
-#### 2. `counsel_documents` Collection
+#### 2. `woolly_documents` Collection
 Indexes the actual content of markdown documents for deep search.
 
 **Documents**: Full markdown content (chunked if needed)
@@ -105,7 +105,7 @@ Captures reusable knowledge, patterns, and learnings.
   type: 'knowledge';
   knowledgeType: 'pattern' | 'solution' | 'gotcha' | 'best-practice' | 
                  'anti-pattern' | 'learning';
-  sourceItemId?: string;   // Which counsel item this came from
+  sourceItemId?: string;   // Which woolly item this came from
   title: string;
   category: string;        // e.g., "authentication", "performance"
   tags: string[];
@@ -170,7 +170,7 @@ interface SearchOptions {
 1. Implement document processors for each file type
 2. Create smart chunking algorithm
 3. Build incremental indexing system
-4. Add batch indexing for existing counsel work
+4. Add batch indexing for existing woolly work
 
 ### Phase 3: Search Features
 1. Implement basic semantic search
@@ -249,7 +249,7 @@ await counselKnowledge.extract({
 # ChromaDB Configuration
 CHROMADB_HOST=localhost
 CHROMADB_PORT=8444
-CHROMADB_PERSIST_DIR=~/.counsel/chromadb
+CHROMADB_PERSIST_DIR=~/.woolly/chromadb
 
 # Embedding Configuration
 EMBEDDING_MODEL=default  # or 'openai'
@@ -260,13 +260,13 @@ DEFAULT_SEARCH_LIMIT=10
 DEFAULT_SIMILARITY_THRESHOLD=0.7
 ```
 
-### Config File (~/.counsel/chromadb.config.json)
+### Config File (~/.woolly/chromadb.config.json)
 ```json
 {
   "connection": {
     "host": "localhost",
     "port": 8444,
-    "persistDirectory": "~/.counsel/chromadb"
+    "persistDirectory": "~/.woolly/chromadb"
   },
   "embedding": {
     "model": "default",
@@ -292,19 +292,19 @@ DEFAULT_SIMILARITY_THRESHOLD=0.7
 ### From Stub to Real Implementation
 1. **Backward Compatibility**: Maintain existing API surface
 2. **Gradual Rollout**: Use feature flags for new functionality
-3. **Data Migration**: Script to index existing counsel work
+3. **Data Migration**: Script to index existing woolly work
 4. **Fallback Logic**: Graceful degradation if ChromaDB unavailable
 
 ### Initial Data Population
 ```bash
-# Index all existing counsel work
-counsel index --all
+# Index all existing woolly work
+woolly index --all
 
 # Index specific mode
-counsel index --mode feature
+woolly index --mode feature
 
 # Index specific project
-counsel index --project my-app
+woolly index --project my-app
 ```
 
 ## Performance Considerations
@@ -334,7 +334,7 @@ counsel index --project my-app
 
 1. **Search Accuracy**: >80% relevant results in top 5
 2. **Response Time**: <500ms for searches
-3. **Index Coverage**: >95% of counsel work indexed
+3. **Index Coverage**: >95% of woolly work indexed
 4. **Knowledge Reuse**: 30% reduction in solving similar problems
 5. **User Satisfaction**: Positive feedback on search relevance
 

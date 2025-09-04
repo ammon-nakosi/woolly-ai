@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { CounselMode } from '../types';
 
-// Get the counsel framework directory (where this CLI is running from)
+// Get the woolly framework directory (where this CLI is running from)
 const getFrameworkDir = (): string => {
   // Start from current file location and find the root
   let dir = __dirname;
@@ -15,7 +15,7 @@ const getFrameworkDir = (): string => {
     }
     dir = path.dirname(dir);
   }
-  throw new Error('Could not find counsel framework root directory');
+  throw new Error('Could not find woolly framework root directory');
 };
 
 export function registerGuidelinesCommand(program: Command) {
@@ -33,11 +33,11 @@ export function registerGuidelinesCommand(program: Command) {
         // Map modes to their guideline files
         const guidelineFiles: Record<string, string> = {
           script: path.join(frameworkDir, 'docs', 'SCRIPT-MODE-GUIDELINES.md'),
-          feature: path.join(frameworkDir, 'docs', 'COUNSEL-FRAMEWORK.md'),
-          debug: path.join(frameworkDir, 'docs', 'COUNSEL-FRAMEWORK.md'), // Use framework for now
-          review: path.join(frameworkDir, 'docs', 'COUNSEL-FRAMEWORK.md'), // Use framework for now
-          vibe: path.join(frameworkDir, 'docs', 'COUNSEL-FRAMEWORK.md'),   // Use framework for now
-          prompt: path.join(frameworkDir, 'docs', 'COUNSEL-FRAMEWORK.md'), // Use framework for now
+          feature: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'),
+          debug: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
+          review: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
+          vibe: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'),   // Use framework for now
+          prompt: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
         };
         
         const validModes = Object.keys(guidelineFiles);

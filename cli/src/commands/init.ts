@@ -8,15 +8,15 @@ import fs from 'fs/promises';
 import { getConfig } from '../utils/config';
 import simpleGit from 'simple-git';
 
-const CONFIG_PATH = path.join(os.homedir(), '.counsel', 'config.json');
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const CONFIG_PATH = path.join(os.homedir(), '.woolly', 'config.json');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerInitCommands(program: Command) {
   program
     .command('init')
-    .description('Initialize counsel configuration and setup')
+    .description('Initialize woolly configuration and setup')
     .action(async () => {
-      const spinner = ora('Checking counsel configuration...').start();
+      const spinner = ora('Checking woolly configuration...').start();
       
       try {
         // Check if config already exists
@@ -28,7 +28,7 @@ export function registerInitCommands(program: Command) {
           spinner.text = 'No configuration found, creating new one...';
         }
         
-        console.log(chalk.bold('\n🎯 Counsel Configuration Setup\n'));
+        console.log(chalk.bold('\n🎯 Woolly Configuration Setup\n'));
         
         // If config exists, show current values
         if (existingConfig) {
@@ -139,7 +139,7 @@ export function registerInitCommands(program: Command) {
         await fs.writeFile(CONFIG_PATH, JSON.stringify(config, null, 2));
         
         // Create directory structure
-        spinner.text = 'Creating counsel directories...';
+        spinner.text = 'Creating woolly directories...';
         const directories = ['features', 'scripts', 'debugs', 'reviews', 'vibes', 'archives', 'knowledge'];
         for (const dir of directories) {
           await fs.mkdir(path.join(COUNSEL_BASE, dir), { recursive: true });
@@ -157,7 +157,7 @@ export function registerInitCommands(program: Command) {
             {
               type: 'confirm',
               name: 'initGit',
-              message: '\nInitialize git repository for counsel work (enables backup/sync)?',
+              message: '\nInitialize git repository for woolly work (enables backup/sync)?',
               default: true
             }
           ]);
@@ -175,7 +175,7 @@ export function registerInitCommands(program: Command) {
               
               // Initial commit
               await git.add('.');
-              await git.commit('Initial counsel configuration');
+              await git.commit('Initial woolly configuration');
               
               spinner.succeed('Git repository initialized');
               
@@ -194,7 +194,7 @@ export function registerInitCommands(program: Command) {
                   {
                     type: 'input',
                     name: 'remoteUrl',
-                    message: 'Remote repository URL (e.g., git@github.com:user/counsel-backup.git):',
+                    message: 'Remote repository URL (e.g., git@github.com:user/woolly-backup.git):',
                     validate: (input) => {
                       if (!input) return 'URL is required';
                       return true;
@@ -206,27 +206,27 @@ export function registerInitCommands(program: Command) {
                 spinner.start();
                 await git.addRemote('origin', remoteUrl);
                 spinner.succeed('Remote repository configured');
-                console.log(chalk.gray(`  Use ${chalk.bold('counsel git sync')} to sync your work`));
+                console.log(chalk.gray(`  Use ${chalk.bold('woolly git sync')} to sync your work`));
               }
             } catch (error: any) {
               spinner.fail('Failed to initialize git repository');
-              console.log(chalk.gray(`  You can initialize it later with ${chalk.bold('counsel git init')}`));
+              console.log(chalk.gray(`  You can initialize it later with ${chalk.bold('woolly git init')}`));
             }
           }
         } else {
           console.log(chalk.gray('\n  Git repository already initialized'));
         }
         
-        console.log(chalk.green('\n✓ Counsel is now configured!\n'));
+        console.log(chalk.green('\n✓ Woolly is now configured!\n'));
         console.log(chalk.cyan('Next steps:'));
-        console.log('  • Add existing counsel work: counsel add <mode> <name>');
-        console.log('  • List your tickets: counsel linear');
-        console.log('  • Search counsel work: counsel search <query>');
-        console.log('  • Sync your work: counsel git sync');
-        console.log('  • Get help: counsel --help');
+        console.log('  • Add existing woolly work: woolly add <mode> <name>');
+        console.log('  • List your tickets: woolly linear');
+        console.log('  • Search woolly work: woolly search <query>');
+        console.log('  • Sync your work: woolly git sync');
+        console.log('  • Get help: woolly --help');
         
       } catch (error: any) {
-        spinner.fail('Failed to initialize counsel');
+        spinner.fail('Failed to initialize woolly');
         console.error(chalk.red('Error:'), error.message);
       }
     });
@@ -235,7 +235,7 @@ export function registerInitCommands(program: Command) {
 async function createGitignore(): Promise<void> {
   const gitignorePath = path.join(COUNSEL_BASE, '.gitignore');
   
-  const content = `# Counsel Framework Git Ignore
+  const content = `# Woolly Framework Git Ignore
 # This file controls what gets synced across machines
 
 # Python virtual environment (large, regenerable)
@@ -278,7 +278,7 @@ cli/
 # Optional: Uncomment to exclude sensitive configuration
 # config.json
 
-# Optional: Uncomment to exclude specific counsel modes
+# Optional: Uncomment to exclude specific woolly modes
 # debugs/
 # vibes/
 `;

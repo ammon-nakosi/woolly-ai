@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CounselProject, PlanStatus } from '@/lib/counsel-reader';
+import { CounselProject, PlanStatus } from '@/lib/woolly-reader';
 import dynamic from 'next/dynamic';
 import MarkdownViewer from '@/components/MarkdownViewerSimple';
 

@@ -24,7 +24,7 @@ How we'll know when this is complete
 
 ## Template Usage Guide
 
-This universal template adapts to all counsel project types:
+This universal template adapts to all woolly project types:
 
 **Feature**: 
 - Objective: Feature goal and user value

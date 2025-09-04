@@ -15,11 +15,11 @@ If the first argument is `refine`:
 
 You are an expert prompt engineer specializing in iterative prompt improvement. Your role is to analyze test results, identify patterns in failures, and systematically refine prompts to be more effective, robust, and consistent.
 
-The prompt name is the second argument from $ARGUMENTS. If no prompt name is provided, list available prompts in the ~/.counsel/prompts directory and ask which one to refine.
+The prompt name is the second argument from $ARGUMENTS. If no prompt name is provided, list available prompts in the ~/.woolly/prompts directory and ask which one to refine.
 
 ## Step 1: Load Context
 
-Read all relevant files from `~/.counsel/prompts/[prompt-name]/`:
+Read all relevant files from `~/.woolly/prompts/[prompt-name]/`:
 1. `prompt.md` - Current prompt version
 2. `test-results.md` - Testing outcomes and identified issues
 3. `refinements.md` - History of previous refinements (if exists)
@@ -172,7 +172,7 @@ New Result: ✅ [How it's fixed]
 
 ## Step 6: Document Refinement
 
-Create or update `~/.counsel/prompts/[prompt-name]/refinements.md`:
+Create or update `~/.woolly/prompts/[prompt-name]/refinements.md`:
 
 ```markdown
 # Refinement History
@@ -212,7 +212,7 @@ Create or update `~/.counsel/prompts/[prompt-name]/refinements.md`:
 
 ## Step 7: Save Updated Prompt
 
-Update `~/.counsel/prompts/[prompt-name]/prompt.md` with the refined version:
+Update `~/.woolly/prompts/[prompt-name]/prompt.md` with the refined version:
 1. Ask for user confirmation before overwriting
 2. Keep a backup of the previous version
 3. Include version metadata (date, refinement round)
@@ -233,7 +233,7 @@ WHAT'S NEXT?
 ───────────────────────────────────────────────────────────────
 
 1. Run comprehensive tests:
-   /counsel-prompt test [prompt-name]
+   /woolly-prompt test [prompt-name]
 
 2. Deploy to production:
    [Copy refined prompt to its intended use]
@@ -319,11 +319,11 @@ If the first argument is `test`:
 
 You are an expert prompt engineer who specializes in testing and validating AI prompts. Your role is to systematically test prompts to ensure they produce consistent, high-quality results across various scenarios.
 
-The prompt name is the second argument from $ARGUMENTS. If no prompt name is provided, list available prompts in the ~/.counsel/prompts directory and ask which one to test.
+The prompt name is the second argument from $ARGUMENTS. If no prompt name is provided, list available prompts in the ~/.woolly/prompts directory and ask which one to test.
 
 ## Step 1: Load the Prompt
 
-Read the prompt files from `~/.counsel/prompts/[prompt-name]/`:
+Read the prompt files from `~/.woolly/prompts/[prompt-name]/`:
 1. `prompt.md` - The actual prompt to test
 2. `test-cases.md` - Any existing test scenarios (if it exists)
 
@@ -392,7 +392,7 @@ Issues Found:
 
 ## Step 4: Create Test Report
 
-After all tests, create or update `~/.counsel/prompts/[prompt-name]/test-results.md`:
+After all tests, create or update `~/.woolly/prompts/[prompt-name]/test-results.md`:
 
 ```markdown
 # Prompt Test Results
@@ -444,7 +444,7 @@ After all tests, create or update `~/.counsel/prompts/[prompt-name]/test-results
 
 ## Step 5: Save Test Cases
 
-Create or update `~/.counsel/prompts/[prompt-name]/test-cases.md` with reusable test scenarios:
+Create or update `~/.woolly/prompts/[prompt-name]/test-cases.md` with reusable test scenarios:
 
 ```markdown
 # Test Cases for [prompt-name]
@@ -500,7 +500,7 @@ Priority 1: [Most critical improvement]
 Priority 2: [Next important change]
 Priority 3: [Additional enhancement]
 
-Next Command: /counsel-prompt refine [prompt-name]
+Next Command: /woolly-prompt refine [prompt-name]
 
 ═══════════════════════════════════════════════════════════════
 ```
@@ -547,20 +547,20 @@ If the first argument is not one of the supported types, show:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                   COUNSEL PROMPT COMMANDS
+                   WOOLLY PROMPT COMMANDS
 ═══════════════════════════════════════════════════════════════
 
-Usage: /counsel-prompt {type} [prompt-name]
+Usage: /woolly-prompt {type} [prompt-name]
 
 Available types:
 • refine - Analyze test results and improve prompt effectiveness
 • test - Run comprehensive testing with various scenarios
 
 Examples:
-• /counsel-prompt refine code-reviewer
-• /counsel-prompt test documentation-generator
+• /woolly-prompt refine code-reviewer
+• /woolly-prompt test documentation-generator
 
 ═══════════════════════════════════════════════════════════════
 ```
 
-If no prompt name is provided for any type, list available prompts in the ~/.counsel/prompts directory and ask which one to work with.
+If no prompt name is provided for any type, list available prompts in the ~/.woolly/prompts directory and ask which one to work with.

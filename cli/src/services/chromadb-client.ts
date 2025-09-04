@@ -10,14 +10,14 @@ import { getEmbeddingFunction } from './embedding-functions';
 const CHROMADB_CONFIG = {
   host: process.env.CHROMADB_HOST || 'localhost',
   port: parseInt(process.env.CHROMADB_PORT || '8444'),
-  persistDir: process.env.CHROMADB_PERSIST_DIR || path.join(os.homedir(), '.counsel', 'chromadb'),
+  persistDir: process.env.CHROMADB_PERSIST_DIR || path.join(os.homedir(), '.woolly', 'chromadb'),
   defaultLimit: parseInt(process.env.DEFAULT_SEARCH_LIMIT || '10'),
   defaultThreshold: parseFloat(process.env.DEFAULT_SIMILARITY_THRESHOLD || '0.7')
 };
 
 // Collection names
 const COLLECTIONS = {
-  DOCUMENTS: 'counsel_documents',
+  DOCUMENTS: 'woolly_documents',
   KNOWLEDGE: 'counsel_knowledge'
 };
 
@@ -80,13 +80,13 @@ export const getChromaClient = async (): Promise<ChromaClient> => {
     
   } catch (error) {
     console.log('ChromaDB server not available, using ephemeral client for now');
-    console.log(`💡 To fix: Run "counsel chromadb start" or check connection at http://localhost:${CHROMADB_CONFIG.port}`);
+    console.log(`💡 To fix: Run "woolly chromadb start" or check connection at http://localhost:${CHROMADB_CONFIG.port}`);
     // Fall back to ephemeral client for development
     try {
       chromaClient = new ChromaClient();
       isConnected = true;
     } catch (ephemeralError) {
-      console.log('❌ Failed to connect to ChromaDB. Please run "counsel chromadb health" for diagnosis.');
+      console.log('❌ Failed to connect to ChromaDB. Please run "woolly chromadb health" for diagnosis.');
       throw new Error(`ChromaDB unavailable: ${error}. Ephemeral fallback also failed: ${ephemeralError}`);
     }
   }
@@ -324,7 +324,7 @@ export const search = async (
   // Sort by weighted similarity and limit
   results.sort((a, b) => b.similarity - a.similarity);
   
-  // Group by counsel work and deduplicate chunks
+  // Group by woolly work and deduplicate chunks
   const grouped = new Map();
   results.forEach(result => {
     if (result.type === 'documents' && result.metadata.counselWork) {
@@ -393,7 +393,7 @@ const searchCollection = async (
     return results;
   } catch (error) {
     console.error(`Error searching ${collectionName}:`, error);
-    console.log('💡 Troubleshooting: Run "counsel chromadb health" to check ChromaDB status');
+    console.log('💡 Troubleshooting: Run "woolly chromadb health" to check ChromaDB status');
     return { ids: [[]], documents: [[]], metadatas: [[]], distances: [[]] };
   }
 };
@@ -451,8 +451,8 @@ export const initializeCollections = async () => {
   } catch (error) {
     console.error('Failed to initialize ChromaDB collections:', error);
     console.log('💡 This usually means ChromaDB is not running. Try:');
-    console.log('   1. counsel chromadb start');
-    console.log('   2. counsel chromadb health');
+    console.log('   1. woolly chromadb start');
+    console.log('   2. woolly chromadb health');
     return false;
   }
 };
@@ -471,7 +471,7 @@ export const healthCheck = async (): Promise<boolean> => {
 };
 
 /**
- * Index a single counsel work item
+ * Index a single woolly work item
  */
 export const indexCounselWork = async (
   counselPath: string,
@@ -536,13 +536,13 @@ export const indexCounselWork = async (
 };
 
 /**
- * Index all counsel work
+ * Index all woolly work
  */
 export const indexAllCounselWork = async (
   force?: boolean,
   mode?: CounselMode
 ): Promise<{ itemsIndexed: number; filesIndexed: number; errors: string[] }> => {
-  const counselBase = path.join(os.homedir(), '.counsel');
+  const counselBase = path.join(os.homedir(), '.woolly');
   const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
   const result = { itemsIndexed: 0, filesIndexed: 0, errors: [] as string[] };
   
@@ -596,7 +596,7 @@ export const getIndexStats = async (): Promise<{
     const uniqueItems = new Set();
     
     allDocs.metadatas.forEach((metadata: any) => {
-      // Count unique counsel work items
+      // Count unique woolly work items
       uniqueItems.add(`${metadata.counselMode}_${metadata.counselWork}`);
       
       // Count by mode

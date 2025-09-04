@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useParams } from 'next/navigation';
-import { CounselProject, PlanStatus } from '@/lib/counsel-reader';
+import { CounselProject, PlanStatus } from '@/lib/woolly-reader';
 
 interface ProjectLayoutProps {
   children: React.ReactNode;

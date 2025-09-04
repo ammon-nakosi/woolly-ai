@@ -1,4 +1,4 @@
-You are opening the Counsel Framework web interface. This command starts the Next.js development server for the web application.
+You are opening the Woolly Framework web interface. This command starts the Next.js development server for the web application.
 
 ## Primary Task
 Start the Next.js development server (configured to run on port 3555) using the CLI command.
@@ -7,11 +7,11 @@ Start the Next.js development server (configured to run on port 3555) using the 
 
 1. **Try using the CLI command first**
    ```bash
-   counsel open
+   woolly open
    ```
    
    This should start the server and display:
-   - 🚀 Starting Counsel Framework Web Interface...
+   - 🚀 Starting Woolly Framework Web Interface...
    - Access at: http://localhost:3555
    
 2. **If the CLI command fails (command not found), use fallback method:**
@@ -37,12 +37,12 @@ Start the Next.js development server (configured to run on port 3555) using the 
 
 ## Error Handling
 - If port 3555 is already in use, the server will notify and exit
-- If counsel command not found, use the fallback method
+- If woolly command not found, use the fallback method
 - If dependencies fail to install, npm will provide error details
 - If server fails to start, check the console output for Next.js errors
 
 ## Notes
-- The web interface provides a web-based UI for managing Counsel Framework projects
+- The web interface provides a web-based UI for managing Woolly Framework projects
 - Port 3555 is the default port configured in package.json
 - The server runs in development mode with hot reloading enabled
 - Press Ctrl+C to stop the server

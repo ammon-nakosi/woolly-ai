@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 /**
- * Production Script Template for Counsel Framework
+ * Production Script Template for Woolly Framework
  * 
  * This template implements all required patterns from docs/SCRIPT-MODE-GUIDELINES.md
  * Features: dry-run mode, limits, batching, rate limiting, progress tracking, outcomes
@@ -12,7 +12,7 @@
  *   tsx script.ts --live --force                           # Full production run
  */
 
-import { getCounselLogger } from './counsel-logger';
+import { getCounselLogger } from './woolly-logger';
 import { parseArgs } from 'util';
 import { readFileSync, existsSync } from 'fs';
 
@@ -93,8 +93,8 @@ Testing Progression:
   4. tsx ${process.argv[1]} --live --limit 100
   5. tsx ${process.argv[1]} --live
 
-Logs saved to: ~/.counsel/scripts/${SCRIPT_NAME}/logs/
-Outcomes saved to: ~/.counsel/scripts/${SCRIPT_NAME}/outcomes/
+Logs saved to: ~/.woolly/scripts/${SCRIPT_NAME}/logs/
+Outcomes saved to: ~/.woolly/scripts/${SCRIPT_NAME}/outcomes/
 `);
   process.exit(0);
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getProject, updateFileContent, CounselMode } from '@/lib/counsel-reader';
+import { getProject, updateFileContent, CounselMode } from '@/lib/woolly-reader';
 
 export async function PUT(
   request: Request,

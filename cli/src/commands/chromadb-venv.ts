@@ -11,8 +11,8 @@ import { getConfig, updateConfig } from '../utils/config';
 const execAsync = promisify(exec);
 
 const CHROMADB_PORT = process.env.CHROMADB_PORT || '8444';
-const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.counsel', 'chromadb');
-const COUNSEL_DIR = path.join(os.homedir(), '.counsel');
+const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.woolly', 'chromadb');
+const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
 const VENV_PATH = path.join(COUNSEL_DIR, 'venv');
 const CHROMADB_SCRIPT = path.join(COUNSEL_DIR, 'bin', 'chromadb-server.py');
 const PID_FILE = path.join(COUNSEL_DIR, 'chromadb.pid');
@@ -188,13 +188,13 @@ import signal
 from pathlib import Path
 
 # Add ChromaDB to path
-sys.path.insert(0, str(Path.home() / '.counsel'))
+sys.path.insert(0, str(Path.home() / '.woolly'))
 
 def signal_handler(sig, frame):
     """Handle shutdown gracefully"""
     print("\\nShutting down ChromaDB server...")
     # Clean up PID file
-    pid_file = Path.home() / '.counsel' / 'chromadb.pid'
+    pid_file = Path.home() / '.woolly' / 'chromadb.pid'
     if pid_file.exists():
         pid_file.unlink()
     sys.exit(0)
@@ -204,7 +204,7 @@ def start_chromadb():
     import chromadb
     
     # Set ChromaDB persistent directory
-    persist_directory = Path.home() / '.counsel' / 'chromadb'
+    persist_directory = Path.home() / '.woolly' / 'chromadb'
     persist_directory.mkdir(exist_ok=True)
     
     # Configure ChromaDB settings
@@ -214,7 +214,7 @@ def start_chromadb():
     os.environ['CHROMA_SERVER_HTTP_PORT'] = '8444'
     
     # Write PID file
-    pid_file = Path.home() / '.counsel' / 'chromadb.pid'
+    pid_file = Path.home() / '.woolly' / 'chromadb.pid'
     with open(pid_file, 'w') as f:
         f.write(str(os.getpid()))
     
@@ -327,9 +327,9 @@ export function registerChromaDBCommands(program: Command) {
           spinner.succeed('ChromaDB is already running');
           console.log(chalk.gray(`\nChromaDB is available at: http://localhost:${options.port}`));
           console.log(chalk.cyan('\nUseful commands:'));
-          console.log('  View logs:    counsel chromadb logs');
-          console.log('  Stop server:  counsel chromadb stop');
-          console.log('  View status:  counsel chromadb status');
+          console.log('  View logs:    woolly chromadb logs');
+          console.log('  Stop server:  woolly chromadb stop');
+          console.log('  View status:  woolly chromadb status');
           return;
         }
         
@@ -396,12 +396,12 @@ export function registerChromaDBCommands(program: Command) {
         
         console.log(chalk.green(`\n✅ ChromaDB is running at: http://localhost:${options.port}\n`));
         console.log(chalk.cyan('Next steps:'));
-        console.log('  1. Index your counsel work:  counsel index --all');
-        console.log('  2. Search your work:         counsel search <query>');
+        console.log('  1. Index your woolly work:  woolly index --all');
+        console.log('  2. Search your work:         woolly search <query>');
         console.log(chalk.gray('\nManage ChromaDB:'));
-        console.log('  View logs:    counsel chromadb logs');
-        console.log('  Stop server:  counsel chromadb stop');
-        console.log('  View status:  counsel chromadb status');
+        console.log('  View logs:    woolly chromadb logs');
+        console.log('  Stop server:  woolly chromadb stop');
+        console.log('  View status:  woolly chromadb status');
         
       } catch (error: any) {
         spinner.fail('Failed to start ChromaDB');
@@ -453,19 +453,19 @@ export function registerChromaDBCommands(program: Command) {
       try {
         if (!await checkVenv()) {
           spinner.fail('Python virtual environment not found');
-          console.log(chalk.gray('\nSetup with: counsel chromadb start'));
+          console.log(chalk.gray('\nSetup with: woolly chromadb start'));
           return;
         }
         
         if (!await checkChromaDBInstalled()) {
           spinner.fail('ChromaDB is not installed in virtual environment');
-          console.log(chalk.gray('\nInstall with: counsel chromadb start'));
+          console.log(chalk.gray('\nInstall with: woolly chromadb start'));
           return;
         }
         
         if (!await isChromaDBRunning()) {
           spinner.info('ChromaDB is not running');
-          console.log(chalk.gray('\nStart it with: counsel chromadb start'));
+          console.log(chalk.gray('\nStart it with: woolly chromadb start'));
           return;
         }
         
@@ -487,7 +487,7 @@ export function registerChromaDBCommands(program: Command) {
             console.log(chalk.gray(`Data directory: ${CHROMADB_DATA_DIR}`));
           } else {
             spinner.warn('ChromaDB process is running but API is not responding');
-            console.log(chalk.yellow('\nTry restarting: counsel chromadb restart'));
+            console.log(chalk.yellow('\nTry restarting: woolly chromadb restart'));
           }
         } catch {
           spinner.warn('ChromaDB process is running but API is not accessible');
@@ -504,8 +504,8 @@ export function registerChromaDBCommands(program: Command) {
     .description('View ChromaDB server logs')
     .action(async () => {
       console.log(chalk.yellow('For venv-based ChromaDB, logs are shown in the terminal where it\'s running.'));
-      console.log(chalk.gray('To run in foreground and see logs: counsel chromadb start'));
-      console.log(chalk.gray('To run in background: counsel chromadb start --background'));
+      console.log(chalk.gray('To run in foreground and see logs: woolly chromadb start'));
+      console.log(chalk.gray('To run in background: woolly chromadb start --background'));
     });
 
   chromadb
@@ -590,9 +590,9 @@ export function registerChromaDBCommands(program: Command) {
           console.log('  default - Basic embeddings (limited performance)');
           
           console.log(chalk.gray('\nTo change provider:'));
-          console.log(chalk.cyan('  counsel chromadb embeddings ollama'));
-          console.log(chalk.cyan('  counsel chromadb embeddings openai'));
-          console.log(chalk.cyan('  counsel chromadb embeddings default'));
+          console.log(chalk.cyan('  woolly chromadb embeddings ollama'));
+          console.log(chalk.cyan('  woolly chromadb embeddings openai'));
+          console.log(chalk.cyan('  woolly chromadb embeddings default'));
           return;
         }
         
@@ -668,8 +668,8 @@ export function registerChromaDBCommands(program: Command) {
         }
         
         console.log('\nNext steps:');
-        console.log('1. Re-index your content: ' + chalk.cyan('counsel index --all --force'));
-        console.log('2. Test search: ' + chalk.cyan('counsel search "your query"'));
+        console.log('1. Re-index your content: ' + chalk.cyan('woolly index --all --force'));
+        console.log('2. Test search: ' + chalk.cyan('woolly search "your query"'));
         
       } catch (error: any) {
         spinner.fail('Failed to update configuration');
@@ -686,13 +686,13 @@ export function registerChromaDBCommands(program: Command) {
       
       try {
         if (await isChromaDBRunning()) {
-          spinner.fail('ChromaDB is running. Stop it first with: counsel chromadb stop');
+          spinner.fail('ChromaDB is running. Stop it first with: woolly chromadb stop');
           return;
         }
         
         spinner.stop();
         
-        console.log(chalk.yellow('\n⚠️  This will delete all indexed counsel data!'));
+        console.log(chalk.yellow('\n⚠️  This will delete all indexed woolly data!'));
         console.log(chalk.gray(`Data directory: ${CHROMADB_DATA_DIR}`));
         
         // Simple confirmation
@@ -713,7 +713,7 @@ export function registerChromaDBCommands(program: Command) {
               await fs.rm(CHROMADB_DATA_DIR, { recursive: true, force: true });
               await fs.mkdir(CHROMADB_DATA_DIR, { recursive: true });
               cleanSpinner.succeed('ChromaDB data cleaned');
-              console.log(chalk.gray('\nStart fresh with: counsel chromadb start'));
+              console.log(chalk.gray('\nStart fresh with: woolly chromadb start'));
             } catch (error: any) {
               cleanSpinner.fail('Failed to clean data');
               console.error(chalk.red('Error:'), error.message);

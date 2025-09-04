@@ -1,10 +1,10 @@
 {
-  "name": "@counsel/cli",
+  "name": "@woolly/cli",
   "version": "1.0.0",
-  "description": "Counsel Framework CLI with Linear and ChromaDB integration",
+  "description": "Woolly Framework CLI with Linear and ChromaDB integration",
   "main": "dist/index.js",
   "bin": {
-    "counsel": "./bin/counsel"
+    "woolly": "./bin/woolly"
   },
   "scripts": {
     "build": "tsc",
@@ -38,7 +38,7 @@
     "typescript": "^5.3.3"
   },
   "keywords": [
-    "counsel",
+    "woolly",
     "linear",
     "chromadb",
     "cli",

@@ -11,7 +11,7 @@ import { CounselMode } from '../types';
 import { ruleInjectionService } from '../services/rule-injection';
 
 const execAsync = promisify(exec);
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 interface WorkContext {
   name: string;
@@ -39,7 +39,7 @@ async function findCounselWork(name: string): Promise<WorkContext | null> {
 
 async function detectWorkFromDirectory(): Promise<WorkContext | null> {
   const cwd = process.cwd();
-  const counselMatch = cwd.match(/\.counsel[\/\\](\w+)s[\/\\]([^\/\\]+)/);
+  const counselMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
   
   if (counselMatch) {
     const [, modePrefix, name] = counselMatch;
@@ -47,8 +47,8 @@ async function detectWorkFromDirectory(): Promise<WorkContext | null> {
     return { name, mode, path: path.join(COUNSEL_BASE, `${mode}s`, name) };
   }
   
-  // Check for .counsel-active file
-  const activeFile = path.join(COUNSEL_BASE, '.counsel-active');
+  // Check for .woolly-active file
+  const activeFile = path.join(COUNSEL_BASE, '.woolly-active');
   try {
     const active = JSON.parse(await fs.readFile(activeFile, 'utf8'));
     if (active.name && active.mode) {
@@ -126,8 +126,8 @@ async function applyDiscernment(projects: WorkContext[]): Promise<WorkContext[]>
       continue;
     }
     
-    // Medium confidence: Working in counsel directory of same mode
-    if (cwd.includes(`.counsel/${project.mode}s`)) {
+    // Medium confidence: Working in woolly directory of same mode
+    if (cwd.includes(`.woolly/${project.mode}s`)) {
       project.confidence = 'medium';
       project.reason = `Working in ${project.mode} mode`;
       continue;
@@ -222,8 +222,8 @@ async function getUserConfirmation(question: string): Promise<boolean> {
 export function registerReloadCommands(program: Command) {
   program
     .command('reload')
-    .description('Load Counsel Framework context for new sessions')
-    .argument('[name]', 'Optional counsel work name')
+    .description('Load Woolly Framework context for new sessions')
+    .argument('[name]', 'Optional woolly work name')
     .action(async (name?: string) => {
       try {
         let work: WorkContext | null = null;
@@ -232,26 +232,26 @@ export function registerReloadCommands(program: Command) {
           // Find specific work by name
           work = await findCounselWork(name);
           if (!work) {
-            console.error(chalk.red(`Counsel work not found: ${name}`));
+            console.error(chalk.red(`Woolly work not found: ${name}`));
             console.log(chalk.yellow('Try one of these recent projects:'));
             const recent = await getRecentProjects(5);
             recent.forEach(p => {
-              console.log(chalk.gray(`  counsel reload ${p.name}`));
+              console.log(chalk.gray(`  woolly reload ${p.name}`));
             });
             return;
           }
         } else {
           // Use smart selection
           console.log(chalk.cyan('═'.repeat(63)));
-          console.log(chalk.cyan('                    COUNSEL FRAMEWORK'));
+          console.log(chalk.cyan('                    WOOLLY FRAMEWORK'));
           console.log(chalk.cyan('═'.repeat(63)));
           
           // Get recent projects and apply discernment
           const recentProjects = await getRecentProjects(10);
           if (recentProjects.length === 0) {
-            console.log(chalk.yellow('\nNo counsel work found.'));
+            console.log(chalk.yellow('\nNo woolly work found.'));
             console.log('\nTo start new work:');
-            console.log(chalk.gray('counsel init [feature|script|debug|review|vibe|prompt] "description"'));
+            console.log(chalk.gray('woolly init [feature|script|debug|review|vibe|prompt] "description"'));
             return;
           }
           
@@ -265,7 +265,7 @@ export function registerReloadCommands(program: Command) {
         }
         
         // Set as active work
-        const activeFile = path.join(COUNSEL_BASE, '.counsel-active');
+        const activeFile = path.join(COUNSEL_BASE, '.woolly-active');
         await fs.writeFile(activeFile, JSON.stringify({
           name: work.name,
           mode: work.mode,
@@ -278,7 +278,7 @@ export function registerReloadCommands(program: Command) {
         console.log(chalk.yellow(`Loading ${work.mode} mode guidelines...`));
         
         try {
-          const { stdout } = await execAsync(`counsel guidelines ${work.mode}`);
+          const { stdout } = await execAsync(`woolly guidelines ${work.mode}`);
           console.log(stdout);
         } catch (error) {
           console.error(chalk.red('Failed to load guidelines:'), error);

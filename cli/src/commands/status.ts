@@ -6,24 +6,24 @@ import os from 'os';
 import fs from 'fs/promises';
 import { getChromaClient } from '../services/chromadb-client';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerStatusCommands(program: Command) {
   program
     .command('status <name>')
-    .description('Get detailed status of counsel work')
+    .description('Get detailed status of woolly work')
     .option('-m, --mode <mode>', 'Specify mode if name is ambiguous')
     .option('--verify', 'Verify against actual codebase (slower)')
     .option('--json', 'Output as JSON')
     .action(async (name: string, options) => {
-      const spinner = ora('Fetching counsel status...').start();
+      const spinner = ora('Fetching woolly status...').start();
       
       try {
-        // Find the counsel work
+        // Find the woolly work
         const counselPath = await findCounselPath(name, options.mode);
         if (!counselPath) {
-          spinner.fail(`Counsel work not found: ${name}`);
-          console.log(chalk.yellow('\nTry listing all work with: counsel list'));
+          spinner.fail(`Woolly work not found: ${name}`);
+          console.log(chalk.yellow('\nTry listing all work with: woolly list'));
           return;
         }
         
@@ -44,7 +44,7 @@ export function registerStatusCommands(program: Command) {
         try {
           const client = await getChromaClient();
           const collection = await client.getOrCreateCollection({
-            name: 'counsel_documents'
+            name: 'woolly_documents'
           });
           
           const results = await collection.get({
@@ -95,7 +95,7 @@ export function registerStatusCommands(program: Command) {
         }
         
         // Display formatted status
-        console.log(chalk.bold(`\n📊 Counsel Status: ${name}\n`));
+        console.log(chalk.bold(`\n📊 Woolly Status: ${name}\n`));
         console.log(chalk.gray('─'.repeat(50)));
         
         // Basic info
@@ -237,11 +237,11 @@ export function registerStatusCommands(program: Command) {
         
         // Next actions
         console.log(chalk.cyan('\n💡 Actions:'));
-        console.log(`  • Update status: /counsel-status-update ${name}`);
-        console.log(`  • Export knowledge: counsel export knowledge ${name}`);
-        console.log(`  • Archive: counsel export archive ${name}`);
+        console.log(`  • Update status: /woolly-status-update ${name}`);
+        console.log(`  • Export knowledge: woolly export knowledge ${name}`);
+        console.log(`  • Archive: woolly export archive ${name}`);
         if (metadata?.project?.name) {
-          console.log(`  • Sync with Linear: counsel sync ${name}`);
+          console.log(`  • Sync with Linear: woolly sync ${name}`);
         }
         
       } catch (error: any) {

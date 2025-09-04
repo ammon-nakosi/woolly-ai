@@ -8,7 +8,7 @@ import { Prompt, RuleScope } from '../types/library';
 export function registerPromptCommands(program: Command) {
   const prompt = program
     .command('prompt')
-    .description('Manage counsel prompts library');
+    .description('Manage woolly prompts library');
 
   // List prompts
   prompt
@@ -31,11 +31,11 @@ export function registerPromptCommands(program: Command) {
 
         if (prompts.length === 0) {
           console.log(chalk.gray('No prompts found.'));
-          console.log(chalk.gray('Create your first prompt with: /counsel-remember prompt "description"'));
+          console.log(chalk.gray('Create your first prompt with: /woolly-remember prompt "description"'));
           return;
         }
 
-        console.log(chalk.bold(`\n🤖 Counsel Prompts (${prompts.length})\n`));
+        console.log(chalk.bold(`\n🤖 Woolly Prompts (${prompts.length})\n`));
 
         for (const prompt of prompts) {
           console.log(chalk.bold(prompt.title));
@@ -50,7 +50,7 @@ export function registerPromptCommands(program: Command) {
           console.log();
         }
 
-        console.log(chalk.gray('\nManage prompts with: counsel prompt show|use|edit|delete [id]'));
+        console.log(chalk.gray('\nManage prompts with: woolly prompt show|use|edit|delete [id]'));
       } catch (error: any) {
         spinner.fail('Failed to list prompts');
         console.error(chalk.red('Error:'), error.message);

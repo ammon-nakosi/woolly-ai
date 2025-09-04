@@ -16,7 +16,7 @@
   - [x] 2.2 Build comprehensive content for all sections
     - Create Overview section with framework introduction and modes
     - Build Getting Started section with installation and setup instructions
-    - Document all five Counsel modes with workflows and examples
+    - Document all five Woolly modes with workflows and examples
     - Create CLI reference with all commands and usage examples
     - Document slash commands with interactive workflow explanations
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 3.4, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 5.5_

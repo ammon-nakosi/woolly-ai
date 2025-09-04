@@ -8,7 +8,7 @@ import { indexCounselWork } from '../services/chromadb-client';
 import { CounselMode, ProjectMetadata } from '../types';
 import simpleGit from 'simple-git';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 interface ProjectInfo {
   name: string;
@@ -19,12 +19,12 @@ interface ProjectInfo {
 export function registerAddCommands(program: Command) {
   program
     .command('add <mode> <name>')
-    .description('Add existing counsel work to the index')
+    .description('Add existing woolly work to the index')
     .option('-d, --description <desc>', 'Description of the work')
     .option('-p, --project <project>', 'Project name')
     .option('--status <status>', 'Current status (planned, in-progress, completed)', 'planned')
     .action(async (mode: string, name: string, options) => {
-      const spinner = ora('Adding counsel work to index...').start();
+      const spinner = ora('Adding woolly work to index...').start();
       
       try {
         // Validate mode
@@ -35,13 +35,13 @@ export function registerAddCommands(program: Command) {
           return;
         }
         
-        // Check if counsel directory exists
+        // Check if woolly directory exists
         const counselPath = path.join(COUNSEL_BASE, `${mode}s`, name);
         try {
           await fs.access(counselPath);
         } catch {
-          spinner.fail(`Counsel work not found: ${counselPath}`);
-          console.log(chalk.yellow('Make sure the counsel work exists before adding it to the index'));
+          spinner.fail(`Woolly work not found: ${counselPath}`);
+          console.log(chalk.yellow('Make sure the woolly work exists before adding it to the index'));
           return;
         }
         
@@ -112,8 +112,8 @@ export function registerAddCommands(program: Command) {
         
         await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2));
         
-        // Index existing markdown files in the counsel work
-        spinner.text = 'Indexing counsel work in ChromaDB...';
+        // Index existing markdown files in the woolly work
+        spinner.text = 'Indexing woolly work in ChromaDB...';
         const indexResult = await indexCounselWork(
           counselPath,
           name,
@@ -134,12 +134,12 @@ export function registerAddCommands(program: Command) {
         console.log(chalk.gray(`Status: ${options.status || 'planned'}`));
         
         console.log(chalk.cyan('\nNext steps:'));
-        console.log(`  • View details: counsel status ${name}`);
-        console.log(`  • Search related: counsel search "${description.split(' ').slice(0, 3).join(' ')}"`);
-        console.log(`  • List all: counsel list --mode ${mode}`);
+        console.log(`  • View details: woolly status ${name}`);
+        console.log(`  • Search related: woolly search "${description.split(' ').slice(0, 3).join(' ')}"`);
+        console.log(`  • List all: woolly list --mode ${mode}`);
         
       } catch (error: any) {
-        spinner.fail('Failed to add counsel work');
+        spinner.fail('Failed to add woolly work');
         console.error(chalk.red('Error:'), error.message);
       }
     });

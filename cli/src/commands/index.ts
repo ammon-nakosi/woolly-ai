@@ -7,7 +7,7 @@ import fs from 'fs/promises';
 import { indexDocument, indexAllCounselWork, indexCounselWork, getIndexStats } from '../services/chromadb-client';
 import { CounselMode } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 async function findCounselWork(name: string): Promise<{ mode: CounselMode; path: string } | null> {
   const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
@@ -28,13 +28,13 @@ async function findCounselWork(name: string): Promise<{ mode: CounselMode; path:
 export function registerIndexCommands(program: Command) {
   program
     .command('index')
-    .description('Index counsel work into ChromaDB for semantic search')
-    .option('--all', 'Index all counsel work across all modes')
+    .description('Index woolly work into ChromaDB for semantic search')
+    .option('--all', 'Index all woolly work across all modes')
     .option('-m, --mode <mode>', 'Index all work in specific mode (feature, script, debug, review, vibe)')
-    .option('-n, --name <name>', 'Index specific counsel work by name')
-    .option('-f, --file <file>', 'Index specific file within counsel work')
+    .option('-n, --name <name>', 'Index specific woolly work by name')
+    .option('-f, --file <file>', 'Index specific file within woolly work')
     .option('--modified', 'Only index modified files since last index')
-    .option('--init', 'Initialize index for new counsel work')
+    .option('--init', 'Initialize index for new woolly work')
     .option('--force', 'Force re-index even if already indexed')
     .option('--status', 'Show indexing statistics')
     .action(async (options) => {
@@ -49,7 +49,7 @@ export function registerIndexCommands(program: Command) {
           
           console.log(chalk.cyan('\n📊 ChromaDB Index Status\n'));
           console.log(`Total indexed documents: ${chalk.bold(stats.totalDocuments)}`);
-          console.log(`Total counsel work items: ${chalk.bold(stats.totalItems)}`);
+          console.log(`Total woolly work items: ${chalk.bold(stats.totalItems)}`);
           
           if (stats.byMode) {
             console.log(chalk.cyan('\nBy Mode:'));
@@ -68,19 +68,19 @@ export function registerIndexCommands(program: Command) {
           return;
         }
         
-        // Index all counsel work
+        // Index all woolly work
         if (options.all) {
-          spinner.text = 'Indexing all counsel work...';
+          spinner.text = 'Indexing all woolly work...';
           const result = await indexAllCounselWork(options.force);
           
-          spinner.succeed(`Indexed ${result.itemsIndexed} counsel items with ${result.filesIndexed} files`);
+          spinner.succeed(`Indexed ${result.itemsIndexed} woolly items with ${result.filesIndexed} files`);
           
           if (result.errors.length > 0) {
             console.log(chalk.yellow('\n⚠️  Some files could not be indexed:'));
             result.errors.forEach(err => console.log(`  - ${err}`));
           }
           
-          console.log(chalk.gray('\nRun `counsel search <query>` to search indexed content'));
+          console.log(chalk.gray('\nRun `woolly search <query>` to search indexed content'));
           return;
         }
         
@@ -100,14 +100,14 @@ export function registerIndexCommands(program: Command) {
           return;
         }
         
-        // Index specific counsel work
+        // Index specific woolly work
         if (options.name) {
-          spinner.text = `Finding counsel work: ${options.name}...`;
+          spinner.text = `Finding woolly work: ${options.name}...`;
           
           const work = await findCounselWork(options.name);
           if (!work) {
-            spinner.fail(`Counsel work not found: ${options.name}`);
-            console.log(chalk.yellow('\nTry listing all work with: counsel list'));
+            spinner.fail(`Woolly work not found: ${options.name}`);
+            console.log(chalk.yellow('\nTry listing all work with: woolly list'));
             return;
           }
           
@@ -146,7 +146,7 @@ export function registerIndexCommands(program: Command) {
         }
         
         // Interactive mode - detect unindexed work
-        spinner.text = 'Detecting counsel work to index...';
+        spinner.text = 'Detecting woolly work to index...';
         
         const unindexed: { name: string; mode: CounselMode; path: string }[] = [];
         const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
@@ -169,13 +169,13 @@ export function registerIndexCommands(program: Command) {
         }
         
         if (unindexed.length === 0) {
-          spinner.succeed('All counsel work is already indexed!');
+          spinner.succeed('All woolly work is already indexed!');
           return;
         }
         
-        spinner.succeed(`Found ${unindexed.length} counsel items to index`);
+        spinner.succeed(`Found ${unindexed.length} woolly items to index`);
         
-        console.log(chalk.cyan('\n📚 Indexing Counsel Work\n'));
+        console.log(chalk.cyan('\n📚 Indexing Woolly Work\n'));
         
         for (const work of unindexed) {
           console.log(chalk.gray(`Indexing ${work.mode}/${work.name}...`));
@@ -183,8 +183,8 @@ export function registerIndexCommands(program: Command) {
           console.log(chalk.green(`  ✓ Indexed ${result.filesIndexed} files`));
         }
         
-        console.log(chalk.green(`\n✅ Successfully indexed ${unindexed.length} counsel items`));
-        console.log(chalk.gray('Run `counsel search <query>` to search indexed content'));
+        console.log(chalk.green(`\n✅ Successfully indexed ${unindexed.length} woolly items`));
+        console.log(chalk.gray('Run `woolly search <query>` to search indexed content'));
         
       } catch (error: any) {
         spinner.fail('Indexing failed');

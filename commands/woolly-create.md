@@ -1,9 +1,9 @@
 ---
-description: "Create a new counsel workflow with appropriate mode"
+description: "Create a new woolly workflow with appropriate mode"
 argument-hint: "{feature|script|vibe} [brief description]"
 ---
 
-You are initiating a new Counsel Framework workflow. Parse the arguments from $ARGUMENTS as:
+You are initiating a new Woolly Framework workflow. Parse the arguments from $ARGUMENTS as:
 1. **Mode**: The first word should be one of: `feature`, `script`, or `vibe`
 2. **Description**: The rest of the arguments form a brief description
 
@@ -15,14 +15,14 @@ Validate the mode is one of the supported types. If not, present:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                    COUNSEL MODES AVAILABLE
+                    WOOLLY MODES AVAILABLE
 ═══════════════════════════════════════════════════════════════
 
 • feature - Full development lifecycle for new features
 • script - Quick automation scripts and utilities  
 • vibe - Flexible, exploratory work
 
-Please specify mode: /counsel-create [mode] [description]
+Please specify mode: /woolly-create [mode] [description]
 ═══════════════════════════════════════════════════════════════
 ```
 
@@ -43,7 +43,7 @@ Based on the description and mode, suggest an appropriate name:
                    VIBE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: ~/.counsel/vibes/[auto-generated-name]/
+Created: ~/.woolly/vibes/[auto-generated-name]/
 
 Session initialized.
 
@@ -55,13 +55,13 @@ Present the suggestion and ask for confirmation:
 
 ```
 ═══════════════════════════════════════════════════════════════
-            COUNSEL INITIATION - [MODE] MODE
+            WOOLLY INITIATION - [MODE] MODE
 ═══════════════════════════════════════════════════════════════
 
 Description: [user's description]
 Suggested Name: [proposed-name]
 
-This will create: ~/.counsel/[mode]s/[proposed-name]/
+This will create: ~/.woolly/[mode]s/[proposed-name]/
 
 Is this name good, or would you prefer a different one?
 ═══════════════════════════════════════════════════════════════
@@ -69,19 +69,19 @@ Is this name good, or would you prefer a different one?
 
 ## Step 2.5: Check for Similar Work (CLI Integration)
 
-**After the name is confirmed (or auto-generated for vibe)**, use the Counsel CLI to check for similar existing work:
+**After the name is confirmed (or auto-generated for vibe)**, use the Woolly CLI to check for similar existing work:
 
 ```bash
-counsel search "[name] [description]"
+woolly search "[name] [description]"
 ```
 
 If similar work is found with >80% similarity:
 ```
-⚠️ Found similar existing counsel work:
+⚠️ Found similar existing woolly work:
   • [name]: [similarity]% match
   
 Would you like to:
-1. View the existing work (counsel status [name])
+1. View the existing work (woolly status [name])
 2. Continue with creating new work
 3. Choose a different name
 ```
@@ -91,9 +91,9 @@ Would you like to:
 ## Step 3: Create Directory Structure
 
 Once the user approves or provides an alternative name, create the appropriate directory:
-- `~/.counsel/features/[name]/` for feature mode
-- `~/.counsel/scripts/[name]/` for script mode
-- `~/.counsel/vibes/[name]/` for vibe mode
+- `~/.woolly/features/[name]/` for feature mode
+- `~/.woolly/scripts/[name]/` for script mode
+- `~/.woolly/vibes/[name]/` for vibe mode
 
 ## Step 4: Provide Mode-Specific Next Steps
 
@@ -112,7 +112,7 @@ After loading the agent, present:
                  FEATURE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: ~/.counsel/features/[name]/
+Created: ~/.woolly/features/[name]/
 
 ───────────────────────────────────────────────────────────────
               STARTING: SPECIFICATIONS PHASE
@@ -122,7 +122,7 @@ I'll help you define solid specifications for this feature.
 These requirements will guide the technical scoping and 
 implementation phases that follow.
 
-The Counsel Framework enforces structured development:
+The Woolly Framework enforces structured development:
 📋 Phase 1: Specs (current) - Gathering requirements
 🔍 Phase 2: Scope - Technical discovery  
 📐 Phase 3: Plan - Implementation planning
@@ -141,7 +141,7 @@ Let me ask you some questions to build complete specifications...
 - Do NOT ask permission to start
 - Do NOT allow skipping to implementation
 - BLOCK any coding attempts until all phases complete
-- After specs are done, guide to: `/counsel-feature scope [name]`
+- After specs are done, guide to: `/woolly-feature scope [name]`
 
 ### Script Mode
 ```
@@ -149,7 +149,7 @@ Let me ask you some questions to build complete specifications...
                   SCRIPT MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: ~/.counsel/scripts/[name]/
+Created: ~/.woolly/scripts/[name]/
 
 Let me help you define this script. I'll need to understand:
 - What problem does it solve?
@@ -184,8 +184,8 @@ Then begin coding.
   - `production-script-template.ts` for TypeScript/Node.js scripts
   - `production-script-template.sh` for shell scripts
 - All scripts MUST include: dry-run mode, limits, batching, progress tracking, and outcomes
-- **Logs MUST be saved to**: `~/.counsel/scripts/{script-name}/logs/` (NOT the current directory)
-- **Outcomes MUST be saved to**: `~/.counsel/scripts/{script-name}/outcomes/`
+- **Logs MUST be saved to**: `~/.woolly/scripts/{script-name}/logs/` (NOT the current directory)
+- **Outcomes MUST be saved to**: `~/.woolly/scripts/{script-name}/outcomes/`
 - Copy the logging utility or include inline logging code that uses the correct paths
 - Default to dry-run mode for safety (require `--live` flag for actual execution)
 - Testing progression: dry-run with small limit → dry-run with larger limit → live with small limit → full production
@@ -198,7 +198,7 @@ Since vibe mode auto-generates the name, the flow is streamlined. After creating
                    VIBE MODE INITIALIZED
 ═══════════════════════════════════════════════════════════════
 
-Created: ~/.counsel/vibes/[auto-generated-name]/
+Created: ~/.woolly/vibes/[auto-generated-name]/
 
 Based on your description, I see a few key areas to explore:
 
@@ -214,7 +214,7 @@ Which of these would you like to dive into first, or is there another angle you'
   - What the user wants to explore/accomplish
   - Initial research findings or insights
   - Potential approaches to investigate
-- **All progress updates use `/counsel-context-update`** - no session files for routine progress
+- **All progress updates use `/woolly-context-update`** - no session files for routine progress
 - Session files only for full session exports (like Claude Code session export)
 
 ## Special Handling

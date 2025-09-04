@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start ChromaDB server for Counsel Framework
+# Start ChromaDB server for Woolly Framework
 # This script starts a ChromaDB server using Docker
 
 set -e
@@ -13,9 +13,9 @@ NC='\033[0m' # No Color
 
 # Configuration
 CHROMADB_PORT=${CHROMADB_PORT:-8444}
-CHROMADB_DATA_DIR=${CHROMADB_DATA_DIR:-~/.counsel/chromadb}
+CHROMADB_DATA_DIR=${CHROMADB_DATA_DIR:-~/.woolly/chromadb}
 
-echo -e "${GREEN}Starting ChromaDB server for Counsel Framework...${NC}"
+echo -e "${GREEN}Starting ChromaDB server for Woolly Framework...${NC}"
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
@@ -78,6 +78,6 @@ echo "  Stop server:  docker stop chromadb"
 echo "  Restart:      docker restart chromadb"
 echo "  Remove:       docker rm chromadb"
 echo ""
-echo "Index your counsel work:"
-echo "  counsel index --all"
+echo "Index your woolly work:"
+echo "  woolly index --all"
 echo ""

@@ -57,7 +57,7 @@ interface LoggerOptions {
 }
 
 /**
- * Creates a dual-output logger for counsel scripts
+ * Creates a dual-output logger for woolly scripts
  * Logs to both console and file for crash recovery
  */
 export const createCounselLogger = (options: LoggerOptions): Logger => {
@@ -85,7 +85,7 @@ export const createCounselLogger = (options: LoggerOptions): Logger => {
   
   if (!noLog) {
     // Create directories
-    const baseDir = join(homedir(), '.counsel', 'scripts', scriptName);
+    const baseDir = join(homedir(), '.woolly', 'scripts', scriptName);
     const logsDir = join(baseDir, 'logs');
     const outcomesDir = join(baseDir, 'outcomes');
     mkdirSync(logsDir, { recursive: true });
@@ -175,7 +175,7 @@ export const createCounselLogger = (options: LoggerOptions): Logger => {
     writeFileSync(outcomeFilePath, JSON.stringify(outcome, null, 2));
     
     // Create/update latest symlink
-    const latestPath = join(homedir(), '.counsel', 'scripts', scriptName, 'outcomes', 'latest.json');
+    const latestPath = join(homedir(), '.woolly', 'scripts', scriptName, 'outcomes', 'latest.json');
     try {
       // Remove existing symlink if it exists
       if (existsSync(latestPath)) {

@@ -75,7 +75,7 @@ Your job is to thoroughly scope out the project. Ultimately you have to provide 
 
 ## Deliverable
 
-Save the scoping document to `~/.counsel/features/[feature-name]/scope_[model_name].md` where [model_name] is your model identifier (e.g., `scope_claude-opus-4-1-20250805.md`)
+Save the scoping document to `~/.woolly/features/[feature-name]/scope_[model_name].md` where [model_name] is your model identifier (e.g., `scope_claude-opus-4-1-20250805.md`)
 
 ### Document Structure
 ```markdown
@@ -155,7 +155,7 @@ The scoping step is complete when:
 
 After scoping is complete, guide the user to run:
 ```
-/counsel-feature plan [feature-name]
+/woolly-feature plan [feature-name]
 ```
 
 This will begin the planning phase with the Lead Engineer persona.

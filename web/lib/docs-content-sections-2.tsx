@@ -99,7 +99,7 @@ export const ArchitectureSection: React.FC = () => (
     <div id="system-overview" className="scroll-mt-20">
       <h2 className="text-2xl font-bold mb-4">System Overview</h2>
       <p className="text-gray-700 mb-4">
-        Counsel is designed as a modular framework that integrates seamlessly
+        Woolly is designed as a modular framework that integrates seamlessly
         with existing development workflows. The architecture emphasizes
         simplicity, extensibility, and AI-first design principles.
       </p>
@@ -138,13 +138,13 @@ export const ArchitectureSection: React.FC = () => (
     <div id="storage-structure" className="scroll-mt-20">
       <h2 className="text-2xl font-bold mb-4">Storage Structure</h2>
       <p className="text-gray-700 mb-4">
-        Counsel stores all data in a <code>.counsel</code> directory within your
+        Woolly stores all data in a <code>.woolly</code> directory within your
         project. This approach keeps everything version-controlled and easily
         portable.
       </p>
 
       <pre className="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto mb-4">
-        <code>{`~/.counsel/                    # Global configuration
+        <code>{`~/.woolly/                    # Global configuration
 ├── config.json               # Global settings
 ├── integrations/             # Integration configurations
 │   ├── chromadb.json
@@ -153,7 +153,7 @@ export const ArchitectureSection: React.FC = () => (
 └── cache/                    # Temporary data
 
 project-root/
-├── .counsel/                 # Project-specific data
+├── .woolly/                 # Project-specific data
 │   ├── config.json          # Project configuration
 │   ├── .features/           # Feature mode items
 │   │   └── user-auth/
@@ -199,7 +199,7 @@ project-root/
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-2">Storage ↔ Version Control</h3>
           <p className="text-sm text-gray-700">
-            All Counsel data is version-controlled alongside your code
+            All Woolly data is version-controlled alongside your code
           </p>
         </div>
       </div>
@@ -248,17 +248,17 @@ export const ExamplesSection: React.FC = () => (
       <h2 className="text-2xl font-bold mb-4">Feature Development Workflow</h2>
       <p className="text-gray-700 mb-4">
         Complete example of developing a user authentication feature using
-        Counsel.
+        Woolly.
       </p>
 
       <div className="space-y-6">
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 1: Create Feature</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>counsel add feature user-authentication --priority high</code>
+            <code>woolly add feature user-authentication --priority high</code>
           </pre>
           <p className="text-sm text-gray-600">
-            Creates .counsel/.features/user-authentication/ directory with
+            Creates .woolly/.features/user-authentication/ directory with
             initial files
           </p>
         </div>
@@ -269,7 +269,7 @@ export const ExamplesSection: React.FC = () => (
             In your AI assistant (Claude/Cursor):
           </p>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-specs</code>
+            <code>/woolly-feature-specs</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI guides you through defining user stories and acceptance criteria
@@ -279,7 +279,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 3: Create Design</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-plan</code>
+            <code>/woolly-feature-plan</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps create technical design and architecture decisions
@@ -289,7 +289,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 4: Implement</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-code</code>
+            <code>/woolly-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI assists with code implementation following the design
@@ -299,7 +299,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Step 5: Track Progress</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>counsel status feature user-authentication</code>
+            <code>woolly status feature user-authentication</code>
           </pre>
           <p className="text-sm text-gray-600">
             Check current status and next steps
@@ -319,7 +319,7 @@ export const ExamplesSection: React.FC = () => (
           <h3 className="font-semibold mb-3">Create Script</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
             <code>
-              counsel add script db-backup --description &quot;Automated
+              woolly add script db-backup --description &quot;Automated
               database backup utility&quot;
             </code>
           </pre>
@@ -328,7 +328,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Define Requirements</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-specs</code>
+            <code>/woolly-feature-specs</code>
           </pre>
           <p className="text-sm text-gray-600">
             Specify backup frequency, storage location, error handling
@@ -338,7 +338,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Implement Script</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-code</code>
+            <code>/woolly-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps write the backup script with proper error handling
@@ -357,14 +357,14 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Create Debug Item</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>counsel add debug memory-leak --priority high</code>
+            <code>woolly add debug memory-leak --priority high</code>
           </pre>
         </div>
 
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Investigate Issue</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-scope</code>
+            <code>/woolly-feature-scope</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI helps analyze code and identify potential memory leak sources
@@ -374,7 +374,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Deep Dive Analysis</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-reload</code>
+            <code>/woolly-reload</code>
           </pre>
           <p className="text-sm text-gray-600">
             Get detailed understanding of memory management in the codebase
@@ -384,7 +384,7 @@ export const ExamplesSection: React.FC = () => (
         <div className="border rounded-lg p-4">
           <h3 className="font-semibold mb-3">Implement Fix</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
-            <code>/counsel-feature-code</code>
+            <code>/woolly-feature-code</code>
           </pre>
           <p className="text-sm text-gray-600">
             AI assists with implementing the memory leak fix
@@ -401,9 +401,9 @@ export const ExamplesSection: React.FC = () => (
           <h3 className="font-semibold mb-3">Linear Integration</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
             <code>
-              # Sync feature to Linear issue{"\n"}counsel add feature user-auth
+              # Sync feature to Linear issue{"\n"}woolly add feature user-auth
               --linear-sync{"\n"}
-              {"\n"}# Update Linear issue status{"\n"}counsel status feature
+              {"\n"}# Update Linear issue status{"\n"}woolly status feature
               user-auth --update-linear
             </code>
           </pre>
@@ -413,9 +413,9 @@ export const ExamplesSection: React.FC = () => (
           <h3 className="font-semibold mb-3">ChromaDB Search</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-2">
             <code>
-              # Semantic code search{"\n"}counsel search &quot;authentication
+              # Semantic code search{"\n"}woolly search &quot;authentication
               middleware&quot;{"\n"}
-              {"\n"}# Find similar implementations{"\n"}counsel search --similar
+              {"\n"}# Find similar implementations{"\n"}woolly search --similar
               auth.js
             </code>
           </pre>
@@ -468,7 +468,7 @@ export const ExamplesSection: React.FC = () => (
             <li>Use appropriate modes for different types of work</li>
             <li>Keep related items grouped and cross-referenced</li>
             <li>Regular cleanup of completed items</li>
-            <li>Backup .counsel directory with your code</li>
+            <li>Backup .woolly directory with your code</li>
           </ul>
         </div>
       </div>
@@ -482,7 +482,7 @@ export const DevelopmentSection: React.FC = () => (
     <div id="development-setup" className="scroll-mt-20">
       <h2 className="text-2xl font-bold mb-4">Development Setup</h2>
       <p className="text-gray-700 mb-4">
-        Set up your development environment to contribute to the Counsel
+        Set up your development environment to contribute to the Woolly
         Framework.
       </p>
 
@@ -491,8 +491,8 @@ export const DevelopmentSection: React.FC = () => (
           <h3 className="font-semibold mb-3">Clone Repository</h3>
           <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">
             <code>
-              git clone https://github.com/ammon-nakosi/counsel-framework.git
-              {"\n"}cd counsel-framework
+              git clone https://github.com/ammon-nakosi/woolly-framework.git
+              {"\n"}cd woolly-framework
             </code>
           </pre>
         </div>
@@ -523,7 +523,7 @@ export const DevelopmentSection: React.FC = () => (
       <h2 className="text-2xl font-bold mb-4">Codebase Structure</h2>
 
       <pre className="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto mb-4">
-        <code>{`counsel/
+        <code>{`woolly/
 ├── cli/                      # CLI implementation
 │   ├── src/
 │   │   ├── commands/        # CLI command implementations

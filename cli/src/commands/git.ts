@@ -7,20 +7,20 @@ import os from 'os';
 import simpleGit, { SimpleGit } from 'simple-git';
 import inquirer from 'inquirer';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.counsel');
+const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
 
 export function registerGitCommands(program: Command) {
   const gitCmd = program
     .command('git')
-    .description('Manage git repository for counsel work');
+    .description('Manage git repository for woolly work');
 
   // Init subcommand
   gitCmd
     .command('init')
-    .description('Initialize git repository in ~/.counsel')
+    .description('Initialize git repository in ~/.woolly')
     .option('--remote <url>', 'Set remote repository URL')
     .action(async (options) => {
-      console.log(chalk.cyan('\n🔧 Initializing Git Repository for Counsel\n'));
+      console.log(chalk.cyan('\n🔧 Initializing Git Repository for Woolly\n'));
       
       const git: SimpleGit = simpleGit(COUNSEL_DIR);
       
@@ -55,7 +55,7 @@ export function registerGitCommands(program: Command) {
         
         // Add all files and make initial commit
         await git.add('.');
-        await git.commit('Initial commit of counsel work');
+        await git.commit('Initial commit of woolly work');
         
         spinner.succeed('Git repository initialized');
         
@@ -90,8 +90,8 @@ export function registerGitCommands(program: Command) {
         }
         
         console.log(chalk.green('\n✅ Git repository ready!\n'));
-        console.log(chalk.cyan('Your counsel work is now version controlled.'));
-        console.log(chalk.gray('Use ' + chalk.bold('counsel git sync') + ' to sync with remote'));
+        console.log(chalk.cyan('Your woolly work is now version controlled.'));
+        console.log(chalk.gray('Use ' + chalk.bold('woolly git sync') + ' to sync with remote'));
         
       } catch (error) {
         spinner.fail(`Failed to initialize repository: ${error}`);
@@ -101,7 +101,7 @@ export function registerGitCommands(program: Command) {
   // Status subcommand
   gitCmd
     .command('status')
-    .description('Show git status of counsel work')
+    .description('Show git status of woolly work')
     .action(async () => {
       const git: SimpleGit = simpleGit(COUNSEL_DIR);
       
@@ -109,11 +109,11 @@ export function registerGitCommands(program: Command) {
       const isRepo = await git.checkIsRepo();
       if (!isRepo) {
         console.log(chalk.red('❌ No git repository found'));
-        console.log(chalk.gray('Run ' + chalk.bold('counsel git init') + ' to initialize'));
+        console.log(chalk.gray('Run ' + chalk.bold('woolly git init') + ' to initialize'));
         return;
       }
       
-      console.log(chalk.cyan('\n📊 Counsel Git Status\n'));
+      console.log(chalk.cyan('\n📊 Woolly Git Status\n'));
       
       try {
         // Get status
@@ -172,8 +172,8 @@ export function registerGitCommands(program: Command) {
   // Sync subcommand
   gitCmd
     .command('sync')
-    .description('Sync counsel work with remote repository')
-    .option('--message <msg>', 'Commit message', 'Update counsel work')
+    .description('Sync woolly work with remote repository')
+    .option('--message <msg>', 'Commit message', 'Update woolly work')
     .action(async (options) => {
       const git: SimpleGit = simpleGit(COUNSEL_DIR);
       
@@ -181,11 +181,11 @@ export function registerGitCommands(program: Command) {
       const isRepo = await git.checkIsRepo();
       if (!isRepo) {
         console.log(chalk.red('❌ No git repository found'));
-        console.log(chalk.gray('Run ' + chalk.bold('counsel git init') + ' to initialize'));
+        console.log(chalk.gray('Run ' + chalk.bold('woolly git init') + ' to initialize'));
         return;
       }
       
-      console.log(chalk.cyan('\n🔄 Syncing Counsel Work\n'));
+      console.log(chalk.cyan('\n🔄 Syncing Woolly Work\n'));
       
       const spinner = ora('Checking remote...').start();
       
@@ -194,7 +194,7 @@ export function registerGitCommands(program: Command) {
         const remotes = await git.getRemotes();
         if (remotes.length === 0) {
           spinner.fail('No remote repository configured');
-          console.log(chalk.gray('Run ' + chalk.bold('counsel git remote <url>') + ' to add remote'));
+          console.log(chalk.gray('Run ' + chalk.bold('woolly git remote <url>') + ' to add remote'));
           return;
         }
         
@@ -246,7 +246,7 @@ export function registerGitCommands(program: Command) {
       const isRepo = await git.checkIsRepo();
       if (!isRepo) {
         console.log(chalk.red('❌ No git repository found'));
-        console.log(chalk.gray('Run ' + chalk.bold('counsel git init') + ' to initialize'));
+        console.log(chalk.gray('Run ' + chalk.bold('woolly git init') + ' to initialize'));
         return;
       }
       
@@ -255,7 +255,7 @@ export function registerGitCommands(program: Command) {
         const remotes = await git.getRemotes(true);
         if (remotes.length === 0) {
           console.log(chalk.yellow('No remotes configured'));
-          console.log(chalk.gray('Add a remote with: ' + chalk.bold('counsel git remote <url>')));
+          console.log(chalk.gray('Add a remote with: ' + chalk.bold('woolly git remote <url>')));
         } else {
           console.log(chalk.cyan('\n📡 Current Remotes\n'));
           remotes.forEach(remote => {
@@ -295,7 +295,7 @@ async function setupRemote(git: SimpleGit, url: string): Promise<void> {
       {
         type: 'confirm',
         name: 'pushNow',
-        message: 'Push existing counsel work to remote now?',
+        message: 'Push existing woolly work to remote now?',
         default: true
       }
     ]);
@@ -325,7 +325,7 @@ async function setupRemote(git: SimpleGit, url: string): Promise<void> {
 async function createGitignore(): Promise<void> {
   const gitignorePath = path.join(COUNSEL_DIR, '.gitignore');
   
-  const content = `# Counsel Framework Git Ignore
+  const content = `# Woolly Framework Git Ignore
 # This file controls what gets synced across machines
 
 # Python virtual environment (large, regenerable)
@@ -368,7 +368,7 @@ cli/
 # Optional: Uncomment to exclude sensitive configuration
 # config.json
 
-# Optional: Uncomment to exclude specific counsel modes
+# Optional: Uncomment to exclude specific woolly modes
 # debug/
 # vibe/
 `;

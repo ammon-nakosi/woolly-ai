@@ -1,18 +1,18 @@
-# Counsel Memory Management Architecture
+# Woolly Memory Management Architecture
 
 ## Overview
 
-The Counsel Memory Management system provides a three-tier memory architecture that seamlessly integrates with AI assistants (Claude, Cursor) to maintain context and knowledge across different scopes and lifecycles. The system leverages modern memory management practices from 2025, including semantic search, vector embeddings, and the Model Context Protocol (MCP).
+The Woolly Memory Management system provides a three-tier memory architecture that seamlessly integrates with AI assistants (Claude, Cursor) to maintain context and knowledge across different scopes and lifecycles. The system leverages modern memory management practices from 2025, including semantic search, vector embeddings, and the Model Context Protocol (MCP).
 
 ## Memory Tiers
 
 ### 1. Session Memory (Ephemeral)
-**Lifetime**: Active counsel session only  
+**Lifetime**: Active woolly session only  
 **Scope**: Current work context  
 **Storage**: Temporary injection into AI context files  
 **Purpose**: Immediate working memory for active tasks
 
-- Automatically captures insights during counsel work
+- Automatically captures insights during woolly work
 - Injects relevant context into `.claude/CLAUDE.md` or `.cursorrules`
 - Clears when session closes or work completes
 - Includes recent commands, decisions, and discoveries
@@ -20,7 +20,7 @@ The Counsel Memory Management system provides a three-tier memory architecture t
 ### 2. Repository Memory (Project-Persistent)
 **Lifetime**: Project/repository lifecycle  
 **Scope**: Repository-specific patterns and knowledge  
-**Storage**: `.counsel/memory/repo-memory.json`  
+**Storage**: `.woolly/memory/repo-memory.json`  
 **Purpose**: Project-specific patterns, conventions, and learnings
 
 - Stores project conventions and patterns
@@ -31,7 +31,7 @@ The Counsel Memory Management system provides a three-tier memory architecture t
 ### 3. User Memory (Global-Persistent)
 **Lifetime**: Permanent until explicitly removed  
 **Scope**: User-wide preferences and knowledge  
-**Storage**: `~/.counsel/memory/user-memory.json`  
+**Storage**: `~/.woolly/memory/user-memory.json`  
 **Purpose**: Personal preferences, recurring patterns, and global knowledge
 
 - User preferences and coding style
@@ -113,30 +113,30 @@ The system dynamically injects relevant memories into AI context files:
 
 **Claude Integration** (`.claude/CLAUDE.md`):
 ```markdown
-# Active Counsel Memories
+# Active Woolly Memories
 
 ## Session Context
 [Dynamically injected session memories]
 
 ## Repository Knowledge
-import: .counsel/memory/repo-context.md
+import: .woolly/memory/repo-context.md
 
 ## User Preferences
-import: ~/.counsel/memory/user-context.md
+import: ~/.woolly/memory/user-context.md
 ```
 
 **Cursor Integration** (`.cursorrules`):
 ```markdown
-# Counsel Memory Context
+# Woolly Memory Context
 
 ## Current Session
 [Active session memories and decisions]
 
 ## Project Patterns
-@.counsel/memory/repo-patterns.md
+@.woolly/memory/repo-patterns.md
 
 ## Personal Preferences
-@~/.counsel/memory/user-preferences.md
+@~/.woolly/memory/user-preferences.md
 ```
 
 ### 2. Search Integration
@@ -147,7 +147,7 @@ Memories enhance search results with contextual relevance:
 
 ### 3. Automatic Capture Points
 The system automatically captures memories at key events:
-- After completing counsel work phases
+- After completing woolly work phases
 - When marking tasks as done
 - During retrospectives and reviews
 - When patterns are identified in search results
@@ -157,48 +157,48 @@ The system automatically captures memories at key events:
 ### Adding Memories
 ```bash
 # Manual memory addition
-counsel memory add "Use semantic chunking for large documents" --scope repo --type semantic
+woolly memory add "Use semantic chunking for large documents" --scope repo --type semantic
 
 # Automatic capture from search
-counsel search "authentication" --save-insights
+woolly search "authentication" --save-insights
 # → Automatically saves strong patterns as session memories
 
 # From retrospective
-counsel close feature-auth --retrospective
+woolly close feature-auth --retrospective
 # → Extracts learnings to appropriate memory scopes
 ```
 
 ### Retrieving Memories
 ```bash
 # List all memories
-counsel memory list
+woolly memory list
 
 # Filter by scope
-counsel memory list --scope session
-counsel memory list --scope repo
-counsel memory list --scope user
+woolly memory list --scope session
+woolly memory list --scope repo
+woolly memory list --scope user
 
 # Search memories
-counsel memory search "testing patterns"
+woolly memory search "testing patterns"
 
 # Show memory details
-counsel memory show <memory-id>
+woolly memory show <memory-id>
 ```
 
 ### Managing Memories
 ```bash
 # Update memory
-counsel memory update <memory-id> --description "Updated description"
+woolly memory update <memory-id> --description "Updated description"
 
 # Promote memory scope
-counsel memory promote <memory-id> --to repo  # session → repo
-counsel memory promote <memory-id> --to user  # repo → user
+woolly memory promote <memory-id> --to repo  # session → repo
+woolly memory promote <memory-id> --to user  # repo → user
 
 # Delete memory
-counsel memory delete <memory-id>
+woolly memory delete <memory-id>
 
 # Clear scope
-counsel memory clear --scope session
+woolly memory clear --scope session
 ```
 
 ## Lifecycle Management

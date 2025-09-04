@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CounselProject } from '@/lib/counsel-reader';
+import { CounselProject } from '@/lib/woolly-reader';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -168,7 +168,7 @@ export default function ModernHomePage() {
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-4xl font-bold tracking-tight">Counsel Framework</h1>
+                <h1 className="text-4xl font-bold tracking-tight">Woolly Framework</h1>
                 <p className="text-muted-foreground mt-2">
                   Manage your projects, scripts, and creative explorations
                 </p>

@@ -369,7 +369,7 @@ export default function DocsPage() {
                     <p className="mb-4">
                       Found an issue with the documentation?
                       <a
-                        href="https://github.com/ammon-nakosi/counsel-framework/issues"
+                        href="https://github.com/ammon-nakosi/woolly-framework/issues"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="ml-1 text-blue-600 dark:text-blue-400 hover:underline"
@@ -378,7 +378,7 @@ export default function DocsPage() {
                       </a>
                     </p>
                     <p className="text-sm">
-                      © 2025 Counsel Framework. Built with ❤️ for developers.
+                      © 2025 Woolly Framework. Built with ❤️ for developers.
                     </p>
                   </div>
                 </footer>

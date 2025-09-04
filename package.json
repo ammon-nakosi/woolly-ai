@@ -1,10 +1,10 @@
 {
-  "name": "@counsel/framework",
+  "name": "@woolly/framework",
   "version": "0.1.0",
   "description": "A comprehensive framework for structured development workflows with AI assistance",
   "main": "cli/dist/index.js",
   "bin": {
-    "counsel": "./cli/bin/counsel"
+    "woolly": "./cli/bin/woolly"
   },
   "scripts": {
     "build": "cd cli && npm run build",
@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "counsel",
+    "woolly",
     "framework",
     "development",
     "workflow",
@@ -27,12 +27,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/counsel-framework.git"
+    "url": "git+https://github.com/yourusername/woolly-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/counsel-framework/issues"
+    "url": "https://github.com/yourusername/woolly-framework/issues"
   },
-  "homepage": "https://github.com/yourusername/counsel-framework#readme",
+  "homepage": "https://github.com/yourusername/woolly-framework#readme",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=7.0.0"

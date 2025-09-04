@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Counsel Framework Documentation",
-  description: "Comprehensive guide to the Counsel Framework for AI-assisted development. Learn about features, CLI commands, integrations, and best practices.",
+  title: "Woolly Framework Documentation",
+  description: "Comprehensive guide to the Woolly Framework for AI-assisted development. Learn about features, CLI commands, integrations, and best practices.",
   keywords: [
-    "counsel framework",
+    "woolly framework",
     "ai development",
     "development workflow",
     "cli tools",
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     "documentation",
     "developer tools"
   ],
-  authors: [{ name: "Counsel Framework Team" }],
-  creator: "Counsel Framework",
-  publisher: "Counsel Framework",
+  authors: [{ name: "Woolly Framework Team" }],
+  creator: "Woolly Framework",
+  publisher: "Woolly Framework",
   robots: {
     index: true,
     follow: true,
@@ -31,28 +31,28 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://counsel-framework.dev/docs',
-    title: 'Counsel Framework Documentation',
-    description: 'Comprehensive guide to the Counsel Framework for AI-assisted development',
-    siteName: 'Counsel Framework',
+    url: 'https://woolly-framework.dev/docs',
+    title: 'Woolly Framework Documentation',
+    description: 'Comprehensive guide to the Woolly Framework for AI-assisted development',
+    siteName: 'Woolly Framework',
     images: [
       {
         url: '/og-docs.png',
         width: 1200,
         height: 630,
-        alt: 'Counsel Framework Documentation',
+        alt: 'Woolly Framework Documentation',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Counsel Framework Documentation',
-    description: 'Comprehensive guide to the Counsel Framework for AI-assisted development',
+    title: 'Woolly Framework Documentation',
+    description: 'Comprehensive guide to the Woolly Framework for AI-assisted development',
     images: ['/og-docs.png'],
     creator: '@counsel_framework',
   },
   alternates: {
-    canonical: 'https://counsel-framework.dev/docs',
+    canonical: 'https://woolly-framework.dev/docs',
   },
   other: {
     'msapplication-TileColor': '#3b82f6',
@@ -77,28 +77,28 @@ export default function DocsLayout({
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'TechArticle',
-            headline: 'Counsel Framework Documentation',
-            description: 'Comprehensive guide to the Counsel Framework for AI-assisted development',
+            headline: 'Woolly Framework Documentation',
+            description: 'Comprehensive guide to the Woolly Framework for AI-assisted development',
             author: {
               '@type': 'Organization',
-              name: 'Counsel Framework Team',
+              name: 'Woolly Framework Team',
             },
             publisher: {
               '@type': 'Organization',
-              name: 'Counsel Framework',
+              name: 'Woolly Framework',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://counsel-framework.dev/logo.png',
+                url: 'https://woolly-framework.dev/logo.png',
               },
             },
             datePublished: '2025-01-26',
             dateModified: '2025-01-26',
             mainEntityOfPage: {
               '@type': 'WebPage',
-              '@id': 'https://counsel-framework.dev/docs',
+              '@id': 'https://woolly-framework.dev/docs',
             },
             articleSection: 'Documentation',
-            keywords: 'counsel framework, ai development, development workflow, cli tools',
+            keywords: 'woolly framework, ai development, development workflow, cli tools',
           }),
         }}
       />

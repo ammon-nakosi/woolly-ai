@@ -10,7 +10,7 @@ import fs from 'fs/promises';
 const execAsync = promisify(exec);
 
 const CHROMADB_PORT = process.env.CHROMADB_PORT || '8444';
-const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.counsel', 'chromadb');
+const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.woolly', 'chromadb');
 
 async function checkDocker(): Promise<boolean> {
   try {
@@ -88,9 +88,9 @@ export function registerChromaDBCommands(program: Command) {
           spinner.succeed('ChromaDB is already running');
           console.log(chalk.gray(`\nChromaDB is available at: http://localhost:${options.port}`));
           console.log(chalk.cyan('\nUseful commands:'));
-          console.log('  View logs:    counsel chromadb logs');
-          console.log('  Stop server:  counsel chromadb stop');
-          console.log('  View status:  counsel chromadb status');
+          console.log('  View logs:    woolly chromadb logs');
+          console.log('  Stop server:  woolly chromadb stop');
+          console.log('  View status:  woolly chromadb status');
           return;
         }
         
@@ -131,7 +131,7 @@ export function registerChromaDBCommands(program: Command) {
         if (!isReady) {
           spinner.fail('ChromaDB failed to start');
           console.log(chalk.red('\nCheck Docker logs:'));
-          console.log(chalk.gray('  counsel chromadb logs'));
+          console.log(chalk.gray('  woolly chromadb logs'));
           process.exit(1);
         }
         
@@ -139,12 +139,12 @@ export function registerChromaDBCommands(program: Command) {
         
         console.log(chalk.green(`\n✅ ChromaDB is running at: http://localhost:${options.port}\n`));
         console.log(chalk.cyan('Next steps:'));
-        console.log('  1. Index your counsel work:  counsel index --all');
-        console.log('  2. Search your work:         counsel search <query>');
+        console.log('  1. Index your woolly work:  woolly index --all');
+        console.log('  2. Search your work:         woolly search <query>');
         console.log(chalk.gray('\nManage ChromaDB:'));
-        console.log('  View logs:    counsel chromadb logs');
-        console.log('  Stop server:  counsel chromadb stop');
-        console.log('  View status:  counsel chromadb status');
+        console.log('  View logs:    woolly chromadb logs');
+        console.log('  Stop server:  woolly chromadb stop');
+        console.log('  View status:  woolly chromadb status');
         
       } catch (error: any) {
         spinner.fail('Failed to start ChromaDB');
@@ -193,7 +193,7 @@ export function registerChromaDBCommands(program: Command) {
         
         if (!await isChromaDBRunning()) {
           spinner.info('ChromaDB is not running');
-          console.log(chalk.gray('\nStart it with: counsel chromadb start'));
+          console.log(chalk.gray('\nStart it with: woolly chromadb start'));
           return;
         }
         
@@ -212,11 +212,11 @@ export function registerChromaDBCommands(program: Command) {
             console.log(chalk.gray(`Data directory: ${CHROMADB_DATA_DIR}`));
           } else {
             spinner.warn('ChromaDB container is running but API is not responding');
-            console.log(chalk.yellow('\nTry restarting: counsel chromadb restart'));
+            console.log(chalk.yellow('\nTry restarting: woolly chromadb restart'));
           }
         } catch {
           spinner.warn('ChromaDB container is running but API is not accessible');
-          console.log(chalk.yellow('\nCheck logs: counsel chromadb logs'));
+          console.log(chalk.yellow('\nCheck logs: woolly chromadb logs'));
         }
         
       } catch (error: any) {
@@ -234,7 +234,7 @@ export function registerChromaDBCommands(program: Command) {
       try {
         if (!await isChromaDBRunning()) {
           console.log(chalk.yellow('ChromaDB is not running'));
-          console.log(chalk.gray('Start it with: counsel chromadb start'));
+          console.log(chalk.gray('Start it with: woolly chromadb start'));
           return;
         }
         
@@ -273,7 +273,7 @@ export function registerChromaDBCommands(program: Command) {
             spinner.succeed('ChromaDB restarted successfully');
           } else {
             spinner.fail('ChromaDB restarted but API is not responding');
-            console.log(chalk.yellow('\nCheck logs: counsel chromadb logs'));
+            console.log(chalk.yellow('\nCheck logs: woolly chromadb logs'));
           }
         } else {
           spinner.info('ChromaDB is not running, starting it...');
@@ -312,7 +312,7 @@ export function registerChromaDBCommands(program: Command) {
         await execAsync('docker rm chromadb');
         spinner.succeed('ChromaDB container removed');
         console.log(chalk.gray(`\nData preserved in: ${CHROMADB_DATA_DIR}`));
-        console.log(chalk.gray('Start fresh with: counsel chromadb start'));
+        console.log(chalk.gray('Start fresh with: woolly chromadb start'));
         
       } catch (error: any) {
         if (error.message.includes('No such container')) {
@@ -354,7 +354,7 @@ export function registerChromaDBCommands(program: Command) {
           spinner.fail('ChromaDB container is not running');
           console.log(chalk.red('\n❌ ChromaDB Not Running'));
           console.log(chalk.yellow('ChromaDB container is not started.'));
-          console.log(chalk.gray('Fix: Run "counsel chromadb start"'));
+          console.log(chalk.gray('Fix: Run "woolly chromadb start"'));
           return;
         }
         
@@ -380,8 +380,8 @@ export function registerChromaDBCommands(program: Command) {
             
             // Show next steps
             console.log(chalk.gray('\nNext steps:'));
-            console.log('  Index your work: counsel index --all');
-            console.log('  Search your work: counsel search "<query>"');
+            console.log('  Index your work: woolly index --all');
+            console.log('  Search your work: woolly search "<query>"');
             
           } else {
             throw new Error('Version endpoint failed');
@@ -392,8 +392,8 @@ export function registerChromaDBCommands(program: Command) {
           console.log(chalk.red('\n❌ API Connection Failed'));
           console.log(chalk.yellow('ChromaDB container is running but API is not responding.'));
           console.log(chalk.gray('Troubleshooting steps:'));
-          console.log(chalk.gray('  1. Check logs: counsel chromadb logs'));
-          console.log(chalk.gray('  2. Restart container: counsel chromadb restart'));
+          console.log(chalk.gray('  1. Check logs: woolly chromadb logs'));
+          console.log(chalk.gray('  2. Restart container: woolly chromadb restart'));
           console.log(chalk.gray('  3. Check port conflicts (make sure nothing else uses 8444)'));
           console.log(chalk.gray(`  4. Test manually: curl http://localhost:${CHROMADB_PORT}/api/v1`));
         }
@@ -404,8 +404,8 @@ export function registerChromaDBCommands(program: Command) {
         console.error(chalk.gray('Error details:'), error.message);
         console.log(chalk.yellow('\nFor support:'));
         console.log(chalk.gray('  1. Check documentation: docs/CHROMADB-SETUP.md'));
-        console.log(chalk.gray('  2. View logs: counsel chromadb logs'));
-        console.log(chalk.gray('  3. Report issue: https://github.com/ammon-nakosi/counsel-framework/issues'));
+        console.log(chalk.gray('  2. View logs: woolly chromadb logs'));
+        console.log(chalk.gray('  3. Report issue: https://github.com/ammon-nakosi/woolly-framework/issues'));
       }
     });
 }

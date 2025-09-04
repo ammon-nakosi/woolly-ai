@@ -7,14 +7,14 @@ import { CounselMode } from '../types';
 export function registerSearchCommands(program: Command) {
   program
     .command('search <query>')
-    .description('Search counsel work and knowledge using semantic search')
+    .description('Search woolly work and knowledge using semantic search')
     .option('-m, --mode <mode>', 'Filter by mode (feature, script, debug, review, vibe)')
     .option('-t, --type <type>', 'Search type: work, knowledge, or all', 'all')
     .option('-l, --limit <number>', 'Maximum results', '10')
     .option('--threshold <number>', 'Similarity threshold (0-1)')
     .option('--json', 'Output as JSON')
     .action(async (query: string, options) => {
-      const spinner = ora('Searching counsel...').start();
+      const spinner = ora('Searching woolly...').start();
       
       try {
         const limit = parseInt(options.limit);
@@ -60,7 +60,7 @@ export function registerSearchCommands(program: Command) {
           console.log(chalk.gray('  • Using different keywords'));
           console.log(chalk.gray('  • Using broader search terms'));
           if (!status.vector.available) {
-            console.log(chalk.gray('  • Starting ChromaDB: counsel chromadb start'));
+            console.log(chalk.gray('  • Starting ChromaDB: woolly chromadb start'));
           }
           return;
         }
@@ -106,7 +106,7 @@ export function registerSearchCommands(program: Command) {
         // Show ChromaDB help if it's down
         if (!status.vector.available) {
           console.log(chalk.yellow('\n💡 For better semantic search results:'));
-          console.log('   Run: counsel chromadb health');
+          console.log('   Run: woolly chromadb health');
         }
         
       } catch (error: any) {
@@ -115,7 +115,7 @@ export function registerSearchCommands(program: Command) {
         
         if (error.message.includes('ChromaDB') || error.message.includes('chromadb')) {
           console.log(chalk.yellow('\n💡 ChromaDB might be down. Try:'));
-          console.log('   counsel chromadb health');
+          console.log('   woolly chromadb health');
         }
       }
     });

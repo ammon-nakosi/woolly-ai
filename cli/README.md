@@ -1,11 +1,11 @@
-# Counsel CLI
+# Woolly CLI
 
-A TypeScript CLI tool for managing the Counsel Framework - a structured approach for organized development work.
+A TypeScript CLI tool for managing the Woolly Framework - a structured approach for organized development work.
 
 ## Overview
 
-Counsel CLI provides programmatic access to counsel work items, enabling both humans and AI agents to:
-- Query and search counsel work across projects
+Woolly CLI provides programmatic access to woolly work items, enabling both humans and AI agents to:
+- Query and search woolly work across projects
 - Check implementation status
 - Integrate with Linear for ticket management  
 - Extract patterns and knowledge from completed work
@@ -15,7 +15,7 @@ Counsel CLI provides programmatic access to counsel work items, enabling both hu
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd counsel-cli
+cd woolly-cli
 
 # Install dependencies
 npm install
@@ -32,7 +32,7 @@ npm link
 Initialize your configuration:
 
 ```bash
-counsel init
+woolly init
 ```
 
 This will prompt you for:
@@ -41,7 +41,7 @@ This will prompt you for:
 - ChromaDB settings (optional)
 - Pattern extraction preferences
 
-Configuration is stored at `~/.counsel/config.json`.
+Configuration is stored at `~/.woolly/config.json`.
 
 ## Usage
 
@@ -49,33 +49,33 @@ Configuration is stored at `~/.counsel/config.json`.
 
 ```bash
 # Initialize configuration
-counsel init
+woolly init
 
-# Add existing counsel work to the index
-counsel add <mode> <name> -d "description"
+# Add existing woolly work to the index
+woolly add <mode> <name> -d "description"
 
-# List all counsel work
-counsel list
-counsel list --mode feature
-counsel list --status in-progress
-counsel list --local  # List from filesystem instead of ChromaDB
+# List all woolly work
+woolly list
+woolly list --mode feature
+woolly list --status in-progress
+woolly list --local  # List from filesystem instead of ChromaDB
 
 # Get detailed status
-counsel status <name>
+woolly status <name>
 
-# Search counsel work (semantic search)
-counsel search "authentication patterns"
-counsel search "bug fix" --mode debug
+# Search woolly work (semantic search)
+woolly search "authentication patterns"
+woolly search "bug fix" --mode debug
 
 # Linear integration
-counsel linear              # List your tickets
-counsel linear --urgent     # High priority only
-counsel linear --team       # Team tickets
+woolly linear              # List your tickets
+woolly linear --urgent     # High priority only
+woolly linear --team       # Team tickets
 ```
 
-### Counsel Modes
+### Woolly Modes
 
-The CLI supports five counsel modes:
+The CLI supports five woolly modes:
 - `feature` - Full feature development lifecycle
 - `script` - Automation scripts and utilities
 - `debug` - Systematic debugging sessions
@@ -86,9 +86,9 @@ The CLI supports five counsel modes:
 
 ### Storage Structure
 
-All counsel work is stored at the user level in `~/.counsel/`:
+All woolly work is stored at the user level in `~/.woolly/`:
 ```
-~/.counsel/
+~/.woolly/
 ├── config.json
 ├── features/
 ├── scripts/
@@ -120,22 +120,22 @@ npm test
 
 ## CLI vs Slash Commands
 
-This CLI is designed to work alongside Counsel Framework slash commands:
+This CLI is designed to work alongside Woolly Framework slash commands:
 
 - **CLI**: For data retrieval, searching, and automation
 - **Slash Commands**: For interactive, guided workflows in Claude sessions
 
-See [COUNSEL-AGENT-STRATEGY.md](../../COUNSEL-AGENT-STRATEGY.md) for detailed usage guidelines.
+See [WOOLLY-AGENT-STRATEGY.md](../../WOOLLY-AGENT-STRATEGY.md) for detailed usage guidelines.
 
 ## Current Status
 
 ### Implemented ✅
-- Configuration management (`counsel init`)
-- Add work to index (`counsel add`)
-- List counsel work (`counsel list`)
-- Status checking (`counsel status`)
-- Search functionality (`counsel search`)
-- Linear ticket listing (`counsel linear`)
+- Configuration management (`woolly init`)
+- Add work to index (`woolly add`)
+- List woolly work (`woolly list`)
+- Status checking (`woolly status`)
+- Search functionality (`woolly search`)
+- Linear ticket listing (`woolly linear`)
 
 ### In Progress 🚧
 - Full ChromaDB integration
@@ -145,7 +145,7 @@ See [COUNSEL-AGENT-STRATEGY.md](../../COUNSEL-AGENT-STRATEGY.md) for detailed us
 
 ## Contributing
 
-This is part of the Counsel Framework ecosystem. Contributions should maintain:
+This is part of the Woolly Framework ecosystem. Contributions should maintain:
 - Functional programming patterns (no unnecessary classes)
 - TypeScript type safety
 - Clear separation between CLI and slash commands

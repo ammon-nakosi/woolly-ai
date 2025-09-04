@@ -1,22 +1,22 @@
 ---
-description: "Add structured update to counsel project context"
+description: "Add structured update to woolly project context"
 argument-hint: "[optional user guidance]"
 ---
 
-You are updating the context for a counsel project with a structured progress update. This replaces the practice of creating arbitrary files for documentation.
+You are updating the context for a woolly project with a structured progress update. This replaces the practice of creating arbitrary files for documentation.
 
 ## Required Workflow
 
 ### Step 1: Determine Project Name
-**You MUST identify the specific counsel project name explicitly**. Do not assume or auto-detect.
+**You MUST identify the specific woolly project name explicitly**. Do not assume or auto-detect.
 
 If unclear from conversation context:
 ```
-I need to update the project context. Which counsel project should I update?
+I need to update the project context. Which woolly project should I update?
 
 Available options:
 - If this is part of ongoing work, specify the project name
-- Use `counsel list` to see all available projects
+- Use `woolly list` to see all available projects
 - Provide the exact project name (e.g., "user-authentication", "debug-removal")
 ```
 
@@ -24,7 +24,7 @@ Available options:
 **ALWAYS read the existing context before adding updates**:
 
 ```bash
-counsel status <project-name>
+woolly status <project-name>
 ```
 
 Or directly read the context file to understand:
@@ -43,7 +43,7 @@ Parse the optional user guidance from `$ARGUMENTS`:
 Execute the CLI command with ALL required fields:
 
 ```bash
-counsel context add <project-name> \
+woolly context add <project-name> \
   --executed "what was accomplished/executed" \
   --findings "key discoveries or results" \
   --followup "next steps or follow-up plan"
@@ -106,7 +106,7 @@ If the CLI command fails:
 4. **DO NOT** create alternative files or workarounds
 
 Common errors:
-- `Project 'name' not found` → Check project exists with `counsel list`
+- `Project 'name' not found` → Check project exists with `woolly list`
 - `Field '--executed' cannot be empty` → Provide meaningful content for all fields
 - `Context file not found` → Project exists but missing context.md file
 
@@ -125,4 +125,4 @@ Common errors:
 - Use the CLI command exactly as specified
 - Consider user guidance when provided
 
-This systematic approach ensures predictable, structured documentation of all counsel project progress while giving users control through optional guidance.
+This systematic approach ensures predictable, structured documentation of all woolly project progress while giving users control through optional guidance.

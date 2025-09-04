@@ -6,18 +6,18 @@ import os from 'os';
 import fs from 'fs/promises';
 import { CounselMode } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.counsel');
+const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerContextCommands(program: Command) {
   program
     .command('context')
-    .description('Manage context for counsel projects')
+    .description('Manage context for woolly projects')
     .addCommand(createAddCommand());
 }
 
 function createAddCommand(): Command {
   return new Command('add')
-    .argument('<project-name>', 'Name of the counsel project')
+    .argument('<project-name>', 'Name of the woolly project')
     .requiredOption('--executed <text>', 'What was accomplished/executed')
     .requiredOption('--findings <text>', 'Key discoveries or results')  
     .requiredOption('--followup <text>', 'Next steps or follow-up plan')
@@ -51,7 +51,7 @@ function createAddCommand(): Command {
           spinner.fail(`Project '${projectName}' not found`);
           console.log(chalk.yellow('Available projects:'));
           await listAvailableProjects();
-          console.log(chalk.gray('Use \'counsel list\' to see all projects'));
+          console.log(chalk.gray('Use \'woolly list\' to see all projects'));
           return;
         }
         

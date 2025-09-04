@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Counsel Framework Script Logging Template
+# Woolly Framework Script Logging Template
 # This template provides crash-resistant logging for shell scripts
 
 # Script configuration
@@ -53,7 +53,7 @@ STAT_WARNINGS=0
 
 # Setup logging and outcome directories and files
 if [ "$NO_LOG" = false ]; then
-    BASE_DIR="$HOME/.counsel/scripts/${SCRIPT_NAME}"
+    BASE_DIR="$HOME/.woolly/scripts/${SCRIPT_NAME}"
     LOG_DIR="${BASE_DIR}/logs"
     OUTCOME_DIR="${BASE_DIR}/outcomes"
     mkdir -p "$LOG_DIR" "$OUTCOME_DIR"

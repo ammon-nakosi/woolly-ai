@@ -1,4 +1,4 @@
-// Core types for Counsel CLI
+// Core types for Woolly CLI
 
 export type CounselMode = 'feature' | 'script' | 'vibe' | 'prompt';
 export type ProjectStatus = 'active' | 'completed' | 'closed' | 'archived';
@@ -74,7 +74,7 @@ export interface CounselKnowledge {
   usageCount?: number;
 }
 
-// Counsel work item (tracked in ChromaDB)
+// Woolly work item (tracked in ChromaDB)
 export interface CounselItem {
   id: string;
   type: 'counsel_item';
@@ -270,7 +270,7 @@ export interface CounselConfig {
   chromadb?: {
     host?: string;
     port?: number;
-    path?: string;  // Defaults to ~/.counsel/chromadb
+    path?: string;  // Defaults to ~/.woolly/chromadb
     embeddings?: {
       provider?: 'ollama' | 'openai' | 'default';
       ollamaModel?: string;

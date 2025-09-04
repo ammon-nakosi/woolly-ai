@@ -1,15 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Read(/Users/Personal/counsel-framework/cli/scripts/**)",
-      "Read(/Users/Personal/counsel-framework/cli/src/commands/**)",
-      "Bash(counsel chromadb start:*)",
+      "Read(/Users/Personal/woolly-framework/cli/scripts/**)",
+      "Read(/Users/Personal/woolly-framework/cli/src/commands/**)",
+      "Bash(woolly chromadb start:*)",
       "Bash(curl:*)",
-      "Bash(counsel chromadb:*)",
-      "Read(/Users/Personal/.counsel/bin/**)",
-      "Bash(~/.counsel/venv/bin/python -m chromadb.cli.cli --help)",
-      "Bash(~/.counsel/venv/bin/chroma --help)",
-      "Bash(counsel search:*)",
+      "Bash(woolly chromadb:*)",
+      "Read(/Users/Personal/.woolly/bin/**)",
+      "Bash(~/.woolly/venv/bin/python -m chromadb.cli.cli --help)",
+      "Bash(~/.woolly/venv/bin/chroma --help)",
+      "Bash(woolly search:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)"
@@ -17,7 +17,7 @@
     "deny": [],
     "ask": [],
     "additionalDirectories": [
-      "/Users/Personal/counsel-framework"
+      "/Users/Personal/woolly-framework"
     ]
   }
 }

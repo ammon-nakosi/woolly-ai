@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Counsel Framework Web",
-  description: "Web interface for managing your Counsel Framework projects",
+  title: "Woolly Framework Web",
+  description: "Web interface for managing your Woolly Framework projects",
 };
 
 export default function RootLayout({
@@ -45,8 +45,8 @@ export default function RootLayout({
                   href="/"
                   className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  <span className="hidden sm:inline">Counsel Framework</span>
-                  <span className="sm:hidden">Counsel</span>
+                  <span className="hidden sm:inline">Woolly Framework</span>
+                  <span className="sm:hidden">Woolly</span>
                 </Link>
               </div>
               <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-8">
@@ -64,7 +64,7 @@ export default function RootLayout({
                   <span className="sm:hidden">Docs</span>
                 </Link>
                 <a
-                  href="https://github.com/ammon-nakosi/counsel-framework"
+                  href="https://github.com/ammon-nakosi/woolly-framework"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-colors"

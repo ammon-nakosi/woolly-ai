@@ -143,7 +143,7 @@ export function buildSearchIndex(): SearchIndex {
 
   processSections(docsContent.sections);
 
-  // Process Counsel modes as searchable content
+  // Process Woolly modes as searchable content
   counselModes.forEach(mode => {
     const modeContent = `
       ${mode.description} ${mode.purpose}

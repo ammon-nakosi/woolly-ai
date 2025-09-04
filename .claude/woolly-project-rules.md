@@ -1,6 +1,6 @@
-# Counsel Project Rules
+# Woolly Project Rules
 
-This file contains project-specific rules managed by the Counsel Framework.
+This file contains project-specific rules managed by the Woolly Framework.
 Each rule is managed programmatically - do not edit manually.
 
 **Rule Types:**
@@ -12,7 +12,7 @@ Each rule is managed programmatically - do not edit manually.
 - `guideline` - Directives ("do this", "don't do that")
 - `general-note` - Miscellaneous important info
 
-**Management:** Use `counsel rule` commands to modify rules
+**Management:** Use `woolly rule` commands to modify rules
 
 ---
 
@@ -22,7 +22,7 @@ This rule tests summary display
 
 These are the full details that should appear in full mode but not in summary mode
 
-## Counsel Framework Standards
+## Woolly Framework Standards
 
 Use TypeScript for all CLI commands
 

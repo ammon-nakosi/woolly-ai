@@ -7,16 +7,16 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { execSync } from 'child_process';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.counsel');
+const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
 const AI_AWARENESS_DIR = path.join(COUNSEL_DIR, 'ai-awareness');
-const AWARENESS_FILE = 'COUNSEL-AWARENESS.md';
+const AWARENESS_FILE = 'WOOLLY-AWARENESS.md';
 
 class AwarenessCommand {
   private program: Command;
 
   constructor() {
     this.program = new Command('awareness')
-      .description('Manage AI assistant counsel awareness')
+      .description('Manage AI assistant woolly awareness')
       .addCommand(this.createStatusCommand())
       .addCommand(this.createSetupCommand())
       .addCommand(this.createUpdateCommand())
@@ -72,17 +72,17 @@ class AwarenessCommand {
     
     if (fs.existsSync(claudeMdPath)) {
       const content = fs.readFileSync(claudeMdPath, 'utf8');
-      const hasImport = content.includes('counsel/ai-awareness');
+      const hasImport = content.includes('woolly/ai-awareness');
       
       if (hasImport) {
-        console.log('✅ Claude: Configured with counsel awareness');
+        console.log('✅ Claude: Configured with woolly awareness');
       } else {
-        console.log('⚠️  Claude: CLAUDE.md exists but missing counsel import');
-        console.log(chalk.gray('   Run: counsel awareness setup --claude'));
+        console.log('⚠️  Claude: CLAUDE.md exists but missing woolly import');
+        console.log(chalk.gray('   Run: woolly awareness setup --claude'));
       }
     } else if (fs.existsSync(claudeDir)) {
       console.log('⚠️  Claude: Directory exists but CLAUDE.md not found');
-      console.log(chalk.gray('   Run: counsel awareness setup --claude'));
+      console.log(chalk.gray('   Run: woolly awareness setup --claude'));
     } else {
       console.log('ℹ️  Claude: Not detected');
     }
@@ -93,29 +93,29 @@ class AwarenessCommand {
     
     if (fs.existsSync(cursorRulesPath)) {
       const content = fs.readFileSync(cursorRulesPath, 'utf8');
-      const hasCounsel = content.toLowerCase().includes('counsel');
+      const hasCounsel = content.toLowerCase().includes('woolly');
       
       if (hasCounsel) {
-        console.log('✅ Cursor: Project configured with counsel awareness');
+        console.log('✅ Cursor: Project configured with woolly awareness');
       } else {
-        console.log('⚠️  Cursor: .cursorrules exists but missing counsel awareness');
-        console.log(chalk.gray('   Run: counsel cursor awareness'));
+        console.log('⚠️  Cursor: .cursorrules exists but missing woolly awareness');
+        console.log(chalk.gray('   Run: woolly cursor awareness'));
       }
     } else if (fs.existsSync(cursorDirPath)) {
       console.log('ℹ️  Cursor: Project has .cursor/ but no rules file');
-      console.log(chalk.gray('   Run: counsel cursor awareness'));
+      console.log(chalk.gray('   Run: woolly cursor awareness'));
     } else {
       console.log('ℹ️  Cursor: No project configuration');
-      console.log(chalk.gray('   Run: counsel cursor init'));
+      console.log(chalk.gray('   Run: woolly cursor init'));
     }
 
     // Summary
     console.log(chalk.cyan('\n📝 Summary'));
     if (awarenessExists) {
-      console.log('AI assistants can understand natural "counsel" mentions.');
-      console.log('Try saying: "counsel log this works" to test.\n');
+      console.log('AI assistants can understand natural "woolly" mentions.');
+      console.log('Try saying: "woolly log this works" to test.\n');
     } else {
-      console.log('Run ' + chalk.bold('counsel awareness setup') + ' to configure AI awareness.\n');
+      console.log('Run ' + chalk.bold('woolly awareness setup') + ' to configure AI awareness.\n');
     }
   }
 
@@ -136,7 +136,7 @@ class AwarenessCommand {
     }
 
     console.log(chalk.green('\n✅ AI awareness setup complete!'));
-    console.log('Test it by saying: "counsel log test message"\n');
+    console.log('Test it by saying: "woolly log test message"\n');
   }
 
   private ensureAwarenessFiles(): void {
@@ -149,7 +149,7 @@ class AwarenessCommand {
 
     if (fs.existsSync(sourceFile)) {
       fs.copyFileSync(sourceFile, targetFile);
-      console.log('✅ Copied awareness document to ~/.counsel/ai-awareness/');
+      console.log('✅ Copied awareness document to ~/.woolly/ai-awareness/');
     } else {
       console.log('⚠️  Source awareness file not found, creating minimal version');
       this.createMinimalAwareness(targetFile);
@@ -178,21 +178,21 @@ class AwarenessCommand {
       content = fs.readFileSync(claudeMdPath, 'utf8');
     }
 
-    const importLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md';
+    const importLine = 'import: ~/.woolly/ai-awareness/WOOLLY-AWARENESS.md';
     
-    if (content.includes(importLine) || content.includes('counsel/ai-awareness')) {
-      console.log('✅ Claude already configured with counsel awareness');
+    if (content.includes(importLine) || content.includes('woolly/ai-awareness')) {
+      console.log('✅ Claude already configured with woolly awareness');
       return;
     }
 
     // Add import
     const updatedContent = content + 
       (content && !content.endsWith('\n') ? '\n' : '') +
-      '\n# Counsel Framework Integration\n' +
+      '\n# Woolly Framework Integration\n' +
       importLine + '\n';
 
     fs.writeFileSync(claudeMdPath, updatedContent);
-    console.log('✅ Added counsel awareness to Claude configuration');
+    console.log('✅ Added woolly awareness to Claude configuration');
   }
 
   private async setupCursorProject(): Promise<void> {
@@ -201,7 +201,7 @@ class AwarenessCommand {
     // Check if we're in a project directory
     if (!fs.existsSync('package.json') && !fs.existsSync('.git')) {
       console.log('⚠️  Cursor setup requires a project directory');
-      console.log('   Navigate to your project and run: counsel cursor awareness');
+      console.log('   Navigate to your project and run: woolly cursor awareness');
       return;
     }
 
@@ -210,22 +210,22 @@ class AwarenessCommand {
       content = fs.readFileSync(cursorRulesPath, 'utf8');
     }
 
-    if (content.toLowerCase().includes('counsel framework')) {
-      console.log('✅ Cursor already configured with counsel awareness');
+    if (content.toLowerCase().includes('woolly framework')) {
+      console.log('✅ Cursor already configured with woolly awareness');
       return;
     }
 
     const cursorAwareness = `
-# Counsel Framework Awareness
+# Woolly Framework Awareness
 
-When users mention "counsel" in any form, they're referring to the Counsel Framework.
+When users mention "woolly" in any form, they're referring to the Woolly Framework.
 Understand these patterns:
-- "counsel log [anything]" = Add to current work notes
-- "counsel track [issue]" = Create debug work
-- "counsel this" = Create appropriate work
-- "counsel status" = Check work status
+- "woolly log [anything]" = Add to current work notes
+- "woolly track [issue]" = Create debug work
+- "woolly this" = Create appropriate work
+- "woolly status" = Check work status
 
-Reference: @~/.counsel/ai-awareness/COUNSEL-AWARENESS.md
+Reference: @~/.woolly/ai-awareness/WOOLLY-AWARENESS.md
 `;
 
     const updatedContent = content + 
@@ -233,7 +233,7 @@ Reference: @~/.counsel/ai-awareness/COUNSEL-AWARENESS.md
       cursorAwareness;
 
     fs.writeFileSync(cursorRulesPath, updatedContent);
-    console.log('✅ Added counsel awareness to .cursorrules');
+    console.log('✅ Added woolly awareness to .cursorrules');
   }
 
   private async updateAwareness(): Promise<void> {
@@ -271,7 +271,7 @@ Reference: @~/.counsel/ai-awareness/COUNSEL-AWARENESS.md
     const awarenessPath = path.join(AI_AWARENESS_DIR, AWARENESS_FILE);
     if (!fs.existsSync(awarenessPath)) {
       console.log('❌ Awareness file not found');
-      console.log('Run: counsel awareness setup');
+      console.log('Run: woolly awareness setup');
       return;
     }
 
@@ -281,7 +281,7 @@ Reference: @~/.counsel/ai-awareness/COUNSEL-AWARENESS.md
     const claudeMdPath = path.join(os.homedir(), '.claude', 'CLAUDE.md');
     if (fs.existsSync(claudeMdPath)) {
       const content = fs.readFileSync(claudeMdPath, 'utf8');
-      if (content.includes('counsel/ai-awareness')) {
+      if (content.includes('woolly/ai-awareness')) {
         console.log('✅ Claude is configured');
       } else {
         console.log('⚠️  Claude needs configuration');
@@ -291,31 +291,31 @@ Reference: @~/.counsel/ai-awareness/COUNSEL-AWARENESS.md
     // Test suggestions
     console.log(chalk.cyan('\n📝 Test Phrases'));
     console.log('Try these with your AI assistant:');
-    console.log('  • "counsel log fixed the bug"');
-    console.log('  • "counsel track this issue"');
-    console.log('  • "what\'s in counsel?"');
-    console.log('  • "counsel status"');
+    console.log('  • "woolly log fixed the bug"');
+    console.log('  • "woolly track this issue"');
+    console.log('  • "what\'s in woolly?"');
+    console.log('  • "woolly status"');
     
     console.log(chalk.cyan('\n✨ Expected Behavior'));
-    console.log('The AI should understand these as counsel commands');
+    console.log('The AI should understand these as woolly commands');
     console.log('without requiring slash commands or exact syntax.\n');
   }
 
   private createMinimalAwareness(targetPath: string): void {
-    const minimalContent = `# Counsel Framework AI Awareness
+    const minimalContent = `# Woolly Framework AI Awareness
 
 ## Pattern Recognition
-When users mention "counsel", they're referring to the Counsel Framework.
+When users mention "woolly", they're referring to the Woolly Framework.
 
 ### Common Patterns
-- counsel log [anything] → Add to current work notes
-- counsel track [issue] → Create debug work  
-- counsel this → Create appropriate work
-- counsel status → Check work status
-- counsel search [term] → Search all work
+- woolly log [anything] → Add to current work notes
+- woolly track [issue] → Create debug work  
+- woolly this → Create appropriate work
+- woolly status → Check work status
+- woolly search [term] → Search all work
 
 ## Context
-Maintain awareness of active counsel work in the session.
+Maintain awareness of active woolly work in the session.
 `;
     fs.writeFileSync(targetPath, minimalContent);
   }
@@ -328,7 +328,7 @@ Maintain awareness of active counsel work in the session.
 // Export register function for main CLI
 export function registerAwarenessCommands(program: Command) {
   const awarenessCmd = new Command('awareness')
-    .description('Manage AI assistant counsel awareness');
+    .description('Manage AI assistant woolly awareness');
 
   awarenessCmd
     .command('status')

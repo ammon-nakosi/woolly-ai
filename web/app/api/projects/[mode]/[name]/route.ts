@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getProject, getFileContent, getPlanStatus, updatePlanStatus, CounselMode } from '@/lib/counsel-reader';
+import { getProject, getFileContent, getPlanStatus, updatePlanStatus, CounselMode } from '@/lib/woolly-reader';
 import path from 'path';
 import os from 'os';
 
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   const { mode, name } = await params;
   const { searchParams } = new URL(request.url);
-  const projectRoot = searchParams.get('root') || process.env.COUNSEL_DIR || path.join(os.homedir(), '.counsel');
+  const projectRoot = searchParams.get('root') || process.env.COUNSEL_DIR || path.join(os.homedir(), '.woolly');
   const file = searchParams.get('file');
   
   try {
@@ -52,7 +52,7 @@ export async function PUT(
 ) {
   const { mode, name } = await params;
   const { searchParams } = new URL(request.url);
-  const projectRoot = searchParams.get('root') || process.env.COUNSEL_DIR || path.join(os.homedir(), '.counsel');
+  const projectRoot = searchParams.get('root') || process.env.COUNSEL_DIR || path.join(os.homedir(), '.woolly');
   
   try {
     const project = await getProject(projectRoot, mode as CounselMode, name);

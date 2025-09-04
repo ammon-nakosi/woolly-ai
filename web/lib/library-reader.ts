@@ -49,7 +49,7 @@ export interface Prompt {
   usage_count: number;
 }
 
-const LIBRARY_BASE = path.join(os.homedir(), '.counsel', 'library');
+const LIBRARY_BASE = path.join(os.homedir(), '.woolly', 'library');
 const RULES_DIR = path.join(LIBRARY_BASE, 'rules');
 const PROMPTS_DIR = path.join(LIBRARY_BASE, 'prompts');
 

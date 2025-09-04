@@ -30,7 +30,7 @@ const program = new Command();
 // ASCII art logo (optional)
 const logo = chalk.cyan(`
 ╔═══════════════════════════════╗
-║     COUNSEL FRAMEWORK CLI     ║
+║     WOOLLY FRAMEWORK CLI     ║
 ╚═══════════════════════════════╝
 `);
 
@@ -39,8 +39,8 @@ async function main() {
   await initializeConfig();
   
   program
-    .name('counsel')
-    .description('Counsel Framework CLI - Intelligent development workflow management')
+    .name('woolly')
+    .description('Woolly Framework CLI - Intelligent development workflow management')
     .version('1.0.0')
     .addHelpText('before', logo);
 

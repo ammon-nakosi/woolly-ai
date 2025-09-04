@@ -1,14 +1,14 @@
 #!/usr/bin/env tsx
 
 /**
- * Counsel Framework Script Template with Logging
+ * Woolly Framework Script Template with Logging
  * 
  * This template demonstrates crash-resistant logging for TypeScript/Node.js scripts.
  * The pattern is easily translatable to other languages:
  * 
  * Python equivalent:
  * - Use Python's logging module with FileHandler and StreamHandler
- * - Create logs in: os.path.expanduser("~/.counsel/scripts/{script_name}/logs/")
+ * - Create logs in: os.path.expanduser("~/.woolly/scripts/{script_name}/logs/")
  * - Use timestamp: datetime.now().isoformat().replace(":", "-")
  * 
  * Key principles for any language:
@@ -19,7 +19,7 @@
  * 5. Include context (args, cwd, user) in initial log
  */
 
-import { getCounselLogger } from './counsel-logger';
+import { getCounselLogger } from './woolly-logger';
 import { parseArgs } from 'util';
 
 // Parse command line arguments
@@ -46,8 +46,8 @@ Options:
   --limit N   Limit processing to N items
   --help      Show this help message
 
-Logs are saved to: ~/.counsel/scripts/{script-name}/logs/
-Outcomes are saved to: ~/.counsel/scripts/{script-name}/outcomes/
+Logs are saved to: ~/.woolly/scripts/{script-name}/logs/
+Outcomes are saved to: ~/.woolly/scripts/{script-name}/outcomes/
 `);
   process.exit(0);
 }

@@ -1,9 +1,9 @@
 ---
-description: "Store a rule or prompt in the counsel library for reuse"
+description: "Store a rule or prompt in the woolly library for reuse"
 argument-hint: "{rule|prompt} [brief description]"
 ---
 
-You are implementing the `/counsel-remember` command to store reusable knowledge. Parse the arguments from $ARGUMENTS as:
+You are implementing the `/woolly-remember` command to store reusable knowledge. Parse the arguments from $ARGUMENTS as:
 1. **Type**: Either `rule` or `prompt`
 2. **Description**: The rest of the arguments form the initial description
 
@@ -13,15 +13,15 @@ Validate the type is either `rule` or `prompt`. If invalid or missing:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                    COUNSEL REMEMBER
+                    WOOLLY REMEMBER
 ═══════════════════════════════════════════════════════════════
 
-Store reusable knowledge in your counsel library:
+Store reusable knowledge in your woolly library:
 
 • rule - Project guidelines, patterns, and practices
 • prompt - AI prompts for common tasks
 
-Usage: /counsel-remember {rule|prompt} [description]
+Usage: /woolly-remember {rule|prompt} [description]
 ═══════════════════════════════════════════════════════════════
 ```
 
@@ -68,13 +68,13 @@ Use the Bash tool to execute:
 
 For project rules:
 ```bash
-counsel rule create --type [type] --title "[title]" --summary "[summary]" --details "[details]" --scope project
+woolly rule create --type [type] --title "[title]" --summary "[summary]" --details "[details]" --scope project
 ```
 
-For session rules (check if you're in a counsel project first):
+For session rules (check if you're in a woolly project first):
 ```bash
-# If working on a counsel project, include the project name
-counsel rule create --type [type] --title "[title]" --summary "[summary]" --details "[details]" --scope session --project-name "[current_counsel_project_name]"
+# If working on a woolly project, include the project name
+woolly rule create --type [type] --title "[title]" --summary "[summary]" --details "[details]" --scope session --project-name "[current_counsel_project_name]"
 ```
 
 ## Step 3: Handle Prompt Creation
@@ -101,7 +101,7 @@ Should I save this prompt, or would you like me to adjust anything?
 ### 3.3 Save Prompt
 Use the Bash tool to execute:
 ```bash
-counsel prompt create --title "[title]" --description "[description]" --prompt "[prompt]" --tags "[tag1,tag2]"
+woolly prompt create --title "[title]" --description "[description]" --prompt "[prompt]" --tags "[tag1,tag2]"
 ```
 
 ## Step 4: Confirm Storage
@@ -112,12 +112,12 @@ After saving:
 
 • ID: [generated_id]
 • Scope: [scope]
-• Location: ~/.counsel/library/[rules|prompts]/
+• Location: ~/.woolly/library/[rules|prompts]/
 
 You can manage this [type] using:
-• counsel [rule|prompt] list
-• counsel [rule|prompt] show [id]
-• counsel [rule|prompt] edit [id]
+• woolly [rule|prompt] list
+• woolly [rule|prompt] show [id]
+• woolly [rule|prompt] edit [id]
 ```
 
 ## Rule Types Reference

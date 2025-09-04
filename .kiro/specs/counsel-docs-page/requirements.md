@@ -2,17 +2,17 @@
 
 ## Introduction
 
-This feature involves creating a comprehensive documentation page that describes all the features and capabilities of the Counsel Framework. The docs page should serve as the primary reference for users to understand what the framework offers, how to use it, and how different components work together. The page should be accessible, well-organized, and provide clear navigation between different feature areas.
+This feature involves creating a comprehensive documentation page that describes all the features and capabilities of the Woolly Framework. The docs page should serve as the primary reference for users to understand what the framework offers, how to use it, and how different components work together. The page should be accessible, well-organized, and provide clear navigation between different feature areas.
 
 ## Requirements
 
 ### Requirement 1
 
-**User Story:** As a developer interested in the Counsel Framework, I want to see a comprehensive overview of all features, so that I can understand the full capabilities and decide how to use the framework.
+**User Story:** As a developer interested in the Woolly Framework, I want to see a comprehensive overview of all features, so that I can understand the full capabilities and decide how to use the framework.
 
 #### Acceptance Criteria
 
-1. WHEN a user visits the docs page THEN the system SHALL display a clear overview section explaining what the Counsel Framework is
+1. WHEN a user visits the docs page THEN the system SHALL display a clear overview section explaining what the Woolly Framework is
 2. WHEN a user views the overview THEN the system SHALL show the five supported modes (feature, script, debug, review, vibe) with brief descriptions
 3. WHEN a user views the overview THEN the system SHALL display the key integrations (ChromaDB, Linear, Git) and their purposes
 4. WHEN a user views the overview THEN the system SHALL show supported AI assistants (Claude, Cursor IDE) with their support levels
@@ -26,12 +26,12 @@ This feature involves creating a comprehensive documentation page that describes
 1. WHEN a user views the setup section THEN the system SHALL display step-by-step installation instructions
 2. WHEN a user views the setup section THEN the system SHALL show all prerequisites (Node.js, Python, etc.) with version requirements
 3. WHEN a user views the setup section THEN the system SHALL provide CLI installation and linking instructions
-4. WHEN a user views the setup section THEN the system SHALL show configuration setup with counsel init
+4. WHEN a user views the setup section THEN the system SHALL show configuration setup with woolly init
 5. WHEN a user views the setup section THEN the system SHALL explain optional integrations setup (ChromaDB, Linear, Git)
 
 ### Requirement 3
 
-**User Story:** As a user learning the framework, I want to understand the different counsel modes and their workflows, so that I can choose the right mode for my work.
+**User Story:** As a user learning the framework, I want to understand the different woolly modes and their workflows, so that I can choose the right mode for my work.
 
 #### Acceptance Criteria
 
@@ -84,10 +84,10 @@ This feature involves creating a comprehensive documentation page that describes
 #### Acceptance Criteria
 
 1. WHEN a user views the architecture section THEN the system SHALL display the overall system architecture diagram
-2. WHEN a user views the architecture section THEN the system SHALL explain the storage structure at ~/.counsel/
+2. WHEN a user views the architecture section THEN the system SHALL explain the storage structure at ~/.woolly/
 3. WHEN a user views the architecture section THEN the system SHALL show how CLI, slash commands, and integrations interact
 4. WHEN a user views the architecture section THEN the system SHALL explain the philosophy behind the framework design
-5. WHEN a user views the architecture section THEN the system SHALL show the relationship between different counsel modes
+5. WHEN a user views the architecture section THEN the system SHALL show the relationship between different woolly modes
 
 ### Requirement 8
 

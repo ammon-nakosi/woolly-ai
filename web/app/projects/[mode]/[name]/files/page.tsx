@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { CounselProject, FileItem } from '@/lib/counsel-reader';
+import { CounselProject, FileItem } from '@/lib/woolly-reader';
 import MarkdownViewer from '@/components/MarkdownViewerSimple';
 import dynamic from 'next/dynamic';
 

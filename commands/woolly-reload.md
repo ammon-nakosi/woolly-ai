@@ -1,31 +1,31 @@
 ---
-description: "Load Counsel Framework context for new sessions"
+description: "Load Woolly Framework context for new sessions"
 argument-hint: "[name] (optional)"
 ---
 
-You are onboarding into the Counsel Framework, a structured approach for organized development work.
+You are onboarding into the Woolly Framework, a structured approach for organized development work.
 
 ## Load Framework Documentation
-First, read the comprehensive framework guide at `/Users/Personal/.claude/COUNSEL-FRAMEWORK.md` to understand the complete workflow and philosophy.
+First, read the comprehensive framework guide at `/Users/Personal/.claude/WOOLLY-FRAMEWORK.md` to understand the complete workflow and philosophy.
 
 ## Load Mode-Specific Guidelines
 Based on the detected mode, always load the appropriate guidelines using the CLI:
-- **Feature Mode**: `counsel guidelines feature`
-- **Script Mode**: `counsel guidelines script`  
-- **Debug/Review/Vibe/Prompt**: `counsel guidelines [mode]` as needed
+- **Feature Mode**: `woolly guidelines feature`
+- **Script Mode**: `woolly guidelines script`  
+- **Debug/Review/Vibe/Prompt**: `woolly guidelines [mode]` as needed
 
 ## CLI Integration: Smart Project Selection
 If no name provided, use intelligent discernment to select work:
 
 ### Step 0: Gather Context and Apply Discernment
 ```bash
-counsel list --recent --limit 10
+woolly list --recent --limit 10
 ```
 
 **Use discernment to narrow down the options:**
-1. Check if you're already in a counsel project directory (path contains `.counsel/`)
+1. Check if you're already in a woolly project directory (path contains `.woolly/`)
 2. Look for project names mentioned in recent conversation context
-3. Check for `.counsel-active` file indicating recently worked project
+3. Check for `.woolly-active` file indicating recently worked project
 4. Consider the mode you're likely working in based on context
 
 **Present smart selection:**
@@ -40,20 +40,20 @@ Parse the optional name from $ARGUMENTS or from user selection.
 ### Step 0.5: Quick Status Check
 If name provided, first get quick status from CLI:
 ```bash
-counsel status [name]
+woolly status [name]
 ```
 
 ### Step 1: Determine the Mode
 If a name is provided, check which directory structure it belongs to:
-- Check `~/.counsel/features/[name]/` → Feature mode
-- Check `~/.counsel/scripts/[name]/` → Script mode  
-- Check `~/.counsel/vibes/[name]/` → Vibe mode
-- Check `~/.counsel/prompts/[name]/` → Prompt mode
+- Check `~/.woolly/features/[name]/` → Feature mode
+- Check `~/.woolly/scripts/[name]/` → Script mode  
+- Check `~/.woolly/vibes/[name]/` → Vibe mode
+- Check `~/.woolly/prompts/[name]/` → Prompt mode
 
 ### Step 2: Load Mode-Specific Context
 
 #### Feature Mode
-If it's a feature (in `~/.counsel/features/[name]/`):
+If it's a feature (in `~/.woolly/features/[name]/`):
 
 **First, ensure you understand feature mode principles:**
 - Phased development approach
@@ -62,11 +62,11 @@ If it's a feature (in `~/.counsel/features/[name]/`):
 - Simplicity over complexity
 
 Load the specific feature context by reading:
-1. `~/.counsel/features/[feature-name]/context.md` - Project background and objectives
-2. `~/.counsel/features/[feature-name]/specs.md` - Understanding what needs to be built
-3. `~/.counsel/features/[feature-name]/scope_*.md` - Technical analysis and considerations  
-4. `~/.counsel/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
-5. `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
+1. `~/.woolly/features/[feature-name]/context.md` - Project background and objectives
+2. `~/.woolly/features/[feature-name]/specs.md` - Understanding what needs to be built
+3. `~/.woolly/features/[feature-name]/scope_*.md` - Technical analysis and considerations  
+4. `~/.woolly/features/[feature-name]/plan-approved.overview.md` - High-level implementation approach
+5. `~/.woolly/features/[feature-name]/plan-approved.plan-status.json` - Current progress and status
 
 Determine the current stage and recommended role based on the feature's status:
 
@@ -87,7 +87,7 @@ Then provide a summary with role recommendation:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                    COUNSEL FRAMEWORK LOADED
+                    WOOLLY FRAMEWORK LOADED
 ═══════════════════════════════════════════════════════════════
 
 Feature: [feature-name]
@@ -181,7 +181,7 @@ I'll start by gathering detailed specs. Let me ask you about:
 - Success criteria
 - Any technical constraints
 Ready to gather specs?
-(You can also run: `/counsel-feature specs [feature-name]`)
+(You can also run: `/woolly-feature specs [feature-name]`)
 
 [For Senior Engineer - Discovery Stage]:
 I'll investigate the technical implications by:
@@ -190,7 +190,7 @@ I'll investigate the technical implications by:
 - Assessing risks and complexity
 - Proposing solution approaches
 Ready to scope?
-(You can also run: `/counsel-feature scope [feature-name]`)
+(You can also run: `/woolly-feature scope [feature-name]`)
 
 [For Lead Engineer - Planning Stage]:
 I'll create the implementation plan by:
@@ -199,7 +199,7 @@ I'll create the implementation plan by:
 - Creating detailed task checklists
 - Setting up progress tracking
 Ready to plan?
-(You can also run: `/counsel-feature plan [feature-name]`)
+(You can also run: `/woolly-feature plan [feature-name]`)
 
 [For Star Engineer - Implementation Stage]:
 [If single phase in progress]:
@@ -209,7 +209,7 @@ Based on Phase [N] tasks, I'll:
 - Update status tracking after each task
 - Ensure code quality and testing
 Ready to code?
-(You can also run: `/counsel-feature code [feature-name] [phase]`)
+(You can also run: `/woolly-feature code [feature-name] [phase]`)
 
 [If tasks scattered across multiple phases]:
 I notice work has been done across multiple phases:
@@ -225,7 +225,7 @@ Next task to code: [specific task] from Phase [N]
 This fits the plan because: [explanation of how this advances the overall feature]
 
 Ready to code Phase [recommended-phase]?
-(You can also run: `/counsel-feature code [feature-name] [recommended-phase]`)
+(You can also run: `/woolly-feature code [feature-name] [recommended-phase]`)
 
 [For QA Engineer - Verification Stage]:
 I'll verify the implementation by:
@@ -234,7 +234,7 @@ I'll verify the implementation by:
 - Updating status to match reality
 - Identifying any gaps or issues
 Ready to verify?
-(You can also run: `/counsel-status-update [feature-name]`)
+(You can also run: `/woolly-status-update [feature-name]`)
 
 Ready to proceed? Let me know how you'd like to continue.
 
@@ -242,40 +242,40 @@ Ready to proceed? Let me know how you'd like to continue.
 ```
 
 #### Script Mode
-If it's a script (in `~/.counsel/scripts/[name]/`):
+If it's a script (in `~/.woolly/scripts/[name]/`):
 
 **First, load script mode guidelines:**
-- Run `counsel guidelines script` to understand production patterns
+- Run `woolly guidelines script` to understand production patterns
 - Review required features (dry-run, limits, batching, logging paths)
 - Understand architecture considerations
 
 Load the script context by reading:
-1. `~/.counsel/scripts/[name]/context.md` - Project background and objectives
-2. `~/.counsel/scripts/[name]/purpose.md` - Understanding the script's goal
-3. `~/.counsel/scripts/[name]/script.*` - The actual script implementation
-4. `~/.counsel/scripts/[name]/usage.md` - Documentation on how to use it
-5. `~/.counsel/scripts/[name]/test-results.md` - Testing documentation
+1. `~/.woolly/scripts/[name]/context.md` - Project background and objectives
+2. `~/.woolly/scripts/[name]/purpose.md` - Understanding the script's goal
+3. `~/.woolly/scripts/[name]/script.*` - The actual script implementation
+4. `~/.woolly/scripts/[name]/usage.md` - Documentation on how to use it
+5. `~/.woolly/scripts/[name]/test-results.md` - Testing documentation
 
 **Verify the script includes required features:**
 - ✓ Dry-run mode (default) and --live flag
 - ✓ --limit flag for controlled processing
 - ✓ Batch processing with delays
-- ✓ Logs saved to `~/.counsel/scripts/[name]/logs/`
-- ✓ Outcomes saved to `~/.counsel/scripts/[name]/outcomes/`
+- ✓ Logs saved to `~/.woolly/scripts/[name]/logs/`
+- ✓ Outcomes saved to `~/.woolly/scripts/[name]/outcomes/`
 - ✓ Progress tracking and clear output
 
 Then provide status and recommend next steps for enhancement or testing.
 
 #### Vibe Mode
-If it's a vibe session (in `~/.counsel/vibes/[name]/`), load the exploration context by reading:
-1. `~/.counsel/vibes/[name]/context.md` - What we're working on
-2. `~/.counsel/vibes/[name]/notes.md` - Running documentation
-3. `~/.counsel/vibes/[name]/decisions.md` - Key decisions made
+If it's a vibe session (in `~/.woolly/vibes/[name]/`), load the exploration context by reading:
+1. `~/.woolly/vibes/[name]/context.md` - What we're working on
+2. `~/.woolly/vibes/[name]/notes.md` - Running documentation
+3. `~/.woolly/vibes/[name]/decisions.md` - Key decisions made
 
 Then provide a casual summary and ask where to continue.
 
 #### Prompt Mode
-If it's a prompt session (in `~/.counsel/prompts/[name]/`):
+If it's a prompt session (in `~/.woolly/prompts/[name]/`):
 
 **First, understand prompt mode principles:**
 - Clear objectives and success criteria
@@ -284,11 +284,11 @@ If it's a prompt session (in `~/.counsel/prompts/[name]/`):
 - Performance measurement
 
 Load the prompt context by reading:
-1. `~/.counsel/prompts/[name]/context.md` - Project background and objectives
-2. `~/.counsel/prompts/[name]/prompt.md` - The actual prompt content
-3. `~/.counsel/prompts/[name]/test-cases.md` - Test scenarios and examples
-4. `~/.counsel/prompts/[name]/refinements.md` - Iteration history and improvements
-5. `~/.counsel/prompts/[name]/results.md` - Testing outcomes and effectiveness
+1. `~/.woolly/prompts/[name]/context.md` - Project background and objectives
+2. `~/.woolly/prompts/[name]/prompt.md` - The actual prompt content
+3. `~/.woolly/prompts/[name]/test-cases.md` - Test scenarios and examples
+4. `~/.woolly/prompts/[name]/refinements.md` - Iteration history and improvements
+5. `~/.woolly/prompts/[name]/results.md` - Testing outcomes and effectiveness
 
 Then provide current status and recommend next steps for prompt refinement or testing.
 
@@ -297,7 +297,7 @@ After applying discernment, if you still need user input, present a concise sele
 
 ```
 ═══════════════════════════════════════════════════════════════
-                    COUNSEL FRAMEWORK LOADED
+                    WOOLLY FRAMEWORK LOADED
 ═══════════════════════════════════════════════════════════════
 
 Based on recent activity, select a project to reload:
@@ -309,7 +309,7 @@ Based on recent activity, select a project to reload:
 Which project would you like to reload? (1-3):
 
 Or start new work with:
-/counsel-init [feature|script|debug|review|vibe] "description"
+/woolly-init [feature|script|debug|review|vibe] "description"
 
 ═══════════════════════════════════════════════════════════════
 ```
@@ -327,7 +327,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Ask clarifying questions about use cases
   - Define acceptance criteria
   - Document technical constraints
-  - Run `/counsel-feature specs [feature-name]` to formalize
+  - Run `/woolly-feature specs [feature-name]` to formalize
 - Focus on user needs and business value
 - Think about edge cases and user workflows
 
@@ -338,7 +338,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Identify potential gotchas and risks
   - Research third-party dependencies
   - Document architectural impacts
-  - Run `/counsel-feature scope [feature-name]` to capture findings
+  - Run `/woolly-feature scope [feature-name]` to capture findings
 - Analytical and thorough in investigation
 - Proposes multiple solution approaches
 
@@ -349,7 +349,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Break work into logical phases
   - Define detailed tasks for each phase
   - Set up status tracking JSON
-  - Run `/counsel-feature plan [feature-name]` to create plans
+  - Run `/woolly-feature plan [feature-name]` to create plans
 - Balances ideal solutions with practical constraints
 - Creates clear, actionable plans
 
@@ -360,7 +360,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Implement next incomplete task from checklist
   - Update status JSON as tasks complete
   - Test implementation thoroughly
-  - Run `/counsel-feature code [feature-name] [phase]` to execute
+  - Run `/woolly-feature code [feature-name] [phase]` to execute
 - Passionate about code quality and user experience
 - Updates status tracking diligently
 
@@ -371,7 +371,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Check implementation matches specs
   - Update status to reflect reality
   - Identify any gaps or issues
-  - Run `/counsel-status-update [feature-name]` to sync
+  - Run `/woolly-status-update [feature-name]` to sync
 - Detail-oriented about completeness
 - Ensures documentation is accurate
 
@@ -385,4 +385,4 @@ After assuming any role, remember:
 - Follow established patterns
 - Communicate in role-appropriate style
 
-You are now ready to work within the Counsel Framework in the appropriate role for the current stage, with full context from the relevant documents.
+You are now ready to work within the Woolly Framework in the appropriate role for the current stage, with full context from the relevant documents.

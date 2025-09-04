@@ -19,11 +19,11 @@ export class FileBasedDocumentParser {
   private counselDir: string;
 
   constructor() {
-    this.counselDir = path.join(os.homedir(), '.counsel');
+    this.counselDir = path.join(os.homedir(), '.woolly');
   }
 
   /**
-   * Scan and parse all counsel documents from file system
+   * Scan and parse all woolly documents from file system
    */
   async parseAllDocuments(): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
@@ -70,7 +70,7 @@ export class FileBasedDocumentParser {
   }
 
   /**
-   * Parse all markdown documents in a counsel work item
+   * Parse all markdown documents in a woolly work item
    */
   private async parseItemDocuments(mode: CounselMode, itemName: string, itemPath: string): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
@@ -190,7 +190,7 @@ export class FileBasedDocumentParser {
   }
 
   /**
-   * Check if counsel directory exists
+   * Check if woolly directory exists
    */
   async counselDirectoryExists(): Promise<boolean> {
     try {

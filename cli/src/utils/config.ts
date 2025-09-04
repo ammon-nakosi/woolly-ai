@@ -4,14 +4,14 @@ import fs from 'fs/promises';
 import { CounselConfig } from '../types';
 
 // Default config location
-const DEFAULT_CONFIG_PATH = path.join(os.homedir(), '.counsel', 'config.json');
+const DEFAULT_CONFIG_PATH = path.join(os.homedir(), '.woolly', 'config.json');
 
 // Cached config
 let cachedConfig: CounselConfig | null = null;
 
 /**
- * Get the counsel configuration
- * Looks in: ~/.counsel/config.json
+ * Get the woolly configuration
+ * Looks in: ~/.woolly/config.json
  */
 export const getConfig = async (): Promise<CounselConfig> => {
   if (cachedConfig) return cachedConfig;
@@ -33,7 +33,7 @@ export const getDefaultConfig = (): CounselConfig => {
   return {
     version: '1.0.0',
     
-    // User can set these in ~/.counsel/config.json
+    // User can set these in ~/.woolly/config.json
     linear: {
       apiKey: process.env.LINEAR_API_KEY || '',
       userEmail: undefined,
@@ -43,7 +43,7 @@ export const getDefaultConfig = (): CounselConfig => {
     },
     
     chromadb: {
-      path: path.join(os.homedir(), '.counsel', 'chromadb')
+      path: path.join(os.homedir(), '.woolly', 'chromadb')
     },
     
     preferences: {
@@ -122,7 +122,7 @@ export const initializeConfig = async (): Promise<void> => {
     // Config exists
   } catch {
     // Create default config
-    console.log('Creating counsel config at ~/.counsel/config.json');
+    console.log('Creating woolly config at ~/.woolly/config.json');
     
     const defaultConfig = getDefaultConfig();
     
@@ -146,7 +146,7 @@ export const initializeConfig = async (): Promise<void> => {
     await saveConfig(defaultConfig);
     
     console.log(`
-Please configure your Linear API key in ~/.counsel/config.json:
+Please configure your Linear API key in ~/.woolly/config.json:
 {
   "linear": {
     "apiKey": "lin_api_YOUR_KEY_HERE"

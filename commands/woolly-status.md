@@ -3,14 +3,14 @@ description: "Check the development status of a feature and get upcoming tasks"
 argument-hint: "feature-name"
 ---
 
-You are a project manager checking the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.counsel/features directory and ask which one to check.
+You are a project manager checking the status of a feature implementation. Parse the argument as the feature name from $ARGUMENTS. If no feature name is provided, list available features in the ~/.woolly/features directory and ask which one to check.
 
 Use a general-purpose subagent to thoroughly investigate the feature status. The subagent should do deep research into both the plan documents and the actual codebase to provide an accurate assessment.
 
 Instruct the subagent to follow this workflow to provide an accurate status report:
 
 ## 1. Read the Plan Status
-First, read the file at `~/.counsel/features/[feature-name]/plan-approved.plan-status.json` to understand the official status and phase structure.
+First, read the file at `~/.woolly/features/[feature-name]/plan-approved.plan-status.json` to understand the official status and phase structure.
 
 ## 2. Verify Implementation Status
 Cross-check the reported status by:
@@ -20,7 +20,7 @@ Cross-check the reported status by:
 - Reading commit messages if necessary to understand recent work
 
 ## 3. Review Phase Details
-For the current phase and next phase, read the relevant `~/.counsel/features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and specs.
+For the current phase and next phase, read the relevant `~/.woolly/features/[feature-name]/plan-approved.phase-[n].md` files to understand the detailed tasks and specs.
 
 ## 4. Generate Status Report
 
@@ -99,7 +99,7 @@ Always be thorough in verification - don't just trust the JSON status, actually 
 ## Task Delegation
 
 Launch a general-purpose subagent with the above instructions to perform the detailed status analysis. The subagent should:
-- Have access to read all plan documents in the ~/.counsel/features directory
+- Have access to read all plan documents in the ~/.woolly/features directory
 - Search through the codebase to verify implementation
 - Compare planned vs actual work completed
 - Return a comprehensive status report in the format specified above
@@ -111,8 +111,8 @@ Wait for the subagent to complete its analysis and then present the formatted st
 After presenting the status report, include helpful CLI commands:
 ```
 💡 CLI Commands:
-  • Quick status: counsel status [feature-name]
-  • List all work: counsel list --mode feature
-  • Search patterns: counsel search "[topic]"
-  • Check Linear tickets: counsel linear
+  • Quick status: woolly status [feature-name]
+  • List all work: woolly list --mode feature
+  • Search patterns: woolly search "[topic]"
+  • Check Linear tickets: woolly linear
 ```

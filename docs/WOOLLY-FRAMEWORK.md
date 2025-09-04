@@ -1,8 +1,8 @@
-# The Counsel Framework
+# The Woolly Framework
 
 ## Overview
 
-The Counsel Framework is a structured approach for organized development work that supports multiple modes: feature development, script creation, debugging, review processes, and vibe exploration. It guides projects through appropriate workflows using specialized slash commands and organized documentation, providing a systematic way for AI agents to collaborate on various software engineering tasks while maintaining consistency and tracking progress.
+The Woolly Framework is a structured approach for organized development work that supports multiple modes: feature development, script creation, debugging, review processes, and vibe exploration. It guides projects through appropriate workflows using specialized slash commands and organized documentation, providing a systematic way for AI agents to collaborate on various software engineering tasks while maintaining consistency and tracking progress.
 
 ## Core Philosophy
 
@@ -13,7 +13,7 @@ The framework emphasizes:
 - **Simplicity**: Choosing elegant solutions over complex engineering
 - **Verification**: Continuous validation that implementation matches plan
 
-## Counsel Modes
+## Woolly Modes
 
 The framework supports four distinct modes for different types of work:
 
@@ -40,7 +40,7 @@ The framework supports four distinct modes for different types of work:
 **Purpose**: Systematic review of code, features, or architecture  
 **Directory**: `.review/{review-name}/`  
 **Workflow**: Scope → Examine → Document → Recommend → Decide  
-**Use Cases**: Code review, PR review, security audit, reviewing completed counsel work
+**Use Cases**: Code review, PR review, security audit, reviewing completed woolly work
 
 ### 5. Vibe Mode
 **Purpose**: Flexible, exploratory work  
@@ -91,12 +91,12 @@ Project Root/
         └── decisions.md                       # Key decisions
 ```
 
-## Creating Work (`/counsel-create`)
+## Creating Work (`/woolly-create`)
 
 Start any new work with the create command:
 
 ```bash
-/counsel-create [mode] "brief description"
+/woolly-create [mode] "brief description"
 ```
 
 The command will:
@@ -105,15 +105,15 @@ The command will:
 3. Guide you to the next appropriate step
 
 Examples:
-- `/counsel-create feature "add user authentication"`
-- `/counsel-create script "automate deployment process"`
-- `/counsel-create debug "fix memory leak in chat component"`
-- `/counsel-create review "review authentication feature"`
-- `/counsel-create vibe "explore GraphQL migration"`
+- `/woolly-create feature "add user authentication"`
+- `/woolly-create script "automate deployment process"`
+- `/woolly-create debug "fix memory leak in chat component"`
+- `/woolly-create review "review authentication feature"`
+- `/woolly-create vibe "explore GraphQL migration"`
 
 ## Feature Mode Workflow
 
-### 1. Specifications Gathering (`/counsel-feature specs`)
+### 1. Specifications Gathering (`/woolly-feature specs`)
 **Purpose**: Define what needs to be built
 
 - Captures feature specifications from stakeholder input
@@ -122,7 +122,7 @@ Examples:
 - Creates structured specifications document
 - **Output**: `specs.md` with clear feature specification
 
-### 2. Scoping & Discovery (`/counsel-feature scope`)
+### 2. Scoping & Discovery (`/woolly-feature scope`)
 **Purpose**: Understand technical implications and complexity
 
 - Reviews specifications and existing codebase thoroughly
@@ -132,7 +132,7 @@ Examples:
 - Asks critical questions about implementation approach
 - **Output**: `scope_{model_name}.md` with technical analysis
 
-### 3. Planning (`/counsel-feature plan`)
+### 3. Planning (`/woolly-feature plan`)
 **Purpose**: Create detailed implementation roadmap
 
 **Phase 1: High-Level Planning**
@@ -152,7 +152,7 @@ Examples:
 - Creates JSON structure for progress tracking
 - **Output**: `plan-approved.plan-status.json`
 
-### 4. Coding (`/counsel-feature code`)
+### 4. Coding (`/woolly-feature code`)
 **Purpose**: Execute the planned work
 
 - Implements specific phase following approved plan
@@ -165,7 +165,7 @@ Examples:
 
 ### 5. Status Management
 
-#### Quick Status Check (`/counsel-status-light`)
+#### Quick Status Check (`/woolly-status-light`)
 **Purpose**: Fast overview from JSON only
 
 - Reads plan-status.json without verification
@@ -174,7 +174,7 @@ Examples:
 - No codebase validation
 - **Speed**: Instant response
 
-#### Full Status Verification (`/counsel-status`)
+#### Full Status Verification (`/woolly-status`)
 **Purpose**: Comprehensive status with validation
 
 - Launches subagent for deep investigation
@@ -183,7 +183,7 @@ Examples:
 - Provides detailed progress report
 - **Accuracy**: Validates against actual code
 
-#### Status Update (`/counsel-status-update`)
+#### Status Update (`/woolly-status-update`)
 **Purpose**: Synchronize status with reality
 
 - Launches subagent to scan entire codebase
@@ -283,7 +283,7 @@ The framework leverages specialized subagents for complex tasks:
 
 ## Success Criteria
 
-A well-executed Counsel workflow results in:
+A well-executed Woolly workflow results in:
 1. Clear specifications understood by all parties
 2. Thorough scoping preventing surprises during coding
 3. Practical plans that balance ideal and pragmatic approaches
@@ -297,21 +297,21 @@ A well-executed Counsel workflow results in:
 
 Begin any type of work with:
 ```bash
-/counsel-create [mode] "description"
+/woolly-create [mode] "description"
 ```
 
 Where mode is one of:
 - `feature` - For new features requiring full development lifecycle
 - `script` - For automation scripts and utilities
 - `debug` - For systematic debugging of issues
-- `review` - For reviewing code, PRs, or counsel work
+- `review` - For reviewing code, PRs, or woolly work
 - `vibe` - For exploratory work and research
 
 ### Continuing Existing Work
 
 Load context for any existing work:
 ```bash
-/counsel-reload [name]
+/woolly-reload [name]
 ```
 
 This will:
@@ -324,30 +324,30 @@ This will:
 
 ```bash
 # Start a new feature
-/counsel-create feature "add dark mode"
+/woolly-create feature "add dark mode"
 # → Creates .features/dark-mode/
 
 # Gather specifications
-/counsel-feature specs dark-mode
+/woolly-feature specs dark-mode
 
 # Technical scoping
-/counsel-feature scope dark-mode
+/woolly-feature scope dark-mode
 
 # Create implementation plan
-/counsel-feature plan dark-mode
+/woolly-feature plan dark-mode
 
 # Code Phase 1
-/counsel-feature code dark-mode 1
+/woolly-feature code dark-mode 1
 
 # Check status anytime
-/counsel-status dark-mode
+/woolly-status dark-mode
 ```
 
 ### Quick Script Example
 
 ```bash
 # Start a new script
-/counsel-create script "database backup automation"
+/woolly-create script "database backup automation"
 # → Creates .scripts/db-backup/
 # → Guides through script definition and implementation
 ```
@@ -356,7 +356,7 @@ This will:
 
 ```bash
 # Start debugging an issue
-/counsel-create debug "users reporting slow page loads"
+/woolly-create debug "users reporting slow page loads"
 # → Creates .debug/slow-page-loads/
 # → Begins systematic investigation
 ```
@@ -365,12 +365,12 @@ This will:
 
 ```bash
 # Review completed feature
-/counsel-create review "review dark mode feature"
+/woolly-create review "review dark mode feature"
 # → Creates .review/dark-mode-review/
 # → Can review feature:dark-mode or external PR
 
 # Review external code
-/counsel-create review "security audit of API"
+/woolly-create review "security audit of API"
 # → Creates .review/api-security-audit/
 # → Systematic security review
 ```
@@ -379,7 +379,7 @@ This will:
 
 ```bash
 # Start exploratory work
-/counsel-create vibe "research new testing strategies"
+/woolly-create vibe "research new testing strategies"
 # → Creates .vibe/testing-strategies/
 # → Simple "Where should we start?"
 ```

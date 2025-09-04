@@ -9,11 +9,11 @@ const chalk = require('chalk');
 const ora = require('ora');
 const inquirer = require('inquirer');
 
-const COUNSEL_DIR = path.join(os.homedir(), '.counsel');
+const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
 
 class CounselSetup {
   async run() {
-    console.log(chalk.bold.cyan('\n🎯 Counsel Framework Setup\n'));
+    console.log(chalk.bold.cyan('\n🎯 Woolly Framework Setup\n'));
     
     // Check Node version
     this.checkNodeVersion();
@@ -21,7 +21,7 @@ class CounselSetup {
     // Install dependencies first
     await this.installDependencies();
     
-    // Create counsel directories
+    // Create woolly directories
     await this.createDirectories();
     
     // Check Python and setup ChromaDB
@@ -46,15 +46,15 @@ class CounselSetup {
     // Verify ChromaDB setup
     await this.verifySetup();
     
-    console.log(chalk.green('\n✅ Counsel Framework setup complete!\n'));
+    console.log(chalk.green('\n✅ Woolly Framework setup complete!\n'));
     console.log(chalk.cyan('Next steps:'));
-    console.log('  1. Run ' + chalk.bold('counsel init') + ' to configure your settings');
-    console.log('  2. Start ChromaDB: ' + chalk.bold('counsel chromadb start'));
-    console.log('  3. AI assistants are ' + chalk.green('counsel-aware') + '!');
-    console.log('     - Claude: ' + chalk.green('✓') + ' Ready (try "counsel log test")');
-    console.log('     - Cursor: Run ' + chalk.bold('counsel cursor init') + ' in your project');
-    console.log('  4. Create your first counsel work: ' + chalk.bold('/counsel-create feature "your feature"'));
-    console.log('\nDocumentation: https://github.com/ammon-nakosi/counsel-framework');
+    console.log('  1. Run ' + chalk.bold('woolly init') + ' to configure your settings');
+    console.log('  2. Start ChromaDB: ' + chalk.bold('woolly chromadb start'));
+    console.log('  3. AI assistants are ' + chalk.green('woolly-aware') + '!');
+    console.log('     - Claude: ' + chalk.green('✓') + ' Ready (try "woolly log test")');
+    console.log('     - Cursor: Run ' + chalk.bold('woolly cursor init') + ' in your project');
+    console.log('  4. Create your first woolly work: ' + chalk.bold('/woolly-create feature "your feature"'));
+    console.log('\nDocumentation: https://github.com/ammon-nakosi/woolly-framework');
   }
   
   checkNodeVersion() {
@@ -98,7 +98,7 @@ class CounselSetup {
   }
   
   async createDirectories() {
-    const spinner = ora('Creating counsel directories...').start();
+    const spinner = ora('Creating woolly directories...').start();
     
     const dirs = [
       COUNSEL_DIR,
@@ -119,7 +119,7 @@ class CounselSetup {
       }
     }
     
-    spinner.succeed('Counsel directories created');
+    spinner.succeed('Woolly directories created');
   }
   
   async setupPython() {
@@ -231,7 +231,7 @@ import sys
 from pathlib import Path
 
 # Add ChromaDB to path
-sys.path.insert(0, str(Path.home() / '.counsel'))
+sys.path.insert(0, str(Path.home() / '.woolly'))
 
 def start_chromadb():
     """Start ChromaDB server"""
@@ -240,7 +240,7 @@ def start_chromadb():
     import uvicorn
     
     # Set ChromaDB persistent directory
-    persist_directory = Path.home() / '.counsel' / 'chromadb'
+    persist_directory = Path.home() / '.woolly' / 'chromadb'
     persist_directory.mkdir(exist_ok=True)
     
     # Configure ChromaDB
@@ -273,7 +273,7 @@ if __name__ == "__main__":
     
     // Create convenience shell script that uses venv
     const shellScript = `#!/bin/bash
-# ChromaDB server for Counsel Framework
+# ChromaDB server for Woolly Framework
 # Uses Python from virtual environment
 ${this.venvPython} ${scriptPath}
 `;
@@ -309,7 +309,7 @@ ${this.venvPython} ${scriptPath}
           minComplexity: 'medium'
         }
       },
-      initialized: false, // Will be set to true after counsel init
+      initialized: false, // Will be set to true after woolly init
       createdAt: new Date().toISOString()
     };
     
@@ -335,17 +335,17 @@ ${this.venvPython} ${scriptPath}
       fs.mkdirSync(claudeCommandsDir, { recursive: true });
     }
     
-    // Check for existing counsel commands in Claude's commands directory
+    // Check for existing woolly commands in Claude's commands directory
     const existingFiles = fs.existsSync(claudeCommandsDir) 
-      ? fs.readdirSync(claudeCommandsDir).filter(f => f.startsWith('counsel-'))
+      ? fs.readdirSync(claudeCommandsDir).filter(f => f.startsWith('woolly-'))
       : [];
     
     if (existingFiles.length > 0) {
-      // Found existing counsel commands, ask to overwrite
+      // Found existing woolly commands, ask to overwrite
       const customCommands = existingFiles.filter(f => f.includes('-custom'));
       const standardCommands = existingFiles.filter(f => !f.includes('-custom'));
       
-      console.log(chalk.yellow(`\nFound ${existingFiles.length} existing counsel commands:`));
+      console.log(chalk.yellow(`\nFound ${existingFiles.length} existing woolly commands:`));
       if (standardCommands.length > 0) {
         console.log(chalk.gray(`  - ${standardCommands.length} standard commands`));
       }
@@ -357,15 +357,15 @@ ${this.venvPython} ${scriptPath}
         {
           type: 'confirm',
           name: 'overwrite',
-          message: 'Update counsel commands? (custom commands will be preserved)',
+          message: 'Update woolly commands? (custom commands will be preserved)',
           default: true
         }
       ]);
       
       if (overwrite) {
-        const spinner = ora('Updating counsel commands...').start();
+        const spinner = ora('Updating woolly commands...').start();
         
-        // Remove all counsel- commands that don't have -custom in the name
+        // Remove all woolly- commands that don't have -custom in the name
         let removed = 0;
         for (const file of standardCommands) {
           const filePath = path.join(claudeCommandsDir, file);
@@ -373,9 +373,9 @@ ${this.venvPython} ${scriptPath}
           removed++;
         }
         
-        // Copy all new counsel commands from the commands directory
+        // Copy all new woolly commands from the commands directory
         const commandsDir = path.join(__dirname, '..', 'commands');
-        const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
+        const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('woolly-'));
         
         let copied = 0;
         for (const file of counselCommands) {
@@ -385,16 +385,16 @@ ${this.venvPython} ${scriptPath}
           copied++;
         }
         
-        spinner.succeed(`Updated counsel commands (removed ${removed}, added ${copied}, preserved ${customCommands.length} custom)`);
+        spinner.succeed(`Updated woolly commands (removed ${removed}, added ${copied}, preserved ${customCommands.length} custom)`);
       } else {
-        console.log(chalk.gray('Skipped updating counsel commands'));
+        console.log(chalk.gray('Skipped updating woolly commands'));
       }
     } else {
-      // No existing counsel commands, just copy them all
-      const spinner = ora('Installing counsel slash commands...').start();
+      // No existing woolly commands, just copy them all
+      const spinner = ora('Installing woolly slash commands...').start();
       
       const commandsDir = path.join(__dirname, '..', 'commands');
-      const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('counsel-'));
+      const counselCommands = fs.readdirSync(commandsDir).filter(f => f.startsWith('woolly-'));
       
       let copied = 0;
       for (const file of counselCommands) {
@@ -404,7 +404,7 @@ ${this.venvPython} ${scriptPath}
         copied++;
       }
       
-      spinner.succeed(`Installed ${copied} counsel slash commands`);
+      spinner.succeed(`Installed ${copied} woolly slash commands`);
     }
   }
   
@@ -416,8 +416,8 @@ const path = require('path');
 const os = require('os');
 
 const command = process.argv[2];
-const scriptPath = path.join(os.homedir(), '.counsel', 'bin', 'chromadb-server.py');
-const venvPython = path.join(os.homedir(), '.counsel', 'venv', 'bin', 'python');
+const scriptPath = path.join(os.homedir(), '.woolly', 'bin', 'chromadb-server.py');
+const venvPython = path.join(os.homedir(), '.woolly', 'venv', 'bin', 'python');
 
 if (command === 'start') {
   console.log('Starting ChromaDB server...');
@@ -433,11 +433,11 @@ if (command === 'start') {
 } else if (command === 'stop') {
   console.log('To stop ChromaDB, press Ctrl+C in the terminal where it\\'s running');
 } else {
-  console.log('Usage: counsel chromadb [start|stop]');
+  console.log('Usage: woolly chromadb [start|stop]');
 }
 `;
     
-    const chromadbCmdPath = path.join(__dirname, '..', 'cli', 'bin', 'counsel-chromadb');
+    const chromadbCmdPath = path.join(__dirname, '..', 'cli', 'bin', 'woolly-chromadb');
     fs.writeFileSync(chromadbCmdPath, chromadbCommand);
     fs.chmodSync(chromadbCmdPath, '755');
   }
@@ -480,10 +480,10 @@ if (command === 'start') {
     const spinner = ora('Setting up AI awareness...').start();
     
     try {
-      // Copy AI instructions document to ~/.counsel/ai-awareness/
-      const sourceAwareness = path.join(__dirname, '..', 'docs', 'COUNSEL-AI-INSTRUCTIONS.md');
+      // Copy AI instructions document to ~/.woolly/ai-awareness/
+      const sourceAwareness = path.join(__dirname, '..', 'docs', 'WOOLLY-AI-INSTRUCTIONS.md');
       const targetDir = path.join(COUNSEL_DIR, 'ai-awareness');
-      const targetAwareness = path.join(targetDir, 'COUNSEL-AI-INSTRUCTIONS.md');
+      const targetAwareness = path.join(targetDir, 'WOOLLY-AI-INSTRUCTIONS.md');
       
       // Ensure target directory exists
       if (!fs.existsSync(targetDir)) {
@@ -511,8 +511,8 @@ if (command === 'start') {
         }
         
         // Check if import already exists
-        const newImportLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AI-INSTRUCTIONS.md';
-        const oldImportLine = 'import: ~/.counsel/ai-awareness/COUNSEL-AWARENESS.md';
+        const newImportLine = 'import: ~/.woolly/ai-awareness/WOOLLY-AI-INSTRUCTIONS.md';
+        const oldImportLine = 'import: ~/.woolly/ai-awareness/WOOLLY-AWARENESS.md';
         const hasNewImport = claudeMdContent.includes(newImportLine);
         const hasOldImport = claudeMdContent.includes(oldImportLine);
         const hasImport = hasNewImport || hasOldImport;
@@ -521,20 +521,20 @@ if (command === 'start') {
           // Migrate from old import to new import
           const updatedContent = claudeMdContent.replace(oldImportLine, newImportLine);
           fs.writeFileSync(claudeMdPath, updatedContent);
-          spinner.succeed('AI instructions updated: Migrated to new counsel instructions file');
+          spinner.succeed('AI instructions updated: Migrated to new woolly instructions file');
         } else if (!hasImport) {
           // Add import statement
           const updatedContent = claudeMdContent + 
             (claudeMdContent && !claudeMdContent.endsWith('\n') ? '\n' : '') +
-            '\n# Counsel Framework Integration\n' +
+            '\n# Woolly Framework Integration\n' +
             newImportLine + '\n';
           
           fs.writeFileSync(claudeMdPath, updatedContent);
           
           if (isNewFile) {
-            spinner.succeed('AI instructions configured: Created CLAUDE.md with counsel instructions');
+            spinner.succeed('AI instructions configured: Created CLAUDE.md with woolly instructions');
           } else {
-            spinner.succeed('AI instructions configured: Added counsel import to CLAUDE.md');
+            spinner.succeed('AI instructions configured: Added woolly import to CLAUDE.md');
           }
         } else {
           spinner.succeed('AI instructions already configured in CLAUDE.md');
@@ -543,7 +543,7 @@ if (command === 'start') {
         // Claude not installed, but instruction files are ready
         spinner.succeed('AI instruction files prepared (Claude not detected)');
         console.log(chalk.yellow('  To enable: Add this to ~/.claude/CLAUDE.md:'));
-        console.log(chalk.gray('  import: ~/.counsel/ai-awareness/COUNSEL-AI-INSTRUCTIONS.md'));
+        console.log(chalk.gray('  import: ~/.woolly/ai-awareness/WOOLLY-AI-INSTRUCTIONS.md'));
       }
       
       // Create version file for tracking
@@ -585,7 +585,7 @@ if (command === 'start') {
         spinner.succeed('ChromaDB setup verification passed');
         console.log(chalk.green('✅ ChromaDB is ready to use'));
         console.log(chalk.gray(`   Virtual environment: ${venvPath}`));
-        console.log(chalk.gray('   Test with: counsel chromadb health'));
+        console.log(chalk.gray('   Test with: woolly chromadb health'));
         
       } catch (importError) {
         spinner.warn('ChromaDB import test failed');

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Production Script Template for Counsel Framework
+# Production Script Template for Woolly Framework
 # 
 # This template implements all required patterns from docs/SCRIPT-MODE-GUIDELINES.md
 # Features: dry-run mode, limits, batching, rate limiting, progress tracking, outcomes
@@ -119,8 +119,8 @@ Testing Progression:
   4. $0 --live --limit 100
   5. $0 --live
 
-Logs saved to: ~/.counsel/scripts/$SCRIPT_NAME/logs/
-Outcomes saved to: ~/.counsel/scripts/$SCRIPT_NAME/outcomes/
+Logs saved to: ~/.woolly/scripts/$SCRIPT_NAME/logs/
+Outcomes saved to: ~/.woolly/scripts/$SCRIPT_NAME/outcomes/
 EOF
             exit 0
             ;;
@@ -158,7 +158,7 @@ declare -a FAILED_IDS
 # ============================================================================
 
 if [ "$NO_LOG" = false ]; then
-    BASE_DIR="$HOME/.counsel/scripts/${SCRIPT_NAME}"
+    BASE_DIR="$HOME/.woolly/scripts/${SCRIPT_NAME}"
     LOG_DIR="${BASE_DIR}/logs"
     OUTCOME_DIR="${BASE_DIR}/outcomes"
     mkdir -p "$LOG_DIR" "$OUTCOME_DIR"
