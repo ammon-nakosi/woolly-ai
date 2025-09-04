@@ -113,7 +113,7 @@ Examples:
 
 ## Feature Mode Workflow
 
-### 1. Specifications Gathering (`/counsel-feature-specs`)
+### 1. Specifications Gathering (`/counsel-feature specs`)
 **Purpose**: Define what needs to be built
 
 - Captures feature specifications from stakeholder input
@@ -122,7 +122,7 @@ Examples:
 - Creates structured specifications document
 - **Output**: `specs.md` with clear feature specification
 
-### 2. Scoping & Discovery (`/counsel-feature-scope`)
+### 2. Scoping & Discovery (`/counsel-feature scope`)
 **Purpose**: Understand technical implications and complexity
 
 - Reviews specifications and existing codebase thoroughly
@@ -132,7 +132,7 @@ Examples:
 - Asks critical questions about implementation approach
 - **Output**: `scope_{model_name}.md` with technical analysis
 
-### 3. Planning (`/counsel-feature-plan`)
+### 3. Planning (`/counsel-feature plan`)
 **Purpose**: Create detailed implementation roadmap
 
 **Phase 1: High-Level Planning**
@@ -152,7 +152,7 @@ Examples:
 - Creates JSON structure for progress tracking
 - **Output**: `plan-approved.plan-status.json`
 
-### 4. Coding (`/counsel-feature-code`)
+### 4. Coding (`/counsel-feature code`)
 **Purpose**: Execute the planned work
 
 - Implements specific phase following approved plan
@@ -328,16 +328,16 @@ This will:
 # → Creates .features/dark-mode/
 
 # Gather specifications
-/counsel-feature-specs dark-mode
+/counsel-feature specs dark-mode
 
 # Technical scoping
-/counsel-feature-scope dark-mode
+/counsel-feature scope dark-mode
 
 # Create implementation plan
-/counsel-feature-plan dark-mode
+/counsel-feature plan dark-mode
 
 # Code Phase 1
-/counsel-feature-code dark-mode 1
+/counsel-feature code dark-mode 1
 
 # Check status anytime
 /counsel-status dark-mode

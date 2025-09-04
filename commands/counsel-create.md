@@ -98,6 +98,15 @@ Once the user approves or provides an alternative name, create the appropriate d
 ## Step 4: Provide Mode-Specific Next Steps
 
 ### Feature Mode
+
+First create `context.md` using the universal template, populating it with the user's description and feature-specific context.
+
+Then immediately load and follow the specifications agent:
+
+**Load Agent**: @agents/feature/specs.md
+
+After loading the agent, present:
+
 ```
 ═══════════════════════════════════════════════════════════════
                  FEATURE MODE INITIALIZED
@@ -105,26 +114,34 @@ Once the user approves or provides an alternative name, create the appropriate d
 
 Created: ~/.counsel/features/[name]/
 
-The Counsel Framework will guide you through:
-1. Specifications gathering
-2. Technical scoping
-3. Implementation plan
-4. Phased development
+───────────────────────────────────────────────────────────────
+              STARTING: SPECIFICATIONS PHASE
+───────────────────────────────────────────────────────────────
 
-Next step: Let's define the specifications
-Run: /counsel-feature-specs [name]
+I'll help you define solid specifications for this feature.
+These requirements will guide the technical scoping and 
+implementation phases that follow.
 
-💡 CLI Tips:
-  • Check status anytime: counsel status [name]
-  • Find similar features: counsel search "[topic]"
-  • List all features: counsel list --mode feature
-  • Add to index: counsel add feature [name]
+The Counsel Framework enforces structured development:
+📋 Phase 1: Specs (current) - Gathering requirements
+🔍 Phase 2: Scope - Technical discovery  
+📐 Phase 3: Plan - Implementation planning
+⚡ Phase 4: Code - Development
 
-Ready to begin?
+───────────────────────────────────────────────────────────────
+
+Let me ask you some questions to build complete specifications...
+
+[Begin requirements gathering immediately per specs.md agent]
 ═══════════════════════════════════════════════════════════════
 ```
 
-Then create `context.md` using the universal template, populating it with the user's description and feature-specific context.
+**WORKFLOW ENFORCEMENT**: 
+- You MUST immediately begin gathering requirements
+- Do NOT ask permission to start
+- Do NOT allow skipping to implementation
+- BLOCK any coding attempts until all phases complete
+- After specs are done, guide to: `/counsel-feature scope [name]`
 
 ### Script Mode
 ```

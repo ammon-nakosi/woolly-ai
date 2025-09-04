@@ -180,7 +180,8 @@ I'll start by gathering detailed specs. Let me ask you about:
 - User workflows and use cases  
 - Success criteria
 - Any technical constraints
-Then we'll formalize with: `/counsel-feature-specs [feature-name]`
+Ready to gather specs?
+(You can also run: `/counsel-feature specs [feature-name]`)
 
 [For Senior Engineer - Discovery Stage]:
 I'll investigate the technical implications by:
@@ -188,7 +189,8 @@ I'll investigate the technical implications by:
 - Identifying integration points and dependencies
 - Assessing risks and complexity
 - Proposing solution approaches
-Let's run: `/counsel-feature-scope [feature-name]`
+Ready to scope?
+(You can also run: `/counsel-feature scope [feature-name]`)
 
 [For Lead Engineer - Planning Stage]:
 I'll create the implementation plan by:
@@ -196,7 +198,8 @@ I'll create the implementation plan by:
 - Breaking work into deployable phases
 - Creating detailed task checklists
 - Setting up progress tracking
-Let's execute: `/counsel-feature-plan [feature-name]`
+Ready to plan?
+(You can also run: `/counsel-feature plan [feature-name]`)
 
 [For Star Engineer - Implementation Stage]:
 [If single phase in progress]:
@@ -205,7 +208,8 @@ Based on Phase [N] tasks, I'll:
 - Follow the approach outlined in the phase plan
 - Update status tracking after each task
 - Ensure code quality and testing
-Let's continue with: `/counsel-feature-code [feature-name] [phase]`
+Ready to code?
+(You can also run: `/counsel-feature code [feature-name] [phase]`)
 
 [If tasks scattered across multiple phases]:
 I notice work has been done across multiple phases:
@@ -220,7 +224,8 @@ Option C: Work on phases in parallel since [reason - e.g., "they're independent"
 Next task to code: [specific task] from Phase [N]
 This fits the plan because: [explanation of how this advances the overall feature]
 
-Let's proceed with: `/counsel-feature-code [feature-name] [recommended-phase]`
+Ready to code Phase [recommended-phase]?
+(You can also run: `/counsel-feature code [feature-name] [recommended-phase]`)
 
 [For QA Engineer - Verification Stage]:
 I'll verify the implementation by:
@@ -228,7 +233,8 @@ I'll verify the implementation by:
 - Validating against original specs
 - Updating status to match reality
 - Identifying any gaps or issues
-Let's sync status with: `/counsel-status-update [feature-name]`
+Ready to verify?
+(You can also run: `/counsel-status-update [feature-name]`)
 
 Ready to proceed? Let me know how you'd like to continue.
 
@@ -321,7 +327,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Ask clarifying questions about use cases
   - Define acceptance criteria
   - Document technical constraints
-  - Run `/counsel-feature-specs [feature-name]` to formalize
+  - Run `/counsel-feature specs [feature-name]` to formalize
 - Focus on user needs and business value
 - Think about edge cases and user workflows
 
@@ -332,7 +338,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Identify potential gotchas and risks
   - Research third-party dependencies
   - Document architectural impacts
-  - Run `/counsel-feature-scope [feature-name]` to capture findings
+  - Run `/counsel-feature scope [feature-name]` to capture findings
 - Analytical and thorough in investigation
 - Proposes multiple solution approaches
 
@@ -343,7 +349,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Break work into logical phases
   - Define detailed tasks for each phase
   - Set up status tracking JSON
-  - Run `/counsel-feature-plan [feature-name]` to create plans
+  - Run `/counsel-feature plan [feature-name]` to create plans
 - Balances ideal solutions with practical constraints
 - Creates clear, actionable plans
 
@@ -354,7 +360,7 @@ When assuming roles, adopt these characteristics and read these documents:
   - Implement next incomplete task from checklist
   - Update status JSON as tasks complete
   - Test implementation thoroughly
-  - Run `/counsel-feature-code [feature-name] [phase]` to execute
+  - Run `/counsel-feature code [feature-name] [phase]` to execute
 - Passionate about code quality and user experience
 - Updates status tracking diligently
 
