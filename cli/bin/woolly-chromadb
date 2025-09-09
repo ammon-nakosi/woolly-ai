@@ -4,8 +4,8 @@ const path = require('path');
 const os = require('os');
 
 const command = process.argv[2];
-const scriptPath = path.join(os.homedir(), '.counsel', 'bin', 'chromadb-server.py');
-const venvPython = path.join(os.homedir(), '.counsel', 'venv', 'bin', 'python');
+const scriptPath = path.join(os.homedir(), '.woolly', 'bin', 'chromadb-server.py');
+const venvPython = path.join(os.homedir(), '.woolly', 'venv', 'bin', 'python');
 
 if (command === 'start') {
   console.log('Starting ChromaDB server...');
@@ -21,5 +21,5 @@ if (command === 'start') {
 } else if (command === 'stop') {
   console.log('To stop ChromaDB, press Ctrl+C in the terminal where it\'s running');
 } else {
-  console.log('Usage: counsel chromadb [start|stop]');
+  console.log('Usage: woolly chromadb [start|stop]');
 }

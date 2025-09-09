@@ -125,17 +125,29 @@ class CounselSetup {
   async setupPython() {
     const spinner = ora('Checking Python installation...').start();
     
-    // Check for Python 3
+    // Check for Python 3.11 first, then fall back to other versions
     let pythonCmd = null;
     let pythonVersion = null;
     
-    for (const cmd of ['python3', 'python']) {
+    // Prioritize Python 3.11 for ChromaDB compatibility
+    for (const cmd of ['python3.11', 'python3.10', 'python3.9', 'python3', 'python']) {
       try {
         const version = execSync(`${cmd} --version`, { encoding: 'utf-8' }).trim();
         if (version.includes('Python 3.')) {
-          pythonCmd = cmd;
-          pythonVersion = version;
-          break;
+          const versionMatch = version.match(/Python 3\.(\d+)\.(\d+)/);
+          if (versionMatch) {
+            const majorVersion = parseInt(versionMatch[1]);
+            // ChromaDB doesn't support Python 3.13 yet
+            if (majorVersion === 13) {
+              spinner.text = `Found ${version} (not compatible with ChromaDB, checking for older versions...)`;
+              continue;
+            }
+            if (majorVersion >= 9 && majorVersion <= 12) {
+              pythonCmd = cmd;
+              pythonVersion = version;
+              break;
+            }
+          }
         }
       } catch (e) {
         // Continue checking
@@ -143,10 +155,11 @@ class CounselSetup {
     }
     
     if (!pythonCmd) {
-      spinner.fail('Python 3 is not installed');
-      console.log(chalk.red('\n❌ Python 3.8+ is required for ChromaDB'));
-      console.log(chalk.yellow('Please install Python from: https://www.python.org/downloads/'));
-      console.log(chalk.gray('After installing Python, run this setup again'));
+      spinner.fail('Compatible Python version not found');
+      console.log(chalk.red('\n❌ Python 3.9-3.12 is required for ChromaDB'));
+      console.log(chalk.red('   Python 3.13 is not yet supported by ChromaDB'));
+      console.log(chalk.yellow('Please install Python 3.11 from: https://www.python.org/downloads/'));
+      console.log(chalk.gray('After installing Python 3.11, run this setup again'));
       process.exit(1);
     }
     
