@@ -113,6 +113,10 @@ export function registerCloseCommands(program: Command) {
           spinner.succeed('Generated analysis from artifacts');
         }
         
+        // Note if worktree exists (but don't remove it)
+        const projectMetadata = await readMetadata(projectPath);
+        const hasWorktree = projectMetadata && (projectMetadata as any).worktree;
+        
         // Close the project immediately
         const closedAt = new Date().toISOString();
         await updateMetadata(projectPath, { 
@@ -138,6 +142,13 @@ export function registerCloseCommands(program: Command) {
         await indexRetrospective(name, mode, projectPath, analysis, null);
         
         spinner.succeed('Project closed and retrospective saved');
+        
+        // Inform about worktree if it exists
+        if (hasWorktree) {
+          const worktreeInfo = (projectMetadata as any).worktree;
+          console.log(chalk.yellow(`\nNote: Git worktree still exists at ${worktreeInfo.path}`));
+          console.log(chalk.gray(`To remove it: git worktree remove ${worktreeInfo.path}`));
+        }
         
         // Only show summary if using programmatic analysis (deprecated)
         if (!options.aiWentWell && !options.aiImprove && !options.aiAvoid) {

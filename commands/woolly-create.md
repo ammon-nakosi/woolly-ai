@@ -90,16 +90,37 @@ Would you like to:
 
 ## Step 3: Create Directory Structure
 
-Once the user approves or provides an alternative name, create the appropriate directory:
-- `~/.woolly/features/[name]/` for feature mode
-- `~/.woolly/scripts/[name]/` for script mode
-- `~/.woolly/vibes/[name]/` for vibe mode
+Once the user approves or provides an alternative name, use the CLI to create the directory and initial files:
+
+```bash
+woolly create [mode] [name] "[description]"
+```
+
+This creates:
+- `~/.woolly/[mode]s/[name]/` directory
+- `context.md` with the initial query
+- `metadata.json` with project metadata
+
+## Step 3.5: Check for Worktree Request (Optional)
+
+Check if "worktree" appears anywhere in `$ARGUMENTS` (case-insensitive):
+
+If "worktree" is mentioned:
+```bash
+woolly worktree [mode]-[name]
+```
+
+This will:
+- Create a git worktree at `../[mode]-[name]/`
+- Copy environment files (.env, .env.local, etc.)
+- Show setup instructions with the appropriate install command
+- Update metadata.json with worktree information
 
 ## Step 4: Provide Mode-Specific Next Steps
 
 ### Feature Mode
 
-First create `context.md` using the universal template, populating it with the user's description and feature-specific context.
+Read the `context.md` that was created by the CLI and enhance it with additional context gathered from the user.
 
 Then immediately load and follow the specifications agent:
 
@@ -160,7 +181,7 @@ Let me help you define this script. I'll need to understand:
 Tell me about the script's purpose:
 ```
 
-Then create both `context.md` using the universal template and `purpose.md` with the user's responses.
+Read and enhance the `context.md` that was created by the CLI with the user's responses. Also create `purpose.md` with the detailed specifications.
 
 **Before coding, consider asking 2-3 relevant architecture questions:**
 
@@ -191,7 +212,7 @@ Then begin coding.
 - Testing progression: dry-run with small limit → dry-run with larger limit → live with small limit → full production
 
 ### Vibe Mode
-Since vibe mode auto-generates the name, the flow is streamlined. After creating the directory and context.md, read the context to extract potential approaches, then present specific options:
+Since vibe mode auto-generates the name, the flow is streamlined. Read the `context.md` that was created by the CLI to understand the initial query, then present specific options based on it:
 
 ```
 ═══════════════════════════════════════════════════════════════
@@ -206,7 +227,9 @@ Based on your description, I see a few key areas to explore:
 2. **[Approach 2]** - [Brief description from context]  
 3. **[Approach 3]** - [Brief description from context]
 
-Which of these would you like to dive into first, or is there another angle you'd prefer to explore?
+**Recommended starting point**: Option 1 - [reason why this makes sense to start with]
+
+Would you like to start with the recommended approach, or prefer a different angle?
 ```
 
 **Vibe mode file management:**

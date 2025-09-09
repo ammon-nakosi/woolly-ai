@@ -24,6 +24,8 @@ import { registerContextCommands } from './commands/context';
 import { registerRuleCommands } from './commands/rule';
 import { registerPromptCommands } from './commands/prompt';
 import { registerToolCommands } from './commands/tool';
+import { registerCreateCommands } from './commands/create';
+import { registerWorktreeCommands } from './commands/worktree';
 
 const program = new Command();
 
@@ -51,6 +53,7 @@ async function main() {
   registerChromaDBCommands(program);
   registerCloseCommands(program);
   registerContextCommands(program);
+  registerCreateCommands(program);
   registerGuidelinesCommand(program);
   registerIndexCommands(program);
   registerLinearCommands(program);
@@ -66,6 +69,7 @@ async function main() {
   registerRuleCommands(program);
   registerPromptCommands(program);
   registerToolCommands(program);
+  registerWorktreeCommands(program);
 
   // Global options
   program
