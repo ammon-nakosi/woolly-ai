@@ -37,6 +37,9 @@ class CounselSetup {
     // Create CLI commands
     await this.createCLICommands();
     
+    // Install woolly CLI globally
+    await this.installCLIGlobally();
+    
     // Install web dependencies
     await this.installWebDependencies();
     
@@ -46,14 +49,54 @@ class CounselSetup {
     // Verify ChromaDB setup
     await this.verifySetup();
     
+    // Print setup summary
     console.log(chalk.green('\n✅ Woolly Framework setup complete!\n'));
-    console.log(chalk.cyan('Next steps:'));
-    console.log('  1. Run ' + chalk.bold('woolly init') + ' to configure your settings');
-    console.log('  2. Start ChromaDB: ' + chalk.bold('woolly chromadb start'));
-    console.log('  3. AI assistants are ' + chalk.green('woolly-aware') + '!');
-    console.log('     - Claude: ' + chalk.green('✓') + ' Ready (try "woolly log test")');
-    console.log('     - Cursor: Run ' + chalk.bold('woolly cursor init') + ' in your project');
-    console.log('  4. Create your first woolly work: ' + chalk.bold('/woolly-create feature "your feature"'));
+    
+    // Check what was successfully installed
+    const venvPath = path.join(COUNSEL_DIR, 'venv');
+    const pythonPath = path.join(venvPath, 'bin', 'python');
+    const hasChromaDB = fs.existsSync(pythonPath) && (() => {
+      try {
+        execSync(`${pythonPath} -c "import chromadb"`, { stdio: 'pipe' });
+        return true;
+      } catch {
+        return false;
+      }
+    })();
+    
+    const woollyAvailable = (() => {
+      try {
+        execSync('which woolly', { stdio: 'pipe' });
+        return true;
+      } catch {
+        return false;
+      }
+    })();
+    
+    console.log(chalk.cyan('Setup Summary:'));
+    console.log('  ' + (woollyAvailable ? chalk.green('✓') : chalk.yellow('⚠')) + ' Woolly CLI: ' + 
+                (woollyAvailable ? 'Installed globally' : 'Run "cd cli && npm link" to install'));
+    console.log('  ' + (hasChromaDB ? chalk.green('✓') : chalk.yellow('⚠')) + ' ChromaDB: ' + 
+                (hasChromaDB ? 'Ready' : 'Manual installation required (see instructions above)'));
+    console.log('  ' + chalk.green('✓') + ' AI Integration: Claude is woolly-aware');
+    
+    console.log(chalk.cyan('\nNext steps:'));
+    if (woollyAvailable) {
+      console.log('  1. Run ' + chalk.bold('woolly init') + ' to configure your settings');
+      if (hasChromaDB) {
+        console.log('  2. Start ChromaDB: ' + chalk.bold('woolly chromadb start'));
+      } else {
+        console.log('  2. Install ChromaDB manually (see instructions above)');
+      }
+      console.log('  3. Create your first woolly work: ' + chalk.bold('/woolly-create feature "your feature"'));
+    } else {
+      console.log('  1. Install woolly CLI: ' + chalk.bold('cd cli && npm link'));
+      console.log('  2. Configure settings: ' + chalk.bold('woolly init'));
+      if (!hasChromaDB) {
+        console.log('  3. Install ChromaDB manually (see instructions above)');
+      }
+    }
+    
     console.log('\nDocumentation: https://github.com/ammon-nakosi/woolly-framework');
   }
   
@@ -198,6 +241,7 @@ class CounselSetup {
         spinner.fail('Failed to create virtual environment');
         console.log(chalk.red('Could not create Python virtual environment'));
         console.log(chalk.yellow('Please ensure Python venv module is installed'));
+        console.log(chalk.gray('Try: apt-get install python3-venv (Ubuntu) or brew install python@3 (macOS)'));
         process.exit(1);
       }
     }
@@ -208,20 +252,109 @@ class CounselSetup {
       ? path.join(venvPath, 'Scripts', 'pip')
       : path.join(venvPath, 'bin', 'pip');
     
-    // Install/upgrade ChromaDB in virtual environment
-    spinner.text = 'Installing ChromaDB in virtual environment...';
+    // First, ensure pip itself is up to date
+    spinner.text = 'Updating pip in virtual environment...';
     try {
-      execSync(`${pipPath} install --upgrade chromadb --quiet`, { 
-        stdio: 'ignore',
+      execSync(`${pipPath} install --upgrade pip`, {
+        stdio: 'pipe',
         encoding: 'utf-8'
       });
-      spinner.succeed('ChromaDB installed successfully in virtual environment');
-    } catch (error) {
-      spinner.fail('Failed to install ChromaDB');
-      console.log(chalk.yellow('\nPlease install ChromaDB manually:'));
-      console.log(chalk.gray(`  source ${venvPath}/bin/activate`));
-      console.log(chalk.gray(`  pip install chromadb`));
-      process.exit(1);
+    } catch (pipError) {
+      // Not critical if pip upgrade fails, continue
+      console.log(chalk.yellow('⚠️  Could not upgrade pip, continuing with current version'));
+    }
+    
+    // Install/upgrade ChromaDB in virtual environment
+    spinner.text = 'Installing ChromaDB (this may take a minute)...';
+    
+    // Try multiple installation strategies
+    const installStrategies = [
+      {
+        name: 'standard install',
+        command: `${pipPath} install chromadb`,
+        description: 'Installing with standard method'
+      },
+      {
+        name: 'upgrade install',
+        command: `${pipPath} install --upgrade chromadb`,
+        description: 'Attempting upgrade installation'
+      },
+      {
+        name: 'no-cache install',
+        command: `${pipPath} install --no-cache-dir chromadb`,
+        description: 'Installing without pip cache'
+      }
+    ];
+    
+    let installed = false;
+    let lastError = null;
+    
+    for (const strategy of installStrategies) {
+      try {
+        spinner.text = `${strategy.description}...`;
+        
+        // Use 'pipe' to capture output, but print errors if they occur
+        const output = execSync(strategy.command, {
+          encoding: 'utf-8',
+          stdio: 'pipe',
+          timeout: 120000 // 2 minute timeout
+        });
+        
+        // If we get here, installation succeeded
+        installed = true;
+        spinner.succeed('ChromaDB installed successfully in virtual environment');
+        break;
+        
+      } catch (error) {
+        lastError = error;
+        
+        // Check for specific error patterns
+        if (error.message && error.message.includes('Microsoft Visual C++')) {
+          spinner.fail('ChromaDB installation requires Microsoft Visual C++ Build Tools');
+          console.log(chalk.yellow('\n📦 Windows users need additional tools:'));
+          console.log(chalk.gray('1. Download Visual Studio Build Tools:'));
+          console.log(chalk.blue('   https://visualstudio.microsoft.com/visual-cpp-build-tools/'));
+          console.log(chalk.gray('2. Install "Desktop development with C++" workload'));
+          console.log(chalk.gray('3. Restart and run setup again\n'));
+          process.exit(1);
+        }
+        
+        // Continue to next strategy
+        continue;
+      }
+    }
+    
+    if (!installed) {
+      spinner.fail('Failed to install ChromaDB after multiple attempts');
+      
+      // Show the actual error to help with debugging
+      if (lastError && lastError.stderr) {
+        console.log(chalk.red('\n❌ Installation Error Details:'));
+        console.log(chalk.gray(lastError.stderr.slice(-500))); // Show last 500 chars of error
+      }
+      
+      // Provide helpful context based on Python version
+      const pythonVersion = this.pythonCmd && execSync(`${this.pythonCmd} --version`, { encoding: 'utf-8' }).trim();
+      if (pythonVersion && pythonVersion.includes('3.13')) {
+        console.log(chalk.yellow('\n⚠️  Python 3.13 detected - this is a very new version'));
+        console.log(chalk.gray('ChromaDB may not yet be fully compatible with Python 3.13'));
+        console.log(chalk.gray('Consider using Python 3.11 or 3.12 for better compatibility\n'));
+      }
+      
+      console.log(chalk.yellow('\n📝 Manual installation steps:'));
+      console.log(chalk.gray('1. Activate the virtual environment:'));
+      console.log(chalk.cyan(`   source ${venvPath}/bin/activate`));
+      console.log(chalk.gray('2. Try installing with verbose output to see the issue:'));
+      console.log(chalk.cyan('   pip install chromadb -v'));
+      console.log(chalk.gray('3. If that fails, try with Python 3.11:'));
+      console.log(chalk.cyan('   python3.11 -m venv ~/.woolly/venv'));
+      console.log(chalk.cyan('   source ~/.woolly/venv/bin/activate'));
+      console.log(chalk.cyan('   pip install chromadb\n'));
+      
+      // Don't exit immediately - mark as warning instead
+      console.log(chalk.yellow('⚠️  Continuing setup without ChromaDB...'));
+      console.log(chalk.gray('The framework will work but search functionality will be limited\n'));
+      return; // Continue setup instead of exiting
     }
     
     // Store venv paths for later use
@@ -455,6 +588,53 @@ if (command === 'start') {
     fs.chmodSync(chromadbCmdPath, '755');
   }
   
+  async installCLIGlobally() {
+    const spinner = ora('Installing woolly CLI globally...').start();
+    const cliPath = path.join(process.cwd(), 'cli');
+    
+    try {
+      // First, ensure CLI is built
+      spinner.text = 'Building CLI...';
+      execSync('npm run build', {
+        cwd: cliPath,
+        stdio: 'pipe',
+        encoding: 'utf-8'
+      });
+      
+      // Now run npm link to make it globally available
+      spinner.text = 'Making woolly command globally available...';
+      execSync('npm link', {
+        cwd: cliPath,
+        stdio: 'pipe',
+        encoding: 'utf-8'
+      });
+      
+      // Verify the command is available
+      try {
+        const woollyVersion = execSync('woolly --version', {
+          encoding: 'utf-8',
+          stdio: 'pipe'
+        }).trim();
+        
+        spinner.succeed(`Woolly CLI installed globally (${woollyVersion})`);
+        console.log(chalk.gray('   Command available: woolly'));
+      } catch (verifyError) {
+        // Command may not be in PATH yet
+        spinner.succeed('Woolly CLI linked successfully');
+        console.log(chalk.yellow('   Note: You may need to restart your terminal for the woolly command to work'));
+      }
+      
+    } catch (error) {
+      spinner.warn('Could not install woolly CLI globally');
+      console.log(chalk.yellow('\nTo install woolly CLI manually:'));
+      console.log(chalk.gray('  cd cli && npm link'));
+      console.log(chalk.gray('\nOr, if you have permission issues:'));
+      console.log(chalk.gray('  cd cli && sudo npm link'));
+      console.log(chalk.gray('\nAlternatively, use npx:'));
+      console.log(chalk.gray('  npx woolly [command]'));
+    }
+  }
+  
   async installWebDependencies() {
     const webPath = path.join(__dirname, '..', 'web');
     
@@ -571,7 +751,7 @@ if (command === 'start') {
   }
   
   async verifySetup() {
-    const spinner = ora('Verifying ChromaDB setup...').start();
+    const spinner = ora('Verifying setup...').start();
     
     try {
       // Check if Python venv was created successfully
@@ -582,35 +762,45 @@ if (command === 'start') {
         : path.join(venvPath, 'bin', 'python');
       
       if (!fs.existsSync(pythonPath)) {
-        spinner.warn('Python virtual environment verification failed');
-        console.log(chalk.yellow('⚠️  Python venv may not be set up correctly'));
-        console.log(chalk.gray('This may cause issues with ChromaDB server startup'));
+        spinner.warn('Python virtual environment not found');
+        console.log(chalk.yellow('⚠️  Python venv was not created'));
+        console.log(chalk.gray('ChromaDB features will not be available'));
+        console.log(chalk.gray('The framework will still work for other features'));
         return;
       }
       
       // Test ChromaDB import
+      spinner.text = 'Verifying ChromaDB installation...';
       try {
-        execSync(`${pythonPath} -c "import chromadb; print('ChromaDB import successful')"`, { 
-          stdio: 'pipe', 
-          encoding: 'utf-8' 
-        });
+        const versionCheck = execSync(
+          `${pythonPath} -c "import chromadb; print(f'ChromaDB version: {chromadb.__version__}')"`, 
+          { 
+            stdio: 'pipe', 
+            encoding: 'utf-8',
+            timeout: 10000 // 10 second timeout
+          }
+        ).trim();
         
-        spinner.succeed('ChromaDB setup verification passed');
+        spinner.succeed('Setup verification passed');
         console.log(chalk.green('✅ ChromaDB is ready to use'));
+        console.log(chalk.gray(`   ${versionCheck}`));
         console.log(chalk.gray(`   Virtual environment: ${venvPath}`));
-        console.log(chalk.gray('   Test with: woolly chromadb health'));
+        console.log(chalk.gray('   Start server: woolly chromadb start'));
         
       } catch (importError) {
-        spinner.warn('ChromaDB import test failed');
-        console.log(chalk.yellow('⚠️  ChromaDB may not be installed correctly in the virtual environment'));
-        console.log(chalk.gray('You can still use the framework, but search functionality may be limited'));
-        console.log(chalk.gray('To fix: Re-run setup or install ChromaDB manually'));
+        spinner.warn('ChromaDB not installed');
+        console.log(chalk.yellow('\n⚠️  ChromaDB is not installed in the virtual environment'));
+        console.log(chalk.gray('The framework will work, but with limited search functionality'));
+        console.log(chalk.gray('\nTo enable ChromaDB features:'));
+        console.log(chalk.cyan(`  source ${venvPath}/bin/activate`));
+        console.log(chalk.cyan('  pip install chromadb'));
+        console.log(chalk.gray('\nFor Python 3.13 users, consider using Python 3.11 or 3.12'));
       }
       
     } catch (error) {
       spinner.warn('Setup verification encountered issues');
-      console.log(chalk.yellow('⚠️  Some components may not be configured correctly'));
-      console.log(chalk.gray('The framework should still work, but you may need manual configuration'));
+      console.log(chalk.yellow('⚠️  Some components may need manual configuration'));
+      console.log(chalk.gray('The core framework features will still work'));
     }
   }
 }
