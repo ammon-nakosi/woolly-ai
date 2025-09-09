@@ -70,12 +70,17 @@ Load the specific feature context by reading:
 
 Determine the current stage and recommended role based on the feature's status:
 
-#### Role Determination:
-- **No specs.md exists** → Product Manager role (Requirements stage)
-- **Requirements exist but no scope** → Senior Engineer role (Discovery stage)  
-- **Discovery exists but no plan** → Lead Engineer role (Planning stage)
-- **Plan exists, implementation incomplete** → Star Engineer role (Implementation stage)
-- **Implementation complete** → QA/Review role (Verification stage)
+#### Stage Determination and Next Actions:
+- **No specs.md exists** → Requirements gathering stage
+  - Next: Gather detailed specifications and user requirements
+- **Requirements exist but no scope** → Technical discovery stage  
+  - Next: Analyze codebase and identify technical implications
+- **Discovery exists but no plan** → Planning stage
+  - Next: Create phased implementation plan with detailed tasks
+- **Plan exists, implementation incomplete** → Implementation stage
+  - Next: Code the next incomplete tasks from the plan
+- **Implementation complete** → Verification stage
+  - Next: Verify all tasks work and update status tracking
 
 For implementation stage, if tasks are scattered across multiple phases:
 - Analyze which phases have partial completion
@@ -83,7 +88,7 @@ For implementation stage, if tasks are scattered across multiple phases:
 - Recommend focusing on the earliest incomplete phase with started work
 - Or suggest completing critical path tasks first if phases can be done in parallel
 
-Then provide a summary with role recommendation:
+Then provide a summary with next steps based on the current stage:
 
 ```
 ═══════════════════════════════════════════════════════════════
@@ -96,20 +101,20 @@ Current Phase: [number if in implementation]
 Progress: [X/Y phases completed if applicable]
 
 ───────────────────────────────────────────────────────────────
-RECOMMENDED ROLE
+NEXT STEPS
 ───────────────────────────────────────────────────────────────
 
-Role: [Product Manager/Senior Engineer/Lead Engineer/Star Engineer/QA Engineer]
+Based on the current progress, here's what I'll do next:
+• [Specific next action based on current stage]
+• [Another specific action that will be taken]
+• [Additional action if applicable]
 
-This role is recommended because:
-[1-2 sentences explaining why this role fits the current stage]
-
-Would you like me to assume this role? (yes/no)
+Would you like to continue with these steps? (yes/no)
 
 ═══════════════════════════════════════════════════════════════
 ```
 
-If the user accepts the role, immediately:
+If the user accepts continuing with these steps, immediately:
 
 1. **Read the pertinent documents for that role:**
    - **Product Manager**: Read `context.md` and `specs.md` thoroughly to understand user needs
@@ -118,14 +123,14 @@ If the user accepts the role, immediately:
    - **Star Engineer**: Read `context.md`, `plan-approved.phase-[current].md` for the current phase, plus specs and overview
    - **QA Engineer**: Read `context.md`, `plan-approved.plan-status.json` and all phase documents to verify completeness
 
-2. **Assume the role persona and provide:**
+2. **Begin the work and provide:**
 
 ```
 ═══════════════════════════════════════════════════════════════
-                    ROLE ASSUMED: [Role Name]
+                    STARTING WORK: [Stage Name]
 ═══════════════════════════════════════════════════════════════
 
-[1-2 sentences in character establishing the role persona]
+[1-2 sentences describing what you're about to do]
 
 ───────────────────────────────────────────────────────────────
 CURRENT SITUATION
@@ -174,67 +179,71 @@ Priority Tasks (considering dependencies):
 RECOMMENDED NEXT STEPS  
 ───────────────────────────────────────────────────────────────
 
-[For Product Manager - Requirements Stage]:
-I'll start by gathering detailed specs. Let me ask you about:
-- Core functionality needed
-- User workflows and use cases  
-- Success criteria
-- Any technical constraints
-Ready to gather specs?
-(You can also run: `/woolly-feature specs [feature-name]`)
+[For Requirements Stage]:
+Based on the current state, I'll:
+• Gather detailed specifications from you
+• Document user workflows and use cases
+• Define success criteria and acceptance requirements
+• Identify any technical constraints
 
-[For Senior Engineer - Discovery Stage]:
-I'll investigate the technical implications by:
-- Searching the codebase for related functionality
-- Identifying integration points and dependencies
-- Assessing risks and complexity
-- Proposing solution approaches
-Ready to scope?
-(You can also run: `/woolly-feature scope [feature-name]`)
+Would you like to continue gathering specs?
+(Alternative: `/woolly-feature specs [feature-name]`)
 
-[For Lead Engineer - Planning Stage]:
-I'll create the implementation plan by:
-- Reviewing all scope feedback (especially {{curly brace}} items)
-- Breaking work into deployable phases
-- Creating detailed task checklists
-- Setting up progress tracking
-Ready to plan?
-(You can also run: `/woolly-feature plan [feature-name]`)
+[For Discovery Stage]:
+Based on the requirements, I'll:
+• Search the codebase for related functionality
+• Identify integration points and dependencies
+• Assess technical risks and complexity
+• Document solution approaches and trade-offs
 
-[For Star Engineer - Implementation Stage]:
-[If single phase in progress]:
+Would you like to continue with technical discovery?
+(Alternative: `/woolly-feature scope [feature-name]`)
+
+[For Planning Stage]:
+Based on the scope findings, I'll:
+• Review all technical feedback and {{curly brace}} items
+• Break work into logical, deployable phases
+• Create detailed task checklists for each phase
+• Set up progress tracking structure
+
+Would you like to continue creating the plan?
+(Alternative: `/woolly-feature plan [feature-name]`)
+
+[For Implementation Stage - Single Phase]:
 Based on Phase [N] tasks, I'll:
-- Implement: [next incomplete task from phase doc]
-- Follow the approach outlined in the phase plan
-- Update status tracking after each task
-- Ensure code quality and testing
-Ready to code?
-(You can also run: `/woolly-feature code [feature-name] [phase]`)
+• Implement: [next incomplete task from phase doc]
+• Follow the approach outlined in the phase plan
+• Update status tracking after each task
+• Ensure code quality and testing
 
-[If tasks scattered across multiple phases]:
-I notice work has been done across multiple phases:
-- Phase [X]: [Y/Z tasks complete] - [brief status]
-- Phase [X+1]: [Y/Z tasks complete] - [brief status]
+Would you like to continue coding?
+(Alternative: `/woolly-feature code [feature-name] [phase]`)
 
-Recommendation: [Choose one based on analysis]
-Option A: Complete Phase [X] first because [reason - e.g., "it's 80% done and blocks Phase X+1"]
-Option B: Focus on [specific task] in Phase [Y] because [reason - e.g., "it's a critical dependency"]
-Option C: Work on phases in parallel since [reason - e.g., "they're independent"]
+[For Implementation Stage - Multiple Phases]:
+Work is scattered across multiple phases:
+• Phase [X]: [Y/Z tasks complete] - [brief status]
+• Phase [X+1]: [Y/Z tasks complete] - [brief status]
 
-Next task to code: [specific task] from Phase [N]
-This fits the plan because: [explanation of how this advances the overall feature]
+Based on dependencies and progress, I'll:
+• [Primary action based on analysis]
+• [Secondary action if needed]
+• [Update tracking to reflect actual progress]
 
-Ready to code Phase [recommended-phase]?
-(You can also run: `/woolly-feature code [feature-name] [recommended-phase]`)
+Specific next task: [task name] from Phase [N]
+Reason: [why this task makes sense now]
 
-[For QA Engineer - Verification Stage]:
-I'll verify the implementation by:
-- Checking all "done" tasks actually work
-- Validating against original specs
-- Updating status to match reality
-- Identifying any gaps or issues
-Ready to verify?
-(You can also run: `/woolly-status-update [feature-name]`)
+Would you like to continue with Phase [recommended-phase]?
+(Alternative: `/woolly-feature code [feature-name] [recommended-phase]`)
+
+[For Verification Stage]:
+Based on the completed implementation, I'll:
+• Verify all marked-complete tasks actually work
+• Validate implementation against original specs
+• Update status tracking to match reality
+• Identify any gaps or remaining issues
+
+Would you like to continue with verification?
+(Alternative: `/woolly-status-update [feature-name]`)
 
 Ready to proceed? Let me know how you'd like to continue.
 

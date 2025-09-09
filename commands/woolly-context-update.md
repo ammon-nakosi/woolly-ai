@@ -86,16 +86,26 @@ Added: [brief summary of what was documented]
 - "Found 15+ integration points that required coordinated updates"
 - "Web interface renders correctly with new 4-mode structure"
 
-### --followup (Next steps)
-- Remaining work or tasks
-- Next phase of implementation
-- Testing or validation needed
-- Decisions to be made
+### --followup (Next steps - DETAILED IMPLEMENTATION PLAN)
+**CRITICAL**: This field must contain the COMPLETE, ACTIONABLE PLAN that another agent could pick up and execute without additional context.
 
-**Examples:**
-- "Begin Phase 4: web interface testing and validation" 
-- "Test CLI functionality with new context management system"
-- "Update agent instructions to prevent arbitrary file creation"
+Include:
+- **Specific files to create/modify** with paths
+- **Exact implementation steps** in order
+- **Key technical details** (function names, data structures, etc.)
+- **Testing approach** if applicable
+- **Any decisions or constraints** already determined
+
+**Good Example:**
+"1. Create cli/src/commands/create.ts with woolly create command that accepts [mode] [name] [description] args and creates ~/.woolly/[mode]s/[name]/ with context.md and metadata.json
+2. Create cli/src/commands/worktree.ts with woolly worktree command that runs git worktree add ../[identifier] -b [identifier] and copies .env files
+3. Modify commands/woolly-create.md Step 3 to call woolly create instead of mkdir, add worktree detection after Step 3
+4. Update commands/woolly-close.md to read metadata.json and prompt for worktree removal if exists
+5. Test with all three modes (feature/script/vibe) including worktree creation and cleanup"
+
+**Bad Example:**
+"Begin implementation of CLI commands" (too vague)
+"Test CLI functionality" (not specific enough)
 
 ## Error Handling
 
