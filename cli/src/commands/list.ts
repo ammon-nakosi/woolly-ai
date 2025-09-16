@@ -5,9 +5,9 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { getChromaClient } from '../services/chromadb-client';
-import { CounselMode, ProjectMetadata } from '../types';
+import { WoollyMode, WOOLLY_MODES, ProjectMetadata } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerListCommands(program: Command) {
   program
@@ -185,12 +185,12 @@ async function listFromChromaDB(options: any) {
 
 async function listFromFilesystem(options: any) {
   const items = [];
-  const modes: CounselMode[] = options.mode ? [options.mode] : ['feature', 'script', 'vibe', 'prompt'];
+  const modes = options.mode ? [options.mode] : WOOLLY_MODES;
   
   for (const mode of modes) {
     // All directories use plural form
     const dirName = `${mode}s`;
-    const modePath = path.join(COUNSEL_BASE, dirName);
+    const modePath = path.join(WOOLLY_BASE, dirName);
     
     try {
       const dirs = await fs.readdir(modePath);

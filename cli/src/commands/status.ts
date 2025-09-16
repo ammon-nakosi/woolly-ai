@@ -5,8 +5,9 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { getChromaClient } from '../services/chromadb-client';
+import { WOOLLY_MODES } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerStatusCommands(program: Command) {
   program
@@ -20,18 +21,18 @@ export function registerStatusCommands(program: Command) {
       
       try {
         // Find the woolly work
-        const counselPath = await findCounselPath(name, options.mode);
-        if (!counselPath) {
+        const woollyPath = await findWoollyPath(name, options.mode);
+        if (!woollyPath) {
           spinner.fail(`Woolly work not found: ${name}`);
           console.log(chalk.yellow('\nTry listing all work with: woolly list'));
           return;
         }
         
-        const mode = counselPath.split('/').slice(-2, -1)[0].replace(/s$/, '');
+        const mode = woollyPath.split('/').slice(-2, -1)[0].replace(/s$/, '');
         
         // Read plan status if exists
         let planStatus = null;
-        let statusPath = path.join(counselPath, 'plan-approved.plan-status.json');
+        let statusPath = path.join(woollyPath, 'plan-approved.plan-status.json');
         try {
           const statusContent = await fs.readFile(statusPath, 'utf-8');
           planStatus = JSON.parse(statusContent);
@@ -65,10 +66,10 @@ export function registerStatusCommands(program: Command) {
         let description = '';
         let specs = '';
         try {
-          const files = await fs.readdir(counselPath);
+          const files = await fs.readdir(woollyPath);
           for (const file of files) {
             if (file === 'specs.md' || file === 'purpose.md' || file === 'issue.md' || file === 'scope.md' || file === 'context.md') {
-              const content = await fs.readFile(path.join(counselPath, file), 'utf-8');
+              const content = await fs.readFile(path.join(woollyPath, file), 'utf-8');
               const lines = content.split('\n');
               description = lines.find(line => line.trim() && !line.startsWith('#')) || '';
               specs = content;
@@ -85,7 +86,7 @@ export function registerStatusCommands(program: Command) {
           console.log(JSON.stringify({
             name,
             mode,
-            path: counselPath,
+            path: woollyPath,
             metadata,
             planStatus,
             description,
@@ -100,7 +101,7 @@ export function registerStatusCommands(program: Command) {
         
         // Basic info
         console.log(chalk.bold('Mode:'), mode);
-        console.log(chalk.bold('Path:'), counselPath);
+        console.log(chalk.bold('Path:'), woollyPath);
         
         if (metadata) {
           console.log(chalk.bold('Status:'), metadata.status || 'unknown');
@@ -227,7 +228,7 @@ export function registerStatusCommands(program: Command) {
         // Available files
         console.log(chalk.bold('\n📁 Files:'));
         try {
-          const files = await fs.readdir(counselPath);
+          const files = await fs.readdir(woollyPath);
           files.forEach(file => {
             console.log(`  ${chalk.gray('•')} ${file}`);
           });
@@ -251,14 +252,14 @@ export function registerStatusCommands(program: Command) {
     });
 }
 
-async function findCounselPath(name: string, mode?: string): Promise<string | null> {
-  const modes = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
+async function findWoollyPath(name: string, mode?: string): Promise<string | null> {
+  const modes = mode ? [mode] : WOOLLY_MODES;
   
   for (const m of modes) {
-    const counselPath = path.join(COUNSEL_BASE, `${m}s`, name);
+    const woollyPath = path.join(WOOLLY_BASE, `${m}s`, name);
     try {
-      await fs.access(counselPath);
-      return counselPath;
+      await fs.access(woollyPath);
+      return woollyPath;
     } catch {
       // Not found in this mode
     }

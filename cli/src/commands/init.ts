@@ -9,7 +9,7 @@ import { getConfig } from '../utils/config';
 import simpleGit from 'simple-git';
 
 const CONFIG_PATH = path.join(os.homedir(), '.woolly', 'config.json');
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerInitCommands(program: Command) {
   program
@@ -142,13 +142,13 @@ export function registerInitCommands(program: Command) {
         spinner.text = 'Creating woolly directories...';
         const directories = ['features', 'scripts', 'debugs', 'reviews', 'vibes', 'archives', 'knowledge'];
         for (const dir of directories) {
-          await fs.mkdir(path.join(COUNSEL_BASE, dir), { recursive: true });
+          await fs.mkdir(path.join(WOOLLY_BASE, dir), { recursive: true });
         }
         
         spinner.succeed('Configuration saved and directories created');
         
         // Check if git repo already exists
-        const git = simpleGit(COUNSEL_BASE);
+        const git = simpleGit(WOOLLY_BASE);
         const isRepo = await git.checkIsRepo();
         
         if (!isRepo) {
@@ -233,7 +233,7 @@ export function registerInitCommands(program: Command) {
 }
 
 async function createGitignore(): Promise<void> {
-  const gitignorePath = path.join(COUNSEL_BASE, '.gitignore');
+  const gitignorePath = path.join(WOOLLY_BASE, '.gitignore');
   
   const content = `# Woolly Framework Git Ignore
 # This file controls what gets synced across machines

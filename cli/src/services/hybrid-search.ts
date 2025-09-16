@@ -1,13 +1,13 @@
 import { search as vectorSearch } from '../services/chromadb-client';
 import { keywordSearchService, KeywordSearchResult } from './keyword-search';
 import { fuzzySearchService, FuzzySearchResult } from './fuzzy-search';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
 export interface HybridSearchResult {
   id: string;
   title: string;
   content: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   name: string;
   fileName: string;
   filePath: string;
@@ -37,7 +37,7 @@ export class HybridSearchOrchestrator {
     query: string, 
     options: {
       limit?: number;
-      mode?: CounselMode;
+      mode?: WoollyMode;
       threshold?: number;
     } = {}
   ): Promise<{ results: HybridSearchResult[]; status: SearchEngineStatus }> {
@@ -112,7 +112,7 @@ export class HybridSearchOrchestrator {
    */
   private async tryVectorSearch(
     query: string, 
-    options: { mode?: CounselMode; threshold?: number }
+    options: { mode?: WoollyMode; threshold?: number }
   ): Promise<HybridSearchResult[]> {
     const results = await vectorSearch(query, {
       type: 'documents',
@@ -125,7 +125,7 @@ export class HybridSearchOrchestrator {
       id: result.id,
       title: result.metadata?.name || 'Untitled',
       content: result.document || '',
-      mode: result.metadata?.counselMode as CounselMode,
+      mode: result.metadata?.counselMode as WoollyMode,
       name: result.metadata?.counselWork || '',
       fileName: result.metadata?.fileName || '',
       filePath: result.metadata?.filePath || '',

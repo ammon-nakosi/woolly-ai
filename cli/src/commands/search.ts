@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import { hybridSearchOrchestrator } from '../services/hybrid-search';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
 export function registerSearchCommands(program: Command) {
   program
@@ -25,7 +25,7 @@ export function registerSearchCommands(program: Command) {
         
         // Perform hybrid search
         const searchResult = await hybridSearchOrchestrator.search(query, {
-          mode: options.mode as CounselMode,
+          mode: options.mode as WoollyMode,
           limit,
           threshold
         });

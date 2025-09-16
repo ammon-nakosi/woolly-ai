@@ -4,9 +4,9 @@ import ora from 'ora';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 export function registerContextCommands(program: Command) {
   program
@@ -90,10 +90,10 @@ function createAddCommand(): Command {
 }
 
 async function findProjectPath(projectName: string): Promise<string | null> {
-  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+  const modes = WOOLLY_MODES;
   
   for (const mode of modes) {
-    const modePath = path.join(COUNSEL_BASE, `${mode}s`, projectName);
+    const modePath = path.join(WOOLLY_BASE, `${mode}s`, projectName);
     try {
       await fs.access(modePath);
       return modePath;
@@ -106,11 +106,11 @@ async function findProjectPath(projectName: string): Promise<string | null> {
 }
 
 async function listAvailableProjects(): Promise<void> {
-  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+  const modes = WOOLLY_MODES;
   const projects: string[] = [];
   
   for (const mode of modes) {
-    const modePath = path.join(COUNSEL_BASE, `${mode}s`);
+    const modePath = path.join(WOOLLY_BASE, `${mode}s`);
     try {
       const items = await fs.readdir(modePath);
       for (const item of items) {

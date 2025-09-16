@@ -5,15 +5,15 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import inquirer from 'inquirer';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 import { getChromaClient } from '../services/chromadb-client';
 import { ruleInjectionService } from '../services/rule-injection';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 interface ProjectMetadata {
   name: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   status: 'open' | 'closed';
   createdAt: string;
   closedAt: string | null;
@@ -269,11 +269,11 @@ export function registerCloseCommands(program: Command) {
 }
 
 async function findProjectPath(name: string, mode?: string): Promise<string | null> {
-  const modes: CounselMode[] = mode ? [mode as CounselMode] : ['feature', 'script', 'vibe', 'prompt'];
+  const modes = mode ? [mode as WoollyMode] : WOOLLY_MODES;
   
   for (const m of modes) {
     const dirName = `${m}s`;
-    const projectPath = path.join(COUNSEL_BASE, dirName, name);
+    const projectPath = path.join(WOOLLY_BASE, dirName, name);
     try {
       await fs.access(projectPath);
       return projectPath;
@@ -285,10 +285,10 @@ async function findProjectPath(name: string, mode?: string): Promise<string | nu
   return null;
 }
 
-function extractModeFromPath(projectPath: string): CounselMode {
+function extractModeFromPath(projectPath: string): WoollyMode {
   const parts = projectPath.split(path.sep);
   const modeDir = parts[parts.length - 2];
-  return modeDir.slice(0, -1) as CounselMode;
+  return modeDir.slice(0, -1) as WoollyMode;
 }
 
 async function readMetadata(projectPath: string): Promise<ProjectMetadata | null> {
@@ -337,7 +337,7 @@ async function reopenProject(projectPath: string, metadata: ProjectMetadata): Pr
   });
 }
 
-async function generateAgentAnalysis(mode: CounselMode, projectPath: string): Promise<AgentAnalysis> {
+async function generateAgentAnalysis(mode: WoollyMode, projectPath: string): Promise<AgentAnalysis> {
   const analysis: AgentAnalysis = {
     whatWentWell: [],
     whatCouldBeImproved: [],
@@ -512,7 +512,7 @@ async function fileExists(filePath: string): Promise<boolean> {
   }
 }
 
-async function generateSessionInsights(mode: CounselMode, projectPath: string): Promise<string> {
+async function generateSessionInsights(mode: WoollyMode, projectPath: string): Promise<string> {
   const insights: string[] = [];
   
   try {
@@ -663,7 +663,7 @@ async function createSessionEntry(projectPath: string, message: string): Promise
 
 async function generateRetroMarkdown(
   name: string,
-  mode: CounselMode,
+  mode: WoollyMode,
   projectPath: string,
   analysis: AgentAnalysis,
   userInsights: UserInsights | null
@@ -748,7 +748,7 @@ ${userInsights.whatToAvoid.length > 0 ? userInsights.whatToAvoid.map(item => `- 
 
 async function indexRetrospective(
   name: string,
-  mode: CounselMode,
+  mode: WoollyMode,
   projectPath: string,
   analysis: AgentAnalysis,
   userInsights: UserInsights | null

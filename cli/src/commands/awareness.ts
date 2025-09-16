@@ -7,8 +7,8 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { execSync } from 'child_process';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
-const AI_AWARENESS_DIR = path.join(COUNSEL_DIR, 'ai-awareness');
+const WOOLLY_DIR = path.join(os.homedir(), '.woolly');
+const AI_AWARENESS_DIR = path.join(WOOLLY_DIR, 'ai-awareness');
 const AWARENESS_FILE = 'WOOLLY-AWARENESS.md';
 
 class AwarenessCommand {

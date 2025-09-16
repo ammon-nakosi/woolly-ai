@@ -7,25 +7,25 @@ import { statSync } from 'fs';
 import readline from 'readline';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 import { ruleInjectionService } from '../services/rule-injection';
 
 const execAsync = promisify(exec);
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 interface WorkContext {
   name: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   path: string;
   confidence?: 'high' | 'medium' | 'low';
   reason?: string;
 }
 
-async function findCounselWork(name: string): Promise<WorkContext | null> {
-  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+async function findWoollyWork(name: string): Promise<WorkContext | null> {
+  const modes = WOOLLY_MODES;
   
   for (const mode of modes) {
-    const workPath = path.join(COUNSEL_BASE, `${mode}s`, name);
+    const workPath = path.join(WOOLLY_BASE, `${mode}s`, name);
     try {
       await fs.access(workPath);
       return { name, mode, path: workPath };
@@ -39,20 +39,20 @@ async function findCounselWork(name: string): Promise<WorkContext | null> {
 
 async function detectWorkFromDirectory(): Promise<WorkContext | null> {
   const cwd = process.cwd();
-  const counselMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
+  const woollyMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
   
-  if (counselMatch) {
-    const [, modePrefix, name] = counselMatch;
-    const mode = modePrefix as CounselMode;
-    return { name, mode, path: path.join(COUNSEL_BASE, `${mode}s`, name) };
+  if (woollyMatch) {
+    const [, modePrefix, name] = woollyMatch;
+    const mode = modePrefix as WoollyMode;
+    return { name, mode, path: path.join(WOOLLY_BASE, `${mode}s`, name) };
   }
   
   // Check for .woolly-active file
-  const activeFile = path.join(COUNSEL_BASE, '.woolly-active');
+  const activeFile = path.join(WOOLLY_BASE, '.woolly-active');
   try {
     const active = JSON.parse(await fs.readFile(activeFile, 'utf8'));
     if (active.name && active.mode) {
-      const workPath = path.join(COUNSEL_BASE, `${active.mode}s`, active.name);
+      const workPath = path.join(WOOLLY_BASE, `${active.mode}s`, active.name);
       try {
         await fs.access(workPath);
         return { name: active.name, mode: active.mode, path: workPath };
@@ -68,11 +68,11 @@ async function detectWorkFromDirectory(): Promise<WorkContext | null> {
 }
 
 async function getRecentProjects(limit: number = 10): Promise<WorkContext[]> {
-  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+  const modes = WOOLLY_MODES;
   const projects: WorkContext[] = [];
   
   for (const mode of modes) {
-    const modePath = path.join(COUNSEL_BASE, `${mode}s`);
+    const modePath = path.join(WOOLLY_BASE, `${mode}s`);
     try {
       const dirs = await fs.readdir(modePath);
       for (const dir of dirs) {
@@ -230,7 +230,7 @@ export function registerReloadCommands(program: Command) {
         
         if (name) {
           // Find specific work by name
-          work = await findCounselWork(name);
+          work = await findWoollyWork(name);
           if (!work) {
             console.error(chalk.red(`Woolly work not found: ${name}`));
             console.log(chalk.yellow('Try one of these recent projects:'));
@@ -265,7 +265,7 @@ export function registerReloadCommands(program: Command) {
         }
         
         // Set as active work
-        const activeFile = path.join(COUNSEL_BASE, '.woolly-active');
+        const activeFile = path.join(WOOLLY_BASE, '.woolly-active');
         await fs.writeFile(activeFile, JSON.stringify({
           name: work.name,
           mode: work.mode,

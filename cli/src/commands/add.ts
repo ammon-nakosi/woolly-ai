@@ -4,11 +4,11 @@ import ora from 'ora';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
-import { indexCounselWork } from '../services/chromadb-client';
-import { CounselMode, ProjectMetadata } from '../types';
+import { indexWoollyWork } from '../services/chromadb-client';
+import { WoollyMode, WOOLLY_MODES, ProjectMetadata } from '../types';
 import simpleGit from 'simple-git';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
 interface ProjectInfo {
   name: string;
@@ -28,19 +28,19 @@ export function registerAddCommands(program: Command) {
       
       try {
         // Validate mode
-        const validModes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
-        if (!validModes.includes(mode as CounselMode)) {
+        const validModes = WOOLLY_MODES;
+        if (!validModes.includes(mode as WoollyMode)) {
           spinner.fail(`Invalid mode: ${mode}`);
           console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));
           return;
         }
         
         // Check if woolly directory exists
-        const counselPath = path.join(COUNSEL_BASE, `${mode}s`, name);
+        const woollyPath = path.join(WOOLLY_BASE, `${mode}s`, name);
         try {
-          await fs.access(counselPath);
+          await fs.access(woollyPath);
         } catch {
-          spinner.fail(`Woolly work not found: ${counselPath}`);
+          spinner.fail(`Woolly work not found: ${woollyPath}`);
           console.log(chalk.yellow('Make sure the woolly work exists before adding it to the index'));
           return;
         }
@@ -72,10 +72,10 @@ export function registerAddCommands(program: Command) {
         let description = options.description || '';
         if (!description) {
           // Try to read from existing files
-          const files = await fs.readdir(counselPath);
+          const files = await fs.readdir(woollyPath);
           for (const file of files) {
             if (file.endsWith('.md')) {
-              const content = await fs.readFile(path.join(counselPath, file), 'utf-8');
+              const content = await fs.readFile(path.join(woollyPath, file), 'utf-8');
               const lines = content.split('\n').slice(0, 5);
               description = lines.find(line => line.trim() && !line.startsWith('#')) || '';
               if (description) break;
@@ -88,10 +88,10 @@ export function registerAddCommands(program: Command) {
         }
         
         // Create or update metadata.json
-        const metadataPath = path.join(counselPath, 'metadata.json');
+        const metadataPath = path.join(woollyPath, 'metadata.json');
         const metadata: ProjectMetadata = {
           name,
-          mode: mode as CounselMode,
+          mode: mode as WoollyMode,
           status: 'open',
           createdAt: new Date().toISOString(),
           closedAt: null,
@@ -114,10 +114,10 @@ export function registerAddCommands(program: Command) {
         
         // Index existing markdown files in the woolly work
         spinner.text = 'Indexing woolly work in ChromaDB...';
-        const indexResult = await indexCounselWork(
-          counselPath,
+        const indexResult = await indexWoollyWork(
+          woollyPath,
           name,
-          mode as CounselMode
+          mode as WoollyMode
         );
         
         spinner.succeed(`Indexed ${indexResult.filesIndexed} files for ${mode} '${name}'`);
@@ -130,7 +130,7 @@ export function registerAddCommands(program: Command) {
           indexResult.errors.forEach(err => console.log(`  - ${err}`));
         }
         
-        console.log(chalk.gray(`\nPath: ${counselPath}`));
+        console.log(chalk.gray(`\nPath: ${woollyPath}`));
         console.log(chalk.gray(`Status: ${options.status || 'planned'}`));
         
         console.log(chalk.cyan('\nNext steps:'));

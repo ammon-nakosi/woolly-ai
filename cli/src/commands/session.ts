@@ -5,9 +5,9 @@ import * as path from 'path';
 import * as os from 'os';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
+const WOOLLY_DIR = path.join(os.homedir(), '.woolly');
 const FOUR_HOURS = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
 interface SessionFile {
@@ -17,7 +17,7 @@ interface SessionFile {
 
 class SessionCommand {
   private program: Command;
-  private activeWork: { name: string; mode: CounselMode } | null = null;
+  private activeWork: { name: string; mode: WoollyMode } | null = null;
 
   constructor() {
     this.program = new Command('session')
@@ -36,12 +36,12 @@ class SessionCommand {
   }): Promise<void> {
     // Handle listing sessions
     if (options.list) {
-      await this.listSessions(options.work, options.mode as CounselMode);
+      await this.listSessions(options.work, options.mode as WoollyMode);
       return;
     }
 
     // Get work context
-    const work = await this.getWorkContext(options.work, options.mode as CounselMode);
+    const work = await this.getWorkContext(options.work, options.mode as WoollyMode);
     if (!work) {
       console.error(chalk.red('No active woolly work found.'));
       console.log(chalk.yellow('Specify work with: woolly session "message" --work <name> --mode <mode>'));
@@ -53,13 +53,13 @@ class SessionCommand {
     await this.createSessionEntry(work, message);
   }
 
-  private async getWorkContext(workName?: string, mode?: CounselMode): Promise<{ name: string; mode: CounselMode; path: string } | null> {
+  private async getWorkContext(workName?: string, mode?: WoollyMode): Promise<{ name: string; mode: WoollyMode; path: string } | null> {
     // If work name specified, find it
     if (workName) {
-      const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
+      const modes = mode ? [mode] : WOOLLY_MODES;
       
       for (const m of modes) {
-        const workPath = path.join(COUNSEL_DIR, `${m}s`, workName);
+        const workPath = path.join(WOOLLY_DIR, `${m}s`, workName);
         if (fs.existsSync(workPath)) {
           return { name: workName, mode: m, path: workPath };
         }
@@ -71,20 +71,20 @@ class SessionCommand {
 
     // Try to detect from current directory
     const cwd = process.cwd();
-    const counselMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
-    if (counselMatch) {
-      const [, modePrefix, name] = counselMatch;
-      const mode = modePrefix as CounselMode;
-      return { name, mode, path: path.join(COUNSEL_DIR, `${mode}s`, name) };
+    const woollyMatch = cwd.match(/\.woolly[\/\\](\w+)s[\/\\]([^\/\\]+)/);
+    if (woollyMatch) {
+      const [, modePrefix, name] = woollyMatch;
+      const mode = modePrefix as WoollyMode;
+      return { name, mode, path: path.join(WOOLLY_DIR, `${mode}s`, name) };
     }
 
     // Check for .woolly-active file (could be set by woolly-reload)
-    const activeFile = path.join(COUNSEL_DIR, '.woolly-active');
+    const activeFile = path.join(WOOLLY_DIR, '.woolly-active');
     if (fs.existsSync(activeFile)) {
       try {
         const active = JSON.parse(fs.readFileSync(activeFile, 'utf8'));
         if (active.name && active.mode) {
-          const workPath = path.join(COUNSEL_DIR, `${active.mode}s`, active.name);
+          const workPath = path.join(WOOLLY_DIR, `${active.mode}s`, active.name);
           if (fs.existsSync(workPath)) {
             return { name: active.name, mode: active.mode, path: workPath };
           }
@@ -97,7 +97,7 @@ class SessionCommand {
     return null;
   }
 
-  private async createSessionEntry(work: { name: string; mode: CounselMode; path: string }, message: string): Promise<void> {
+  private async createSessionEntry(work: { name: string; mode: WoollyMode; path: string }, message: string): Promise<void> {
     // Ensure sessions directory exists
     const sessionsDir = path.join(work.path, 'sessions');
     if (!fs.existsSync(sessionsDir)) {
@@ -160,7 +160,7 @@ class SessionCommand {
     return files[0];
   }
 
-  private async listSessions(workName?: string, mode?: CounselMode): Promise<void> {
+  private async listSessions(workName?: string, mode?: WoollyMode): Promise<void> {
     const work = await this.getWorkContext(workName, mode);
     if (!work) {
       console.error(chalk.red('No woolly work specified or found.'));

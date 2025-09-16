@@ -1,25 +1,25 @@
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
-import { CounselConfig } from '../types';
+import { WoollyConfig } from '../types';
 
 // Default config location
 const DEFAULT_CONFIG_PATH = path.join(os.homedir(), '.woolly', 'config.json');
 
 // Cached config
-let cachedConfig: CounselConfig | null = null;
+let cachedConfig: WoollyConfig | null = null;
 
 /**
  * Get the woolly configuration
  * Looks in: ~/.woolly/config.json
  */
-export const getConfig = async (): Promise<CounselConfig> => {
+export const getConfig = async (): Promise<WoollyConfig> => {
   if (cachedConfig) return cachedConfig;
   
   try {
     const configContent = await fs.readFile(DEFAULT_CONFIG_PATH, 'utf-8');
     cachedConfig = JSON.parse(configContent);
-    return cachedConfig as CounselConfig;
+    return cachedConfig as WoollyConfig;
   } catch (error) {
     // Config doesn't exist, return defaults
     return getDefaultConfig();
@@ -29,7 +29,7 @@ export const getConfig = async (): Promise<CounselConfig> => {
 /**
  * Get default configuration
  */
-export const getDefaultConfig = (): CounselConfig => {
+export const getDefaultConfig = (): WoollyConfig => {
   return {
     version: '1.0.0',
     
@@ -62,7 +62,7 @@ export const getDefaultConfig = (): CounselConfig => {
 /**
  * Save configuration
  */
-export const saveConfig = async (config: CounselConfig): Promise<void> => {
+export const saveConfig = async (config: WoollyConfig): Promise<void> => {
   const counselDir = path.dirname(DEFAULT_CONFIG_PATH);
   
   // Ensure directory exists
@@ -81,7 +81,7 @@ export const saveConfig = async (config: CounselConfig): Promise<void> => {
 /**
  * Update specific config values
  */
-export const updateConfig = async (updates: Partial<CounselConfig>): Promise<void> => {
+export const updateConfig = async (updates: Partial<WoollyConfig>): Promise<void> => {
   const current = await getConfig();
   const updated = mergeConfig(current, updates);
   await saveConfig(updated);
@@ -90,7 +90,7 @@ export const updateConfig = async (updates: Partial<CounselConfig>): Promise<voi
 /**
  * Merge configs deeply
  */
-const mergeConfig = (current: CounselConfig, updates: Partial<CounselConfig>): CounselConfig => {
+const mergeConfig = (current: WoollyConfig, updates: Partial<WoollyConfig>): WoollyConfig => {
   return {
     ...current,
     ...updates,

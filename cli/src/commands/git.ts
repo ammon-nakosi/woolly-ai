@@ -7,7 +7,7 @@ import os from 'os';
 import simpleGit, { SimpleGit } from 'simple-git';
 import inquirer from 'inquirer';
 
-const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
+const WOOLLY_DIR = path.join(os.homedir(), '.woolly');
 
 export function registerGitCommands(program: Command) {
   const gitCmd = program
@@ -22,7 +22,7 @@ export function registerGitCommands(program: Command) {
     .action(async (options) => {
       console.log(chalk.cyan('\n🔧 Initializing Git Repository for Woolly\n'));
       
-      const git: SimpleGit = simpleGit(COUNSEL_DIR);
+      const git: SimpleGit = simpleGit(WOOLLY_DIR);
       
       // Check if already a git repo
       const isRepo = await git.checkIsRepo();
@@ -103,7 +103,7 @@ export function registerGitCommands(program: Command) {
     .command('status')
     .description('Show git status of woolly work')
     .action(async () => {
-      const git: SimpleGit = simpleGit(COUNSEL_DIR);
+      const git: SimpleGit = simpleGit(WOOLLY_DIR);
       
       // Check if it's a repo
       const isRepo = await git.checkIsRepo();
@@ -175,7 +175,7 @@ export function registerGitCommands(program: Command) {
     .description('Sync woolly work with remote repository')
     .option('--message <msg>', 'Commit message', 'Update woolly work')
     .action(async (options) => {
-      const git: SimpleGit = simpleGit(COUNSEL_DIR);
+      const git: SimpleGit = simpleGit(WOOLLY_DIR);
       
       // Check if it's a repo
       const isRepo = await git.checkIsRepo();
@@ -240,7 +240,7 @@ export function registerGitCommands(program: Command) {
     .command('remote [url]')
     .description('Configure remote repository')
     .action(async (url) => {
-      const git: SimpleGit = simpleGit(COUNSEL_DIR);
+      const git: SimpleGit = simpleGit(WOOLLY_DIR);
       
       // Check if it's a repo
       const isRepo = await git.checkIsRepo();
@@ -323,7 +323,7 @@ async function setupRemote(git: SimpleGit, url: string): Promise<void> {
 }
 
 async function createGitignore(): Promise<void> {
-  const gitignorePath = path.join(COUNSEL_DIR, '.gitignore');
+  const gitignorePath = path.join(WOOLLY_DIR, '.gitignore');
   
   const content = `# Woolly Framework Git Ignore
 # This file controls what gets synced across machines

@@ -1,13 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
 export interface CounselDocument {
   id: string;
   title: string;
   content: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   name: string;
   fileName: string;
   filePath: string;
@@ -27,7 +27,7 @@ export class FileBasedDocumentParser {
    */
   async parseAllDocuments(): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
-    const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+    const modes = WOOLLY_MODES;
 
     for (const mode of modes) {
       const modeDir = path.join(this.counselDir, `${mode}s`);
@@ -47,7 +47,7 @@ export class FileBasedDocumentParser {
   /**
    * Parse documents for a specific mode
    */
-  private async parseModeDocuments(mode: CounselMode, modeDir: string): Promise<CounselDocument[]> {
+  private async parseModeDocuments(mode: WoollyMode, modeDir: string): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
     
     try {
@@ -72,7 +72,7 @@ export class FileBasedDocumentParser {
   /**
    * Parse all markdown documents in a woolly work item
    */
-  private async parseItemDocuments(mode: CounselMode, itemName: string, itemPath: string): Promise<CounselDocument[]> {
+  private async parseItemDocuments(mode: WoollyMode, itemName: string, itemPath: string): Promise<CounselDocument[]> {
     const documents: CounselDocument[] = [];
     
     try {
@@ -102,7 +102,7 @@ export class FileBasedDocumentParser {
   /**
    * Parse a single markdown document
    */
-  private async parseDocument(mode: CounselMode, itemName: string, fileName: string, filePath: string): Promise<CounselDocument | null> {
+  private async parseDocument(mode: WoollyMode, itemName: string, fileName: string, filePath: string): Promise<CounselDocument | null> {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const stat = await fs.stat(filePath);

@@ -1,13 +1,14 @@
 // Core types for Woolly CLI
 
-export type CounselMode = 'feature' | 'script' | 'vibe' | 'prompt';
+export type WoollyMode = 'feature' | 'script' | 'vibe';
+export const WOOLLY_MODES: WoollyMode[] = ['feature', 'script', 'vibe'];
 export type ProjectStatus = 'active' | 'completed' | 'closed' | 'archived';
 export type TaskStatus = 'to-do' | 'doing' | 'done' | 'skipped' | 'canceled';
 export type Priority = 'urgent' | 'high' | 'medium' | 'low' | 'none';
 
 export interface ProjectMetadata {
   name: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   status: 'open' | 'closed';
   createdAt: string;
   closedAt: string | null;
@@ -15,11 +16,11 @@ export interface ProjectMetadata {
 }
 
 // Knowledge types
-export interface CounselKnowledge {
+export interface WoollyKnowledge {
   id: string;
   version: string;
   type: 'pattern' | 'solution' | 'gotcha' | 'learning' | 'template';
-  mode: CounselMode;
+  mode: WoollyMode;
   
   // Core content
   title: string;
@@ -63,7 +64,7 @@ export interface CounselKnowledge {
   // Relationships
   related?: {
     linearTickets?: string[];
-    counselWork?: string[];
+    woollyWork?: string[];
     tags?: string[];
   };
   
@@ -75,10 +76,10 @@ export interface CounselKnowledge {
 }
 
 // Woolly work item (tracked in ChromaDB)
-export interface CounselItem {
+export interface WoollyItem {
   id: string;
-  type: 'counsel_item';
-  mode: CounselMode;
+  type: 'woolly_item';
+  mode: WoollyMode;
   name: string;
   
   // Project association
@@ -113,14 +114,14 @@ export interface CounselItem {
   
   // Closing and retrospective
   closedDate?: string;
-  retrospective?: CounselRetrospective;
+  retrospective?: WoollyRetrospective;
 }
 
 // Retrospective structure for closed projects
-export interface CounselRetrospective {
+export interface WoollyRetrospective {
   id: string;
   projectName: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   closedDate: string;
   duration: {
     startDate: string;
@@ -225,10 +226,10 @@ export interface ChecklistItem {
 }
 
 // Archive types
-export interface CounselArchive {
+export interface WoollyArchive {
   version: '1.0.0';
   type: 'archive';
-  mode: CounselMode;
+  mode: WoollyMode;
   name: string;
   exported: string;
   
@@ -256,7 +257,7 @@ export interface CounselArchive {
 }
 
 // Configuration
-export interface CounselConfig {
+export interface WoollyConfig {
   version?: string;
   
   linear?: {
@@ -291,7 +292,7 @@ export interface CounselConfig {
   preferences?: {
     autoSync?: boolean;
     autoExport?: boolean;
-    defaultMode?: CounselMode;
+    defaultMode?: WoollyMode;
   };
   
   git?: {
@@ -306,7 +307,7 @@ export interface CounselConfig {
 
 // CLI command options
 export interface ListOptions {
-  mode?: CounselMode;
+  mode?: WoollyMode;
   status?: string;
   project?: string;
   recent?: boolean;
@@ -315,7 +316,7 @@ export interface ListOptions {
 }
 
 export interface SearchOptions {
-  mode?: CounselMode;
+  mode?: WoollyMode;
   type?: string;
   project?: string;
   semantic?: boolean;

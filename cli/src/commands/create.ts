@@ -5,7 +5,7 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
-import { CounselMode, ProjectMetadata } from '../types';
+import { WoollyMode, WOOLLY_MODES, ProjectMetadata } from '../types';
 
 const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
@@ -28,8 +28,8 @@ export function registerCreateCommands(program: Command) {
       
       try {
         // Validate mode
-        const validModes: CounselMode[] = ['feature', 'script', 'vibe'];
-        if (!validModes.includes(mode as CounselMode)) {
+        const validModes = WOOLLY_MODES;
+        if (!validModes.includes(mode as WoollyMode)) {
           spinner.fail(`Invalid mode: ${mode}`);
           console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));
           process.exit(1);
@@ -64,7 +64,7 @@ ${description}
         // Create metadata.json with standard fields plus worktree extension
         const metadata: ExtendedProjectMetadata = {
           name,
-          mode: mode as CounselMode,
+          mode: mode as WoollyMode,
           status: 'open',
           createdAt: new Date().toISOString(),
           closedAt: null,

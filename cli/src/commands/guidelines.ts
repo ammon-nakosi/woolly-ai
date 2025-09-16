@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
 import fs from 'fs';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
 // Get the woolly framework directory (where this CLI is running from)
 const getFrameworkDir = (): string => {
@@ -22,7 +22,7 @@ export function registerGuidelinesCommand(program: Command) {
   program
     .command('guidelines')
     .description('Display mode-specific guidelines and best practices')
-    .argument('<mode>', 'Mode to get guidelines for (script, feature, debug, review, vibe, prompt)')
+    .argument('<mode>', 'Mode to get guidelines for (script, feature, vibe)')
     .option('-s, --summary', 'Show only core principles and specs')
     .option('-c, --checklist', 'Show only the specs checklist')
     .option('-e, --examples', 'Show only code examples')
@@ -34,10 +34,7 @@ export function registerGuidelinesCommand(program: Command) {
         const guidelineFiles: Record<string, string> = {
           script: path.join(frameworkDir, 'docs', 'SCRIPT-MODE-GUIDELINES.md'),
           feature: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'),
-          debug: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
-          review: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
-          vibe: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'),   // Use framework for now
-          prompt: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'), // Use framework for now
+          vibe: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md')
         };
         
         const validModes = Object.keys(guidelineFiles);

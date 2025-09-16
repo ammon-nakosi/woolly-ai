@@ -4,16 +4,16 @@ import ora from 'ora';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
-import { indexDocument, indexAllCounselWork, indexCounselWork, getIndexStats } from '../services/chromadb-client';
-import { CounselMode } from '../types';
+import { indexDocument, indexAllWoollyWork, indexWoollyWork, getIndexStats } from '../services/chromadb-client';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 
-const COUNSEL_BASE = path.join(os.homedir(), '.woolly');
+const WOOLLY_BASE = path.join(os.homedir(), '.woolly');
 
-async function findCounselWork(name: string): Promise<{ mode: CounselMode; path: string } | null> {
-  const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+async function findWoollyWork(name: string): Promise<{ mode: WoollyMode; path: string } | null> {
+  const modes = WOOLLY_MODES;
   
   for (const mode of modes) {
-    const workPath = path.join(COUNSEL_BASE, `${mode}s`, name);
+    const workPath = path.join(WOOLLY_BASE, `${mode}s`, name);
     try {
       await fs.access(workPath);
       return { mode, path: workPath };
@@ -71,7 +71,7 @@ export function registerIndexCommands(program: Command) {
         // Index all woolly work
         if (options.all) {
           spinner.text = 'Indexing all woolly work...';
-          const result = await indexAllCounselWork(options.force);
+          const result = await indexAllWoollyWork(options.force);
           
           spinner.succeed(`Indexed ${result.itemsIndexed} woolly items with ${result.filesIndexed} files`);
           
@@ -86,15 +86,15 @@ export function registerIndexCommands(program: Command) {
         
         // Index by mode
         if (options.mode) {
-          const validModes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
-          if (!validModes.includes(options.mode as CounselMode)) {
+          const validModes = WOOLLY_MODES;
+          if (!validModes.includes(options.mode as WoollyMode)) {
             spinner.fail(`Invalid mode: ${options.mode}`);
             console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));
             return;
           }
           
           spinner.text = `Indexing all ${options.mode} work...`;
-          const result = await indexAllCounselWork(options.force, options.mode as CounselMode);
+          const result = await indexAllWoollyWork(options.force, options.mode as WoollyMode);
           
           spinner.succeed(`Indexed ${result.itemsIndexed} ${options.mode} items with ${result.filesIndexed} files`);
           return;
@@ -104,7 +104,7 @@ export function registerIndexCommands(program: Command) {
         if (options.name) {
           spinner.text = `Finding woolly work: ${options.name}...`;
           
-          const work = await findCounselWork(options.name);
+          const work = await findWoollyWork(options.name);
           if (!work) {
             spinner.fail(`Woolly work not found: ${options.name}`);
             console.log(chalk.yellow('\nTry listing all work with: woolly list'));
@@ -131,7 +131,7 @@ export function registerIndexCommands(program: Command) {
               spinner.fail(`File not found: ${options.file}`);
             }
           } else {
-            const result = await indexCounselWork(work.path, options.name, work.mode, {
+            const result = await indexWoollyWork(work.path, options.name, work.mode, {
               modified: options.modified,
               force: options.force
             });
@@ -148,11 +148,11 @@ export function registerIndexCommands(program: Command) {
         // Interactive mode - detect unindexed work
         spinner.text = 'Detecting woolly work to index...';
         
-        const unindexed: { name: string; mode: CounselMode; path: string }[] = [];
-        const modes: CounselMode[] = ['feature', 'script', 'vibe', 'prompt'];
+        const unindexed: { name: string; mode: WoollyMode; path: string }[] = [];
+        const modes = WOOLLY_MODES;
         
         for (const mode of modes) {
-          const modePath = path.join(COUNSEL_BASE, `${mode}s`);
+          const modePath = path.join(WOOLLY_BASE, `${mode}s`);
           try {
             const items = await fs.readdir(modePath);
             for (const item of items) {
@@ -179,7 +179,7 @@ export function registerIndexCommands(program: Command) {
         
         for (const work of unindexed) {
           console.log(chalk.gray(`Indexing ${work.mode}/${work.name}...`));
-          const result = await indexCounselWork(work.path, work.name, work.mode);
+          const result = await indexWoollyWork(work.path, work.name, work.mode);
           console.log(chalk.green(`  ✓ Indexed ${result.filesIndexed} files`));
         }
         

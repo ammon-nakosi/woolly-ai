@@ -12,10 +12,10 @@ const execAsync = promisify(exec);
 
 const CHROMADB_PORT = process.env.CHROMADB_PORT || '8444';
 const CHROMADB_DATA_DIR = process.env.CHROMADB_DATA_DIR || path.join(os.homedir(), '.woolly', 'chromadb');
-const COUNSEL_DIR = path.join(os.homedir(), '.woolly');
-const VENV_PATH = path.join(COUNSEL_DIR, 'venv');
-const CHROMADB_SCRIPT = path.join(COUNSEL_DIR, 'bin', 'chromadb-server.py');
-const PID_FILE = path.join(COUNSEL_DIR, 'chromadb.pid');
+const WOOLLY_DIR = path.join(os.homedir(), '.woolly');
+const VENV_PATH = path.join(WOOLLY_DIR, 'venv');
+const CHROMADB_SCRIPT = path.join(WOOLLY_DIR, 'bin', 'chromadb-server.py');
+const PID_FILE = path.join(WOOLLY_DIR, 'chromadb.pid');
 
 // Determine Python executable path based on OS
 const isWindows = process.platform === 'win32';
@@ -245,7 +245,7 @@ if __name__ == "__main__":
         sys.exit(1)
 `;
   
-  await fs.mkdir(path.join(COUNSEL_DIR, 'bin'), { recursive: true });
+  await fs.mkdir(path.join(WOOLLY_DIR, 'bin'), { recursive: true });
   await fs.writeFile(CHROMADB_SCRIPT, script);
   await fs.chmod(CHROMADB_SCRIPT, '755');
 }

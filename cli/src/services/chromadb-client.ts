@@ -1,5 +1,5 @@
 import { ChromaClient, Collection, IncludeEnum, DefaultEmbeddingFunction } from 'chromadb';
-import { CounselMode } from '../types';
+import { WoollyMode, WOOLLY_MODES } from '../types';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
@@ -18,7 +18,7 @@ const CHROMADB_CONFIG = {
 // Collection names
 const COLLECTIONS = {
   DOCUMENTS: 'woolly_documents',
-  KNOWLEDGE: 'counsel_knowledge'
+  KNOWLEDGE: 'woolly_knowledge'
 };
 
 // File patterns for vectorization with semantic weights
@@ -176,7 +176,7 @@ const shouldIndexFile = (fileName: string): boolean => {
  */
 export const indexDocument = async (doc: {
   counselWork: string;
-  mode: CounselMode;
+  mode: WoollyMode;
   fileName: string;
   filePath: string;
   content: string;
@@ -281,7 +281,7 @@ export const search = async (
   query: string,
   options?: {
     type?: 'documents' | 'knowledge' | 'all';
-    mode?: CounselMode;
+    mode?: WoollyMode;
     counselWork?: string;
     limit?: number;
     threshold?: number;
@@ -346,7 +346,7 @@ export const search = async (
 export const findSimilarKnowledge = async (
   query: string,
   options?: {
-    mode?: CounselMode;
+    mode?: WoollyMode;
     limit?: number;
     threshold?: number;
   }
@@ -360,7 +360,7 @@ export const findSimilarKnowledge = async (
 export const findSimilarDocuments = async (
   query: string,
   options?: {
-    mode?: CounselMode;
+    mode?: WoollyMode;
     counselWork?: string;
     limit?: number;
     threshold?: number;
@@ -473,10 +473,10 @@ export const healthCheck = async (): Promise<boolean> => {
 /**
  * Index a single woolly work item
  */
-export const indexCounselWork = async (
+export const indexWoollyWork = async (
   counselPath: string,
   counselName: string,
-  mode: CounselMode,
+  mode: WoollyMode,
   options?: {
     modified?: boolean;
     force?: boolean;
@@ -538,12 +538,12 @@ export const indexCounselWork = async (
 /**
  * Index all woolly work
  */
-export const indexAllCounselWork = async (
+export const indexAllWoollyWork = async (
   force?: boolean,
-  mode?: CounselMode
+  mode?: WoollyMode
 ): Promise<{ itemsIndexed: number; filesIndexed: number; errors: string[] }> => {
   const counselBase = path.join(os.homedir(), '.woolly');
-  const modes: CounselMode[] = mode ? [mode] : ['feature', 'script', 'vibe', 'prompt'];
+  const modes = mode ? [mode] : WOOLLY_MODES;
   const result = { itemsIndexed: 0, filesIndexed: 0, errors: [] as string[] };
   
   for (const currentMode of modes) {
@@ -557,7 +557,7 @@ export const indexAllCounselWork = async (
         const stat = await fs.stat(itemPath);
         
         if (stat.isDirectory()) {
-          const indexResult = await indexCounselWork(itemPath, itemName, currentMode, { force });
+          const indexResult = await indexWoollyWork(itemPath, itemName, currentMode, { force });
           if (indexResult.filesIndexed > 0) {
             result.itemsIndexed++;
             result.filesIndexed += indexResult.filesIndexed;
