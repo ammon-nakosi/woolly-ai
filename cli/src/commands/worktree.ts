@@ -69,6 +69,52 @@ async function copyEnvFiles(targetDir: string): Promise<string[]> {
   return copiedFiles;
 }
 
+async function copyAIConfigDirs(targetDir: string): Promise<string[]> {
+  const aiConfigDirs = [
+    '.claude',
+    '.cursor',
+    '.github/copilot',
+    '.vscode',  // Often contains AI-related settings
+    '.idea'     // JetBrains AI settings
+  ];
+  
+  const copiedDirs: string[] = [];
+  
+  for (const dir of aiConfigDirs) {
+    try {
+      if (existsSync(dir)) {
+        // Create the directory structure
+        const targetPath = path.join(targetDir, dir);
+        await fs.mkdir(path.dirname(targetPath), { recursive: true });
+        
+        // Copy directory recursively
+        await copyDir(dir, targetPath);
+        copiedDirs.push(dir);
+      }
+    } catch {
+      // Directory doesn't exist or couldn't be copied, skip
+    }
+  }
+  
+  return copiedDirs;
+}
+
+async function copyDir(src: string, dest: string): Promise<void> {
+  await fs.mkdir(dest, { recursive: true });
+  const entries = await fs.readdir(src, { withFileTypes: true });
+  
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    
+    if (entry.isDirectory()) {
+      await copyDir(srcPath, destPath);
+    } else {
+      await fs.copyFile(srcPath, destPath);
+    }
+  }
+}
+
 export function registerWorktreeCommands(program: Command) {
   program
     .command('worktree <identifier>')
@@ -122,10 +168,13 @@ export function registerWorktreeCommands(program: Command) {
           process.exit(1);
         }
         
-        // Copy environment files
+        // Copy environment files and AI config directories
         spinner.text = 'Copying environment files...';
         const absoluteWorktreePath = path.resolve(worktreePath);
         const copiedFiles = await copyEnvFiles(absoluteWorktreePath);
+        
+        spinner.text = 'Copying AI configuration...';
+        const copiedDirs = await copyAIConfigDirs(absoluteWorktreePath);
         
         // Update metadata.json in the woolly directory
         const woollyPath = path.join(WOOLLY_BASE, `${mode}s`, name);
@@ -153,6 +202,10 @@ export function registerWorktreeCommands(program: Command) {
         
         if (copiedFiles.length > 0) {
           console.log(chalk.green('✅ Environment files copied:'), copiedFiles.join(', '));
+        }
+        
+        if (copiedDirs.length > 0) {
+          console.log(chalk.green('✅ AI config copied:'), copiedDirs.join(', '));
         }
         
         console.log(chalk.yellow('\nNext steps:'));
