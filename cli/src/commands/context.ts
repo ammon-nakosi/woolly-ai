@@ -19,8 +19,9 @@ function createAddCommand(): Command {
   return new Command('add')
     .argument('<project-name>', 'Name of the woolly project')
     .requiredOption('--executed <text>', 'What was accomplished/executed')
-    .requiredOption('--findings <text>', 'Key discoveries or results')  
+    .requiredOption('--findings <text>', 'Key discoveries or results')
     .requiredOption('--followup <text>', 'Next steps or follow-up plan')
+    .requiredOption('--agent-issues <text>', 'Issues encountered and solutions (use "n/a" if none)')
     .description('Add structured update to project context')
     .action(async (projectName: string, options) => {
       const spinner = ora('Adding context update...').start();
@@ -42,6 +43,12 @@ function createAddCommand(): Command {
         if (!options.followup?.trim()) {
           spinner.fail('Field \'--followup\' cannot be empty');
           console.log(chalk.yellow('All fields must contain meaningful content'));
+          return;
+        }
+
+        if (!options.agentIssues?.trim()) {
+          spinner.fail('Field \'--agent-issues\' cannot be empty');
+          console.log(chalk.yellow('Use "n/a" if no issues were encountered'));
           return;
         }
         
@@ -74,6 +81,7 @@ function createAddCommand(): Command {
 **Executed**: ${options.executed.trim()}
 **Key findings**: ${options.findings.trim()}
 **Follow up plan**: ${options.followup.trim()}
+**Agent issues**: ${options.agentIssues.trim()}
 `;
         
         // Append to context.md

@@ -2,7 +2,6 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
 import fs from 'fs';
-import { WoollyMode, WOOLLY_MODES } from '../types';
 
 // Get the woolly framework directory (where this CLI is running from)
 const getFrameworkDir = (): string => {
@@ -21,40 +20,59 @@ const getFrameworkDir = (): string => {
 export function registerGuidelinesCommand(program: Command) {
   program
     .command('guidelines')
-    .description('Display mode-specific guidelines and best practices')
-    .argument('<mode>', 'Mode to get guidelines for (script, feature, vibe)')
+    .description('Display framework documentation and mode-specific guidelines')
+    .argument('<type>', 'Type to get guidelines for (framework, script, feature, vibe)')
     .option('-s, --summary', 'Show only core principles and specs')
     .option('-c, --checklist', 'Show only the specs checklist')
     .option('-e, --examples', 'Show only code examples')
-    .action(async (mode: string, options) => {
+    .action(async (type: string, options) => {
       try {
         const frameworkDir = getFrameworkDir();
+        const frameworkDoc = path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md');
         
-        // Map modes to their guideline files
-        const guidelineFiles: Record<string, string> = {
+        // Handle 'framework' as a special case - just show the framework doc
+        if (type === 'framework') {
+          if (!fs.existsSync(frameworkDoc)) {
+            console.error(chalk.red(`Framework documentation not found: ${frameworkDoc}`));
+            process.exit(1);
+          }
+          const content = fs.readFileSync(frameworkDoc, 'utf-8');
+          console.log(content);
+          return;
+        }
+        
+        // For modes, show framework doc + mode-specific guidelines if they exist
+        const modeSpecificFiles: Record<string, string | null> = {
           script: path.join(frameworkDir, 'docs', 'SCRIPT-MODE-GUIDELINES.md'),
-          feature: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md'),
-          vibe: path.join(frameworkDir, 'docs', 'WOOLLY-FRAMEWORK.md')
+          feature: null, // No feature-specific guidelines yet
+          vibe: null     // No vibe-specific guidelines yet
         };
         
-        const validModes = Object.keys(guidelineFiles);
-        if (!validModes.includes(mode)) {
-          console.error(chalk.red(`Invalid mode: ${mode}`));
-          console.log(chalk.yellow(`Valid modes: ${validModes.join(', ')}`));
+        const validTypes = ['framework', ...Object.keys(modeSpecificFiles)];
+        if (!validTypes.includes(type)) {
+          console.error(chalk.red(`Invalid type: ${type}`));
+          console.log(chalk.yellow(`Valid types: ${validTypes.join(', ')}`));
           process.exit(1);
         }
         
-        const guidelineFile = guidelineFiles[mode];
-        
-        if (!fs.existsSync(guidelineFile)) {
-          console.error(chalk.red(`Guidelines file not found: ${guidelineFile}`));
-          process.exit(1);
+        // Start with framework documentation for all modes
+        let content = '';
+        if (fs.existsSync(frameworkDoc)) {
+          content = fs.readFileSync(frameworkDoc, 'utf-8');
         }
         
-        const content = fs.readFileSync(guidelineFile, 'utf-8');
+        // Add mode-specific guidelines if they exist
+        const modeSpecificFile = modeSpecificFiles[type];
+        if (modeSpecificFile && fs.existsSync(modeSpecificFile)) {
+          content += '\n\n' + '='.repeat(70) + '\n';
+          content += `MODE-SPECIFIC GUIDELINES: ${type.toUpperCase()}\n`;
+          content += '='.repeat(70) + '\n\n';
+          const modeContent = fs.readFileSync(modeSpecificFile, 'utf-8');
+          content += modeContent;
+        }
         
         // Filter content based on options
-        if (options.summary && mode === 'script') {
+        if (options.summary && type === 'script') {
           // Extract just core principles and required features for script mode
           const lines = content.split('\n');
           let inPrinciples = false;
@@ -76,7 +94,7 @@ export function registerGuidelinesCommand(program: Command) {
           }
           
           console.log(output.join('\n'));
-        } else if (options.checklist && mode === 'script') {
+        } else if (options.checklist && type === 'script') {
           // Extract just the checklist
           const lines = content.split('\n');
           let inChecklist = false;
@@ -94,7 +112,7 @@ export function registerGuidelinesCommand(program: Command) {
           }
           
           console.log(output.join('\n'));
-        } else if (options.examples && mode === 'script') {
+        } else if (options.examples && type === 'script') {
           // Extract just the examples
           const lines = content.split('\n');
           let inExamples = false;

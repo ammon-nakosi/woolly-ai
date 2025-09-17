@@ -5,14 +5,13 @@ argument-hint: "[name] (optional)"
 
 You are onboarding into the Woolly Framework, a structured approach for organized development work.
 
-## Load Framework Documentation
-First, read the comprehensive framework guide at `/Users/Personal/.claude/WOOLLY-FRAMEWORK.md` to understand the complete workflow and philosophy.
+## Load Framework and Mode Guidelines
+Based on the detected mode, load the appropriate guidelines using the CLI:
+```bash
+woolly guidelines [mode]  # Replace [mode] with feature, script, or vibe
+```
 
-## Load Mode-Specific Guidelines
-Based on the detected mode, always load the appropriate guidelines using the CLI:
-- **Feature Mode**: `woolly guidelines feature`
-- **Script Mode**: `woolly guidelines script`  
-- **Debug/Review/Vibe/Prompt**: `woolly guidelines [mode]` as needed
+This command will automatically load the core framework documentation (WOOLLY-FRAMEWORK.md) plus any mode-specific guidelines that exist for that mode.
 
 ## CLI Integration: Smart Project Selection
 If no name provided, use intelligent discernment to select work:

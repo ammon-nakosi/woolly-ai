@@ -46,11 +46,13 @@ Execute the CLI command with ALL required fields:
 woolly context add <project-name> \
   --executed "what was accomplished/executed" \
   --findings "key discoveries or results" \
-  --followup "next steps or follow-up plan"
+  --followup "next steps or follow-up plan" \
+  --agent-issues "issues encountered and solutions (use 'n/a' if none)"
 ```
 
 **Requirements:**
-- **All 3 fields MANDATORY** - command will fail if any missing or empty
+- **All 4 fields MANDATORY** - command will fail if any missing or empty
+- **--agent-issues REQUIRED** - use "n/a" if execution went smoothly
 - **Meaningful content** - no placeholder or filler text
 - **Specific details** - concrete actions, findings, and plans
 - **User guidance integration** - incorporate user input when provided
@@ -85,6 +87,25 @@ Added: [brief summary of what was documented]
 - "All build processes now complete successfully with 0 errors"
 - "Found 15+ integration points that required coordinated updates"
 - "Web interface renders correctly with new 4-mode structure"
+
+### --agent-issues (Agent execution problems and solutions)
+**CRITICAL**: This field is MANDATORY. Use "n/a" only if everything went smoothly without any issues.
+
+Document any execution problems:
+- **Misunderstandings** - What the agent initially got wrong and why
+- **Repeated attempts** - Tasks that required multiple tries or user corrections
+- **Tool problems** - Issues with specific tools or commands failing
+- **Context confusion** - Missing or unclear information that led to problems
+- **Solutions found** - How the issue was ultimately resolved
+- **Workarounds used** - Temporary fixes when proper solution wasn't available
+- **User frustration** - Note if user had to repeat/clarify multiple times
+
+**Examples:**
+- "Initially tried to create files directly instead of using woolly context update - resolved by user reminder"
+- "ChromaDB connection failed 3 times - worked around using fuzzy search instead"
+- "Misunderstood requirement for all fields - fixed after error clarification"
+- "TypeScript errors persisted after fixes - solution: full rebuild after each change"
+- "n/a" (when everything worked perfectly first time)
 
 ### --followup (Next steps - DETAILED IMPLEMENTATION PLAN)
 **CRITICAL**: This field must contain the COMPLETE, ACTIONABLE PLAN that another agent could pick up and execute without additional context.

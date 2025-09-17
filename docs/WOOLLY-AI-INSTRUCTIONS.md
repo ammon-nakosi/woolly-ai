@@ -66,7 +66,7 @@ Recognize these patterns for closing woolly work:
 woolly status [name]          # Get detailed status
 woolly search "[query]"       # Semantic search
 woolly list --recent          # List recent work  
-woolly context add [name] --executed "..." --findings "..." --followup "..."  # Add context update
+woolly context add [name] --executed "..." --findings "..." --followup "..." --agent-issues "..."  # Add context update (use "n/a" for agent-issues if none)
 woolly finalize [name]        # Finalize project (use /woolly-close instead)
 woolly session "[message]"    # Update session notes
 ```
